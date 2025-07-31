@@ -1,0 +1,7 @@
+{
+  "name": "trilinerMobile",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

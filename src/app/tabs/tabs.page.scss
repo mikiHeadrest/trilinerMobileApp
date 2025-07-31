@@ -1,0 +1,52 @@
+
+ion-tab-bar{
+  border:0;
+  background-color: #07151F ;
+  gap:8px;
+
+  // sale como cosas que no se que son xdd
+  // la etiqueta slot aplica fondos tab, para un efecto de cuando haces click al boton
+  // aqui lo quito
+  --background: transparent;
+}
+
+
+ion-tab-button{
+
+  //propiedad exclusiva de ion-tab-button
+  --color: #CEEBF7;
+  --color-selected: #07151F;
+
+  div {
+    height: 35px;
+    width: 100%;
+    border-radius: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ion-icon{
+      height: 29px;
+      width: 29px;
+    }
+
+  }
+
+  //Cuando se selecciona un ion-tab-button
+  //ionic agrega la clase tab-selected
+  //aqui lo que hace es buscar si tab-selected esta dentro de las clases
+  // o si el cursor esta eencima
+
+  &[class*="tab-selected"] div, &:hover div{
+    background-color:#7CD4EC;
+  }
+
+
+  // &[class="tab-selected"] div{
+  //   color:aqua;
+  // }
+
+}
+
+
