@@ -31,3 +31,103 @@
   gap: 10px;
 
 }
+
+// Propiedades de la barra de busqueda --- todo esto para lo que busca el Nombre del Producto
+.searchBarContainer{
+  height: 100%;
+  width:70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 6px;
+  padding-left: 15px;
+
+}
+
+.searchIconContainer{
+  height: 85%;
+  width: 50px;
+  background-color: #D2F1EE;
+  border: 1px solid #2C4252;
+  border-radius: 4px 0 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  ion-icon{
+    color: #112534;
+    width: 80%;
+    height: 80%;
+  }
+}
+
+.searchIconContainer:hover{
+  background-color: #112534;
+
+  ion-icon{
+    color:#D2F1EE;
+  }
+
+}
+
+.searchInputStyle{
+  height: 35px;
+  min-height: 35px;
+  background-color: #D2F1EE;
+  border: 1px solid #2C4252;
+  border-radius: 0 4px 4px 0;
+  color: #112534;
+  --padding-start: 4px;
+}
+
+// -- ----------------
+
+// ComoboBox de filtrado
+.comboBoxContainer{
+  border-radius: 4px;
+  height: 65%;
+  width: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #2C4252;
+}
+
+.contentComboBox{
+  width: 70%;
+  flex: auto;
+  height: 100%;
+  border: 1px solid #2C4252;
+  background-color: #D2F1EE;
+  border-radius: 4px 0 0 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.textCombo{
+  padding: 2px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+
+}
+
+.comboBoxButton{
+  width: 30%;
+  max-width: 30px;
+  // max-width hace que no se deforme la caja de texto
+
+  height: 100%;
+  border: 1px solid #2C4252;
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #D2F1EE;
+}
+
+//
+
