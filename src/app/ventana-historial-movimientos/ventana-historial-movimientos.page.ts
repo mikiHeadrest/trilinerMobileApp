@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonIcon, IonInput, IonSelect, IonSelectOption, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { caretDownOutline, searchOutline, time } from 'ionicons/icons';
+import { arrowDown, caretDownOutline, searchOutline, time } from 'ionicons/icons';
+
 
 @Component({
   selector: 'app-ventana-historial-movimientos',
@@ -15,7 +16,7 @@ import { caretDownOutline, searchOutline, time } from 'ionicons/icons';
 export class VentanaHistorialMovimientosPage implements OnInit {
 
   constructor() {
-    addIcons({time,searchOutline, caretDownOutline})
+    addIcons({time,searchOutline, caretDownOutline, arrowDown})
   }
 
   ngOnInit() {
