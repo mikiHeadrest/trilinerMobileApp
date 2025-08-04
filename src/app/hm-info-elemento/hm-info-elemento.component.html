@@ -1,0 +1,29 @@
+<div class="elementContainer">
+  <!-- imagen -->
+  <!-- flex-grow: 3; max-width: 100px; -->
+  <div class="imageSection">
+  <!-- hacer un div que represente el tamaño de la imagen, -->
+  <!-- Dentro de ese ingresar la imagen, y centrarla, hacer overflow none -->
+  <!-- e intentar cambiar las dimensiones -->
+  <!-- El tamaño del div no cambiara pero si el de la imagen -->
+
+  <div class="imageBox">
+    <img src={{urlImage}} >
+  </div>
+
+  </div>
+
+  <!-- contenido -->
+  <div class="textSection" style="color: #D7C7B5;">
+    <div style=" text-overflow: ellipsis; font-size: 16px;"> <span >Despacho de <b>{{name}} </b> - {{franquicia}} </span></div>
+    <span>Hora de operacion: {{hour}}</span>
+    <span>ID_Producto: {{id_producto}}</span>
+  </div>
+
+  <!-- icono -->
+  <div class="iconSection" style="color:#D7C7B5;">
+    <ion-icon name="arrow-down" style="height:30px; width:30px; rotate: 180deg;"></ion-icon>
+    <span class="quantity">{{quantity}}</span>
+    <span class="text">Unidades</span>
+  </div>
+</div>
