@@ -1,3 +1,4 @@
+import { NgStyle } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
@@ -8,7 +9,7 @@ import { arrowDown } from 'ionicons/icons';
   selector: 'app-hm-info-elemento',
   templateUrl: './hm-info-elemento.component.html',
   styleUrls: ['./hm-info-elemento.component.scss'],
-  imports: [IonIcon],
+  imports: [IonIcon,NgStyle],
 })
 export class HMInfoElementoComponent  implements OnInit {
 
@@ -19,6 +20,7 @@ export class HMInfoElementoComponent  implements OnInit {
   @Input() TypeOfOperation!:boolean;
   // True: Despacho
   // False: Recepcion
+
   @Input() quantity!:string;
 
   @Input() name!:string;
