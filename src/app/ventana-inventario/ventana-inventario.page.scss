@@ -31,3 +31,85 @@
   gap: 10px;
 
 }
+
+//Cambiar el color de la searchbar
+ion-searchbar.custom {
+  --background: #D2F1EE;
+  --color: #112534;
+  --placeholder-color: #112534;
+  --icon-color: #112534;
+
+  --border-radius: 4px;
+}
+
+//Cambiar el color del fondo del div de la searchbar
+.divSearch{
+  background-color: #2C4252;
+  padding: 1%;
+}
+
+//Contenedor de los objetos del inventario
+.divItems{
+  padding: 1px;
+  border-radius: 10px;
+  max-width: 95vw;
+  margin: 0 auto; /* centrado horizontal */
+  margin-top: 2%;
+  background-color: #1D303C;
+}
+
+//Cambiar color del fondo de la ventana completa
+ion-content {
+  --background: #041A19;
+}
+//Ion-Card
+ion-item {
+  --background: #112534;
+  --color: #BAD8D7;
+}
+
+ion-card-title {
+  --color: #BAD8D7;
+}
+
+ion-card-subtitle {
+  --color: #BAD8D7;
+}
+
+//Paginación
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+  background-color: #1f2e38;
+}
+
+.page-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #071d2b;
+  color: #dfd7ce;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: -3px 3px 0 #000;
+  transition: 0.3s;
+}
+
+.page-button:hover:not(.active):not(:disabled) {
+  background-color: #123245;
+}
+
+.page-button.active {
+  background-color: #c7e8f1;
+  color: #000;
+  font-weight: bold;
+  box-shadow: -3px 3px 0 #000;
+}
+
+.page-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
