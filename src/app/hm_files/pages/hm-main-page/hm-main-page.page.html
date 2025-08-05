@@ -1,0 +1,49 @@
+<!-- <div class="contentContainer">
+</div> -->
+<ion-header>
+  <!-- Aqui poner la de busquedas -->
+    <div class="firstHeaderSection">
+      <!-- width = 70% -->
+      <div class="searchBarContainer">
+        <div class="searchIconContainer">
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+        <ion-input color="transparent" class="searchInputStyle" placeholder="Buscar..."></ion-input>
+      </div>
+
+      <!-- !!! cargarlo con la fecha de HOY -->
+      <div class="comboBoxContainer" (click)="searchByDate(`4 de Agosto del 2024`)">
+        <div class="contentComboBox">
+          <span class="textCombo">
+            Sin filtro eee sans
+          </span>
+        </div>
+        <div class="comboBoxButton">
+          <ion-icon name="caret-down-outline"></ion-icon>
+        </div>
+      </div>
+
+    </div>
+</ion-header>
+
+<ion-content >
+  <div class="contentContainer">
+    <div class="containerOfLists">
+    <div style="width: 95%; ">
+      <app-hm-movimientos-dia [currentDate]="`13 de Noviembre del 2025`"></app-hm-movimientos-dia>
+      <br>
+      <app-hm-movimientos-dia [currentDate]="`12 de Noviembre del 2025`"></app-hm-movimientos-dia>
+      <br>
+      <app-hm-movimientos-dia [currentDate]="`11 de Noviembre del 2025`"></app-hm-movimientos-dia>
+      <br>
+      <app-hm-movimientos-dia [currentDate]="`10 de Noviembre del 2025`"></app-hm-movimientos-dia>
+    </div>
+
+      <!-- ELIMINAR COMPONENTES DE PRUEBA  -->
+
+      <!-- FIN DE COMPONENTES DE PRUEBA -->
+
+    </div>
+  </div>
+</ion-content>
+

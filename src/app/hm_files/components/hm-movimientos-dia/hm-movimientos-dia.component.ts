@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { HMInfoElementoComponent } from "../hm-info-elemento/hm-info-elemento.component";
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-hm-movimientos-dia',
@@ -9,10 +10,18 @@ import { HMInfoElementoComponent } from "../hm-info-elemento/hm-info-elemento.co
 })
 export class HMMovimientosDiaComponent  implements OnInit {
 
-  @Input() currentDate?:string;
+  private navControl = inject(NavController);
+
+  @Input() currentDate!:string;
+
 
   constructor() { }
 
   ngOnInit() {}
+
+  searchByDate(date:string){
+    this.navControl.navigateForward("/tabs/historial-movimientos/byDate/"+date);
+  }
+
 
 }

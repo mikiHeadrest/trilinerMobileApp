@@ -17,28 +17,7 @@
     </div>
 
     <!-- lo que esta abajo del Header -->
-    <div style="height: 53px; width: 100%; display: flex; align-items: center; ">
-      <!-- width = 70% -->
-      <div class="searchBarContainer">
-        <div class="searchIconContainer">
-          <ion-icon name="search-outline"></ion-icon>
-        </div>
-        <ion-input color="transparent" class="searchInputStyle" placeholder="Buscar..."></ion-input>
-      </div>
 
-      <!-- width = 30% -->
-      <div class="comboBoxContainer">
-        <div class="contentComboBox">
-          <span class="textCombo">
-            Sin filtro eee sans
-          </span>
-        </div>
-        <div class="comboBoxButton">
-          <ion-icon name="caret-down-outline"></ion-icon>
-        </div>
-      </div>
-
-    </div>
 
   </div>
 
@@ -51,31 +30,23 @@
     -Modelo de Datos (se compone )
 
   -Operaciones Filtradas
+
+  - Actualizar componente hm_movimientos dias para que al hacer click a la fecha
+      te mande a hm_elements_by_date
+
+  - ELEMENT PAGE
+    -CONVERTIR LOS ESTLOS A CLASES
  -->
 
-<ion-content [fullscreen]="true">
-  <div class="contentContainer">
-    <div class="containerOfLists">
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+  <!-- no tengo idea de como esto funciona xd esto es una tortura -->
+  <!-- ES QUE SI FULLSCREEN ES TRUE SE OCULTA ATRAS DE TANTO TAB COMO EL HEADER -->
 
-      <div style="width: 95%; ">
+  <!-- Hice todo este desorden para que carga la pagina de Inventarios como el personalizado -->
+  <!-- Basura -->
 
-        <app-hm-movimientos-dia [currentDate]="`13 de Noviembre del 2025`"></app-hm-movimientos-dia>
-        <br>
-        <app-hm-movimientos-dia [currentDate]="`12 de Noviembre del 2025`"></app-hm-movimientos-dia>
-        <br>
-        <app-hm-movimientos-dia [currentDate]="`11 de Noviembre del 2025`"></app-hm-movimientos-dia>
-        <br>
-        <app-hm-movimientos-dia [currentDate]="`10 de Noviembre del 2025`"></app-hm-movimientos-dia>
-      </div>
-
-      <!-- ELIMINAR COMPONENTES DE PRUEBA  -->
-
-      <!-- FIN DE COMPONENTES DE PRUEBA -->
-
-       <!-- ESPACIO VACIO PARA QUE NO SE OCULTEN ELEMENTOS -->
-       <div style="height: 70px;">
-       </div>
-
-    </div>
-  </div>
 </ion-content>
+
+<!-- <ion-content [fullscreen]="true"> -->
+<!-- </ion-content> -->

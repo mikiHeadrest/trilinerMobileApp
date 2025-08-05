@@ -1,6 +1,6 @@
 <div class="listOfItems">
   <div class="dateSection">
-    <span>{{currentDate}}</span>
+    <span (click)="searchByDate(currentDate)" >{{currentDate}}</span>
       <div></div>
   </div>
 
@@ -13,6 +13,8 @@
     [quantity]="`2`"
     [id_producto]="`000000004`"
     [hour]="`21:52`"
+
+    [TypeOfOperation]="true"
     >
     </app-hm-info-elemento>
     <app-hm-info-elemento
@@ -22,6 +24,8 @@
     [quantity]="`1`"
     [id_producto]="`000000005`"
     [hour]="`21:50`"
+
+    [TypeOfOperation]="false"
     >
     </app-hm-info-elemento>
 
