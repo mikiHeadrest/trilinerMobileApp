@@ -1,26 +1,142 @@
 <ion-header [translucent]="true" class="headerClass">
-
-  <div style="height: 25%; background-color: aliceblue;">
-    <br>
+  <div style="height: 25%; background-color: aliceblue">
+    <br />
   </div>
 
   <div class="headerContent">
-
-    <ion-avatar style="height: 50px; width: 50px; border: solid #D2F1EE 1px;">
-      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl-DxLh4oV1NCm2a101jtYxOimBnLZNkiiBQ&s">
+    <ion-avatar style="height: 50px; width: 50px; border: solid #d2f1ee 1px">
+      <img
+        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQl-DxLh4oV1NCm2a101jtYxOimBnLZNkiiBQ&s"
+      />
     </ion-avatar>
 
     <span>
       Bienvenido <span> <b> Juan Manuel Valdez Lerma </b> </span>
     </span>
-
   </div>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">VentanaPrinicpal</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="homeContent">
+  <!-- Contenedor: Estado Actual -->
+  <ion-card class="estado-card">
+    <div class="estado-container">
+      <img src="assets/img1.webp" class="estado-img" />
+      <div class="estado-texto">
+        <h2 class="textm">Modelo: 0000 0000 0001</h2>
+        <p class="texte" [(ngModel)]="estado">
+          <strong> Estado Actual: {{estado}}</strong>
+        </p>
+      </div>
+    </div>
+  </ion-card>
+
+  <!-- Contenedor: Metricas del Día -->
+  <ion-card class="content-card">
+    <p class="textd">El día de hoy se han realizado:</p>
+    <p class="textb" [(ngModel)]="fecha">{{fecha}}</p>
+    <ion-card-content class="containerTrans">
+      <div
+        style="
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        "
+      >
+        <div>
+          <h1 style="color: #dcd3a3" [(ngModel)]="recepcion">{{recepcion}}</h1>
+          <p style="color: #d3ba79">Transacciones de Recepción</p>
+        </div>
+        <div>
+          <p style="font-size: 48px; color: #c3ddd8">|</p>
+        </div>
+        <div>
+          <h1 style="color: #c3ddd8" [(ngModel)]="despacho">{{despacho}}</h1>
+          <p style="color: #bfd3d0">Transacciones de Despacho</p>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Contenedor: Historial de Operaciones -->
+  <ion-card-title style="color: #bfd3d0; margin-left: 16px">
+    Historial de Operaciones Más Recientes
+  </ion-card-title>
+
+  <ion-card>
+    <ion-card-content class="item">
+      <ion-item class="custom-item" *ngFor="let op of historial">
+        <ion-avatar class-="img-container" slot="start">
+          <img [src]="op.img" alt="Producto" />
+        </ion-avatar>
+        <ion-label>
+          <h3>{{ op.nombre }}</h3>
+          <p>
+            {{ op.tipo }} - {{ op.unidades }} unidad(es)<br />
+            ID Montacargas: {{ op.idMontacargas }}<br />
+            Origen: {{ op.origen }}<br />
+            Fecha: {{ op.fecha | date: 'dd/MM/yyyy HH:mm' }}
+          </p>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Contenedor: Consultas Transaccionales -->
+  <ion-content class="contenido">
+    <ion-title class="titulo" style="color: #dcd3a3">
+      Consultas Transaccionales
+    </ion-title>
+
+    <ion-card class="tarjeta" *ngFor="let consulta of consultas">
+      <ion-card-header class="tarjeta-header">
+        <ion-card-title
+          [style.color]="consulta.img ? '#dcd3a3' : 'white'"
+          style="font-size: 16px"
+        >
+          {{ consulta.titulo }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content class="tarjeta-body">
+        <ng-container *ngIf="consulta.img; else resumenOperaciones">
+          <ion-avatar slot="start">
+            <img [src]="consulta.img" alt="Peluche" />
+          </ion-avatar>
+          <div class="info">
+            <h3 style="color: #dcd3a3">{{ consulta.nombre }}</h3>
+            <small>ID Producto: {{ consulta.id }}</small>
+          </div>
+          <div class="dato">
+            <span>Unidades:</span>
+            <h1 style="color: #dcd3a3">{{ consulta.unidades }}</h1>
+          </div>
+        </ng-container>
+
+        <ng-template #resumenOperaciones>
+          <div
+            class="info"
+            style="display: flex; align-items: center; gap: 10px"
+          >
+            <ion-icon
+              name="calendar-outline"
+              style="font-size: 50px; color: white"
+            ></ion-icon>
+            <div>
+              <h3 style="color: white">Fecha: {{ consulta.fecha }}</h3>
+              <small>
+                Operaciones de Recepción: {{ consulta.recepcion }}<br />
+                Operaciones de Despacho: {{ consulta.despacho }}
+              </small>
+            </div>
+          </div>
+
+          <div class="dato">
+            <span>Total de Operaciones:</span>
+            <h1 style="color: white">{{ consulta.total }}</h1>
+          </div>
+        </ng-template>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
 </ion-content>
+
