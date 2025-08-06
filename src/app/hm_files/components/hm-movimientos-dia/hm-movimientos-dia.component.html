@@ -5,29 +5,11 @@
   </div>
 
   <div class="dataSection">
-
-    <app-hm-info-elemento
-    [urlImage]="`https://www.fangamer.com/cdn/shop/products/product_DR_light_ralsei_plush_photo1.png?crop=center&height=1200&v=1691703459&width=1800`"
-    [name]="`Peluche de Ralsei`"
-    [franquicia]="`Deltarune`"
-    [quantity]="`2`"
-    [id_producto]="`000000004`"
-    [hour]="`21:52`"
-
-    [TypeOfOperation]="true"
-    >
-    </app-hm-info-elemento>
-    <app-hm-info-elemento
-    [urlImage]="`https://www.fangamer.com/cdn/shop/files/product_horse_ralsei_costume_staged1.png?crop=center&height=1200&v=1748912701&width=1800`"
-    [name]="`Peluche de Ralsei Caballo texto texto texto`"
-    [franquicia]="`Deltarune`"
-    [quantity]="`1`"
-    [id_producto]="`000000005`"
-    [hour]="`21:50`"
-
-    [TypeOfOperation]="false"
-    >
-    </app-hm-info-elemento>
+    <div style="width: 100%; max-height: 250px; overflow-y: scroll;">
+      @for (element of elementList; track $index) {
+        <app-hm-info-elemento [elementInfo]="element"></app-hm-info-elemento>
+      }
+    </div>
 
   </div>
 </div>
