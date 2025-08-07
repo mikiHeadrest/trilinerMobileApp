@@ -31,3 +31,222 @@
   gap: 10px;
 
 }
+.tituloOperacion{
+  color: #D7C7B5;
+  background-color: #050A17;
+  padding: 2%;
+}
+.divMonitoreo {
+  background-color: #112534;
+  padding: 10px;
+  color: white;
+}
+
+.divModelo {
+  background-color: #0C1821;
+  padding: 5px;
+  text-align: right;
+  border-radius: 10px 10px 0 0;
+}
+
+.divOperaciones {
+  background-color: #13354F;
+  padding: 10px;
+  border-radius: 0 0 10px 10px;
+}
+
+.divSeparador {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.divIzquierdoFondo {
+  width: 30%;
+  height: 160px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fondoAlmacen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlayTexto {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.divDerecho {
+  width: 70%;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filaOperacion {
+  font-size: 9px;
+  display: flex;
+  background-color: #0C1821;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  gap: 25px;
+  padding-left: 3%;
+}
+
+.contenidoDerecho {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+
+.estadoAmarillo {
+  background-color: #112534;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  color: #EADA20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  height: 25%;
+  font-size: 10px;
+}
+
+.estadoImg {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1.5px solid #EADA20;
+}
+
+.tarjetaResumen {
+  background-color: #0f2a3b;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  height: 25%;
+  font-size: 10px;
+}
+
+.despacho{
+  color: #D7C7B5;
+}
+
+.recepcion{
+  color: #D2F1EE;
+}
+
+.numeroResumen {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.divBotones {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.botones-row {
+  --ion-grid-padding: 0;
+  --ion-grid-column-padding: 0;
+}
+
+.boton-col {
+  padding: 0 2px;
+}
+
+.btnAccion {
+  width: 100%;
+  height: 36px;
+  font-size: 13px;
+  --border-radius: 12px;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --color: #D2F1EE;
+}
+
+.btnRojo{
+  --background: #81221F;
+}
+.btnVerde{
+  --background: #1A501A;
+}
+.btnAmarillo{
+  --background: #59511F;
+}
+.subtitulo {
+  font-weight: bold;
+  color: #D2F1EE;
+}
+
+.divUltimas, .divUltimos {
+  background-color: #3F586B;
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.divUltimas{
+  max-height: 240px;
+}
+
+.divUltimos{
+  max-height: 120px;
+}
+
+.cardOperacion {
+  margin-bottom: 8px;
+  --background: #223e54;
+  border-radius: 10px;
+}
+
+.cardOperacion.error {
+  --background: #4b1f1f;
+}
+
+.divAsignar {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  background-color: #13354F;
+  padding: 2%;
+}
+
+.opBox {
+  background-color: #1d3c53;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  flex: 1;
+}
+
+.estadoUnidades{
+  justify-content: center;
+  text-align: center;
+
+}
+
+.recepciones:hover{
+  background-color: #DCF0FF;
+  color: #050A17;
+}
+
+.despachos:hover{
+  background-color: #D7C7B5;
+  color: #050A17;
+}
