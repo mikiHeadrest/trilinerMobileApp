@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonIcon, IonInput, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBackCircle, search, searchOutline } from 'ionicons/icons';
+import { arrowBack, arrowBackCircle, search, searchOutline } from 'ionicons/icons';
 import { ActivatedRoute } from '@angular/router';
 import { HMInfoElementoComponent } from '../../components/hm-info-elemento/hm-info-elemento.component';
 import { HM_ElementModel } from 'src/app/models/hm_ElementModel.models';
@@ -21,6 +21,10 @@ export class HMElementsByDatePage implements OnInit {
   date:string="";
 
   searchInput = signal("");
+
+  currentPage:number = 1;
+  itemsPerPage:number = 7;
+
 
   listOfElements:HM_ElementModel[] = [
     {
@@ -82,13 +86,34 @@ export class HMElementsByDatePage implements OnInit {
           tipo_operacion: true,
           unidades: 1,
           modified_at:(new Date(2025,8,5,6,16)),
+        },
+        {
+          id_operacionProducto: 7,
+          id_producto: 7,
+          imagen: "https://i.etsystatic.com/10959826/r/il/9513fb/1755054117/il_fullxfull.1755054117_3yf7.jpg",
+          nombre: "Susie",
+          franquicia: "Deltarune",
+          tipo_operacion: false,
+          unidades: 2,
+          modified_at:(new Date(2025,8,5,6,16)),
+        },
+        {
+          id_operacionProducto: 7,
+          id_producto: 8,
+          imagen: "https://i.etsystatic.com/20399325/r/il/93734c/7016610176/il_fullxfull.7016610176_qccc.jpg",
+          nombre: "StarWalker",
+          franquicia: "Deltarune",
+          tipo_operacion: false,
+          unidades: 2,
+          modified_at:(new Date(2025,8,5,6,16)),
         }
       ]
 
   constructor() {
-    addIcons({arrowBackCircle, searchOutline});
+    addIcons({arrowBackCircle, searchOutline, arrowBack});
   }
 
+  // Filtra los datos en base a la barra de busqueda
   filteredList = computed(()=>{
 
     const cleanInput = this.searchInput().trim().toLowerCase()
@@ -101,12 +126,74 @@ export class HMElementsByDatePage implements OnInit {
       element.nombre.toLowerCase().includes(cleanInput)
     })
 
+    // Cambia la pagina a la primera
+    this.currentPage = 1;
+
     return filteredList;
 
   })
 
-  getFilteredList(){
+  getTotalPages(){
+    return Math.ceil(this.filteredList().length / this.itemsPerPage)
+  }
 
+  // Filtra las paginas en base a la cantidad de elementos actual
+  getVisiblePages = computed(()=>{
+    const totalPages = this.getTotalPages();
+    const currentPage = this.currentPage;
+
+    let pages: (number | string)[] = []
+
+    if(totalPages > 7){
+
+      if((totalPages -currentPage)> 7 ){
+        for(let i=currentPage; i<currentPage+7;i++){
+          if(i != (currentPage+6)){
+            pages.push(i+1);
+          } else{
+            pages.push('...');
+          }
+        }
+      }
+      else{
+        let firstValueOnList = (totalPages - 7)
+
+        for(let i = firstValueOnList; i<totalPages;i++){
+          if(i!=firstValueOnList){
+            pages.push('...')
+          }
+          else{
+            pages.push(i+1)
+          }
+        }
+      }
+
+    }
+    else{
+      for(let i=0; i<totalPages; i++){
+        pages.push(i+1);
+      }
+    }
+
+    return pages;
+
+  })
+
+  getVisibleElements(){
+    const start = (this.currentPage-1) * this.itemsPerPage
+    return this.filteredList().slice(start,start+this.itemsPerPage);
+  }
+
+  getPreviousPage(){
+    if(this.currentPage > 1) this.currentPage--
+  }
+
+  getNextPage(){
+    if(this.currentPage < this.getTotalPages()) this.currentPage++
+  }
+
+  goToPage(data:(number|string)){
+    if(typeof data == 'number') this.currentPage = data
   }
 
   getListOfElements(){
