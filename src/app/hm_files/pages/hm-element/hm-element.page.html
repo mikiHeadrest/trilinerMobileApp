@@ -3,29 +3,31 @@
   <div class="contentContainer">
     <div class="listOfItems">
 
-      <img class="imageStyle" style=" border: 2px solid #D7C7B5" src="https://www.fangamer.com/cdn/shop/files/product_horse_ralsei_costume_staged1.png?crop=center&height=1200&v=1748912701&width=1800">
+      <img class="imageStyle" style=" border: 2px solid #D7C7B5" src={{elementInfo.imagen}}>
 
       <div style=" width: 88%; text-align: center;">
-        <span><b>Peluche de Ralsei Caballo</b> - <b>Deltarune</b></span>
+        <span><b>{{elementInfo.nombre}}</b> - <b>{{elementInfo.franquicia}}</b></span>
         <p>
-          Id_Producto: <span>{{product_id}}</span>
+          Id_Producto: <span>{{elementInfo.id_producto}}</span>
         </p>
         <p>
-          Unidades Reservadas: <span> 2 </span>
+          Unidades Reservadas: <span> {{elementInfo.unidades}} </span>
         </p>
       </div>
 
       <div class="statusContainer">
-        <span style="color: #62C862;"><b>Estado Actual: </b>Completado</span>
+        <span style="color: #62C862;"><b>Estado Actual: </b>NO IMPLEMENTADO</span>
         <p>
-          ID_Dispositivo: <span> 000000004 </span>
+          ID_Dispositivo: <span> NO IMPLEMENTADO </span>
         </p>
       </div>
 
       <div style=" width: 88%; text-align: center;">
-        <span>Tipo de Operacion: <b>Despacho</b></span>
+        <span>Tipo de Operacion: <b>
+          @if(elementInfo.tipo_operacion){Despacho}
+          @else{Recepcion} </b></span>
         <p>
-          Id_Operacion: <span> no Asignado :> </span>
+          Id_Operacion: <span> {{elementInfo.id_operacionProducto}} </span>
         </p>
       </div>
 
@@ -35,17 +37,17 @@
       <div style=" width: 88%; text-align: justify;">
         <span class="smallTitle">Nombre de Operación</span>
         <p>
-          Despacho de Ralsei Caballo
+          NO IMPLEMENTADO
         </p>
 
         <span class="smallTitle">Descripcion de la Operación</span>
         <p>
-          Aqui hay una descpcion larga acerca de porque se hizo la operacion
+          NO IMPLEMENTADO
         </p>
 
         <span class="smallTitle">Fecha de Operación</span>
         <p>
-          4 de Agosto del 2025
+          NO IMPLEMENTADO
         </p>
 
       </div>

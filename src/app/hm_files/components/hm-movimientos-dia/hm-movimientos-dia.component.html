@@ -7,7 +7,17 @@
   <div class="dataSection">
     <div style="width: 100%; max-height: 250px; overflow-y: scroll;">
       @for (element of elementList; track $index) {
-        <app-hm-info-elemento [elementInfo]="element"></app-hm-info-elemento>
+        @if($index == 5){
+          <div (click)="searchByDate(currentDate)" style="position: relative; width: 100%; height: 100%;">
+            <div class="sixthElement">
+              <span style="padding: 10px;">Cargar operaciones de {{currentDate}}</span>
+            </div>
+            <app-hm-info-elemento [elementInfo]="element"></app-hm-info-elemento>
+          </div>
+        }
+        @else{
+          <app-hm-info-elemento [elementInfo]="element"></app-hm-info-elemento>
+        }
       }
     </div>
 
