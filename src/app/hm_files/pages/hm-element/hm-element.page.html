@@ -1,0 +1,61 @@
+
+<ion-content>
+  <div class="contentContainer">
+    <div class="listOfItems">
+
+      <img class="imageStyle" style=" border: 2px solid #D7C7B5" src={{elementInfo.imagen}}>
+
+      <div style=" width: 88%; text-align: center;">
+        <span><b>{{elementInfo.nombre}}</b> - <b>{{elementInfo.franquicia}}</b></span>
+        <p>
+          Id_Producto: <span>{{elementInfo.id_producto}}</span>
+        </p>
+        <p>
+          Unidades Reservadas: <span> {{elementInfo.unidades}} </span>
+        </p>
+      </div>
+
+      <div class="statusContainer">
+        <span style="color: #62C862;"><b>Estado Actual: </b>NO IMPLEMENTADO</span>
+        <p>
+          ID_Dispositivo: <span> NO IMPLEMENTADO </span>
+        </p>
+      </div>
+
+      <div style=" width: 88%; text-align: center;">
+        <span>Tipo de Operacion: <b>
+          @if(elementInfo.tipo_operacion){Despacho}
+          @else{Recepcion} </b></span>
+        <p>
+          Id_Operacion: <span> {{elementInfo.id_operacionProducto}} </span>
+        </p>
+      </div>
+
+      <div class="divBar">
+      </div>
+
+      <div style=" width: 88%; text-align: justify;">
+        <span class="smallTitle">Nombre de Operación</span>
+        <p>
+          NO IMPLEMENTADO
+        </p>
+
+        <span class="smallTitle">Descripcion de la Operación</span>
+        <p>
+          NO IMPLEMENTADO
+        </p>
+
+        <span class="smallTitle">Fecha de Operación</span>
+        <p>
+          NO IMPLEMENTADO
+        </p>
+
+      </div>
+
+      <ion-button class="returnButton" (click)="volver()">
+        Regresar...
+      </ion-button>
+
+    </div>
+  </div>
+</ion-content>

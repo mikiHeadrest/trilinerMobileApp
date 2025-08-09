@@ -1,0 +1,40 @@
+
+<div (click)="infoElement(elementInfo)" class="elementContainer" [ngStyle]="{'color' : elementInfo.tipo_operacion ? '#D7C7B5' : '#BAD8D7'}" >
+  <!-- imagen -->
+  <!-- flex-grow: 3; max-width: 100px; -->
+  <div class="imageSection">
+  <!-- hacer un div que represente el tamaño de la imagen, -->
+  <!-- Dentro de ese ingresar la imagen, y centrarla, hacer overflow none -->
+  <!-- e intentar cambiar las dimensiones -->
+  <!-- El tamaño del div no cambiara pero si el de la imagen -->
+
+  <div class="imageBox">
+    <img src={{elementInfo.imagen}}>
+  </div>
+
+  </div>
+
+  <!-- contenido -->
+  <div class="textSection">
+    <div style=" text-overflow: ellipsis; font-size: 16px;">
+      <span >
+        @if (elementInfo.tipo_operacion == true) {
+          Despacho
+        }
+        @else {
+          Recepcion
+        }
+        de
+        <b>{{elementInfo.nombre}} </b> - {{elementInfo.franquicia}} </span></div>
+    <span>Hora de operacion: {{elementInfo.modified_at.getHours()}}:{{elementInfo.modified_at.getMinutes()}}</span>
+    <span>ID_Producto: {{elementInfo.id_producto}}</span>
+  </div>
+
+  <!-- icono -->
+  <div class="iconSection">
+    <ion-icon name="arrow-down" style="height:30px; width:30px;" [ngStyle]="{'rotate' : elementInfo.tipo_operacion ? '180deg' : ''}" ></ion-icon>
+    <span class="quantity">{{elementInfo.unidades}}</span>
+    <span class="text">Unidades</span>
+  </div>
+</div>
+

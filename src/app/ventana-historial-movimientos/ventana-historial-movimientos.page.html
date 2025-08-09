@@ -1,25 +1,52 @@
-<ion-header [translucent]="true" class="headerClass">
+<ion-header [translucent]="true" >
 
-  <div style="height: 25%; background-color: aliceblue;">
-    <br>
+  <div style="width: 100%; background-color: #2C4252;">
+    <div class="headerClass">
+      <div style="height: 25%;">
+        <br>
+      </div>
+
+      <div class="headerContent">
+        <ion-icon name="time" style="height:25px;width: 25px;">
+        </ion-icon>
+        <span>
+          <b> Historial de Movimientos </b>
+        </span>
+      </div>
+
+    </div>
+
+    <!-- lo que esta abajo del Header -->
+
+
   </div>
 
-  <div class="headerContent">
 
-    <ion-icon name="time" style="height:25px;width: 25px;">
-    </ion-icon>
-
-    <span>
-      <b> Historial de Movimientos </b>
-    </span>
-
-  </div>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">VentanaHistorialMovimientos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<!-- TO DO -->
+ <!--
+  -Llenar la lista de datos de forma dinamica
+    -Modelo de Datos (se compone )
+
+  -Operaciones Filtradas
+
+  - Actualizar componente hm_movimientos dias para que al hacer click a la fecha
+      te mande a hm_elements_by_date
+
+  - ELEMENT PAGE
+    -CONVERTIR LOS ESTLOS A CLASES
+ -->
+
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+  <!-- no tengo idea de como esto funciona xd esto es una tortura -->
+  <!-- ES QUE SI FULLSCREEN ES TRUE SE OCULTA ATRAS DE TANTO TAB COMO EL HEADER -->
+
+  <!-- Hice todo este desorden para que carga la pagina de Inventarios como el personalizado -->
+  <!-- Basura -->
+
 </ion-content>
+
+<!-- <ion-content [fullscreen]="true"> -->
+<!-- </ion-content> -->

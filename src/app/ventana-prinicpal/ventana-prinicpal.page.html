@@ -23,7 +23,7 @@
       <img src="assets/img1.webp" class="estado-img" />
       <div class="estado-texto">
         <h2 class="textm">Modelo: 0000 0000 0001</h2>
-        <p class="texte" [(ngModel)]="estado">
+        <p class="texte">
           <strong> Estado Actual: {{estado}}</strong>
         </p>
       </div>
@@ -33,7 +33,7 @@
   <!-- Contenedor: Metricas del Día -->
   <ion-card class="content-card">
     <p class="textd">El día de hoy se han realizado:</p>
-    <p class="textb" [(ngModel)]="fecha">{{fecha}}</p>
+    <p class="textb">{{fecha}}</p>
     <ion-card-content class="containerTrans">
       <div
         style="
@@ -43,14 +43,14 @@
         "
       >
         <div>
-          <h1 style="color: #dcd3a3" [(ngModel)]="recepcion">{{recepcion}}</h1>
+          <h1 style="color: #dcd3a3">{{recepcion}}</h1>
           <p style="color: #d3ba79">Transacciones de Recepción</p>
         </div>
         <div>
           <p style="font-size: 48px; color: #c3ddd8">|</p>
         </div>
         <div>
-          <h1 style="color: #c3ddd8" [(ngModel)]="despacho">{{despacho}}</h1>
+          <h1 style="color: #c3ddd8">{{despacho}}</h1>
           <p style="color: #bfd3d0">Transacciones de Despacho</p>
         </div>
       </div>
@@ -82,7 +82,7 @@
   </ion-card>
 
   <!-- Contenedor: Consultas Transaccionales -->
-  <ion-content class="contenido">
+  <div class="contenido">
     <ion-title class="titulo" style="color: #dcd3a3">
       Consultas Transaccionales
     </ion-title>
@@ -137,6 +137,6 @@
         </ng-template>
       </ion-card-content>
     </ion-card>
+    </div>
   </ion-content>
-</ion-content>
 

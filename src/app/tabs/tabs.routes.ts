@@ -13,12 +13,31 @@ export const routes: Routes = [
       },
       {
         path: 'inventario',
-        loadComponent: () => import('../ventana-inventario/ventana-inventario.page').then( m => m.VentanaInventarioPage)
-      }
-      ,
+        loadComponent: () => import('../ventana-inventario/ventana-inventario.page').then( m => m.VentanaInventarioPage),
+      },
       {
         path: 'historial-movimientos',
-        loadComponent: () => import('../ventana-historial-movimientos/ventana-historial-movimientos.page').then( m => m.VentanaHistorialMovimientosPage)
+        loadComponent: () => import('../ventana-historial-movimientos/ventana-historial-movimientos.page').then( m => m.VentanaHistorialMovimientosPage),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('../hm_files/pages/hm-main-page/hm-main-page.page').then(m => m.HMMainPagePage)
+          },
+          {
+            path: 'elemento/:id',
+            loadComponent: ()=> import('../hm_files/pages/hm-element/hm-element.page').then(m=>m.HMElementPage)
+          }
+          ,
+          {
+            path: 'byDate/:date',
+            loadComponent: () => import('../hm_files/pages/hm-elements-by-date/hm-elements-by-date.page').then( m => m.HMElementsByDatePage)
+          },
+          {
+            path: '**',
+            redirectTo: '',
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'monitoreo',

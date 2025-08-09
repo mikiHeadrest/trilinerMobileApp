@@ -1,0 +1,60 @@
+
+p{
+  margin: 2px;
+}
+
+.smallTitle{
+  font-size: 10px;
+}
+
+.returnButton{
+  width: 60%;
+  --color:#D2F1EE;
+  --background: #112534;
+}
+
+// Contenido
+.contentContainer{
+  color: #D2F1EE;
+  background-color: #041A19;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: start; justify-content: center;
+}
+
+.listOfItems{
+  width: 95%;
+  min-height: 95%;
+  margin: 6px;
+  background-color: #09374D;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center; justify-content: start; padding: 10px;
+  gap:10px
+}
+
+// Imagen Container
+
+.imageStyle{
+  border: 2px solid;
+  border-radius: 4px;
+  width: 60%;
+  max-width: 400px;
+}
+
+.statusContainer{
+  width: 88%;
+  background-color: #1A4561;
+  padding: 5px;
+  border-radius:11px;
+  text-align: center;
+}
+
+.divBar{
+  background-color: #D2F1EE;
+  height: 1px;
+  width: 98%;
+  margin: 3px;
+}
