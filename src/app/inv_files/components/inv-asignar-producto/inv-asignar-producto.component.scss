@@ -1,0 +1,35 @@
+.divPrincipal{
+    color: #D2F1EE;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+p{
+    margin: .3rem;
+}
+
+.inputUnidades{
+    border-radius: 10px;
+    border: 0;
+    background-color: #D7C7B5;
+    color: #13354F;
+}
+
+.divBoton{
+    margin-top: 1rem;
+    width: 50%;
+}
+
+.btnOperacion{
+    text-transform: none;
+    --background: #112534;
+    --color: #D2F1EE
+}
+
+.pRegresar{
+    text-decoration: underline;
+}

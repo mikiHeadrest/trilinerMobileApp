@@ -1,7 +1,10 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
+import { IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, NavController, ModalController } from '@ionic/angular/standalone';
+
+import { InvAsignarProductoComponent } from '../../components/inv-asignar-producto/inv-asignar-producto.component';
+
 import { addIcons } from 'ionicons';
 import { StylesServiceService } from 'src/app/services/styles-service.service';
 
@@ -19,7 +22,7 @@ export class InvMainPagePage implements OnInit {
 
   searchTerm: string = '';
 
-  constructor() {
+  constructor(private modalCtrl: ModalController) {
     this.stylesService.setHeaderTitle("Inventario Main");
     this.stylesService.setInvAddButton(true);
   }
@@ -164,5 +167,15 @@ export class InvMainPagePage implements OnInit {
     }
   }
 
+  async openModal() {
+    const modal = await this.modalCtrl.create({
+      component: InvAsignarProductoComponent,
+      cssClass: 'modalOperacion'
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+  }
 
 }

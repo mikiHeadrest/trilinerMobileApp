@@ -16,7 +16,7 @@
     </ion-searchbar>
   </div>
   <div class="divItems">
-    <ion-card *ngFor="let item of paginatedItems">
+    <ion-card *ngFor="let item of paginatedItems" (click)="openModal()">
       <ion-item lines="none">
         <ion-thumbnail slot="start">
           <img [src]="item.imagen" />

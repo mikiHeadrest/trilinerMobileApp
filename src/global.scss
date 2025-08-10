@@ -36,4 +36,9 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
 
-
+.modalOperacion{
+  --width: 90vw;
+  --height: 50vh;
+  --background: #13354F;
+  --border-radius: 20px;
+}
