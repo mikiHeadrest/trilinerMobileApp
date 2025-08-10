@@ -25,6 +25,8 @@ export class InvMainPagePage implements OnInit {
   }
 
   ngOnInit() {
+    this.stylesService.setHeaderTitle("Inventario Main");
+    this.stylesService.setInvAddButton(true);
   }
 
   items = [
