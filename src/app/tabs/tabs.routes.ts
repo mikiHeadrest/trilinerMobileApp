@@ -14,6 +14,21 @@ export const routes: Routes = [
       {
         path: 'inventario',
         loadComponent: () => import('../ventana-inventario/ventana-inventario.page').then( m => m.VentanaInventarioPage),
+        children: [
+          {
+            path:'',
+            loadComponent: () => import('../inv_files/pages/inv-main-page/inv-main-page.page').then(m =>m.InvMainPagePage),
+          },
+          {
+            path:'agregar-elemento',
+            loadComponent: ()=> import('../inv_files/pages/inv-agregar-elemento/inv-agregar-elemento.page').then(m => m.InvAgregarElementoPage),
+          },
+          {
+            path: '**',
+            redirectTo: '',
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'historial-movimientos',
