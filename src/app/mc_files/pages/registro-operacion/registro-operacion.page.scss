@@ -33,6 +33,8 @@ ion-button{
     display: flex;
     justify-content: center;
     border-bottom: 2px solid #D7C7B5;
+    align-items: center;
+    gap: 1rem;
 }
 
 .divContenido{
@@ -100,4 +102,50 @@ ion-button{
     justify-content: center;
     text-decoration: underline;
     color: #BAD8D7;
+}
+
+//SELECT
+.select-pill{
+  /* variables para ajustar rápido */
+  --h: 32px;             /* alto del control */
+  --r: 12px;             /* radio */
+  --panel: var(--h);     /* ancho del panel derecho */
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: var(--h);
+  border-radius: var(--r);
+  overflow: hidden;
+
+  /* gris + panel derecho beige */
+  background: linear-gradient(to right,
+    #e6e7e8 0,
+    #e6e7e8 calc(100% - var(--panel)),
+    #e3d1bc calc(100% - var(--panel)),
+    #e3d1bc 100%);
+}
+
+.pill-select{
+  appearance: none; -webkit-appearance: none; -moz-appearance: none;
+  height: 100%;
+  width: 100%;
+  padding: 0 calc(var(--panel) + 8px) 0 12px; /* deja espacio para la flecha */
+  border: 0;
+  background: transparent;   /* el fondo lo pone el contenedor */
+  color: #122330;
+  font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  position: relative;
+  z-index: 1;                /* debajo de la flecha */
+}
+
+.select-pill .arrow{
+  position: absolute;
+  right: calc(var(--panel)/2 - 8px); /* centra en el panel derecho */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px; height: 16px;
+  fill: #122330;
+  pointer-events: none;
+  z-index: 2;                /* encima del select */
 }

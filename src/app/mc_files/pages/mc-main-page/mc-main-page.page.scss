@@ -194,15 +194,12 @@
   color: #D2F1EE;
 }
 
-.divUltimas, .divUltimos {
+.divUltimas{
+  max-height: 14.5rem;
   background-color: #3F586B;
   border-radius: 10px;
   padding: 10px;
   overflow-y: scroll;
-}
-
-.divUltimas{
-  max-height: 240px;
 }
 
 .divUltimos{
