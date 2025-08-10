@@ -1,176 +1,108 @@
-import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, computed, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, NavController, ModalController } from '@ionic/angular/standalone';
+import { NavController, ModalController, IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, IonSpinner, IonText } from '@ionic/angular/standalone';
 
 import { InvAsignarProductoComponent } from '../../components/inv-asignar-producto/inv-asignar-producto.component';
 
 import { addIcons } from 'ionicons';
 import { StylesServiceService } from 'src/app/services/styles-service.service';
+import { SupabaseService } from 'src/app/services/supabase.service';
+import { addCircle, folder } from 'ionicons/icons';
+
+export interface Producto {
+  id_producto: string;
+  nombre: string;
+  descripcion?: string;
+  franquicia?: string;
+  imagen?: string;
+}
 
 @Component({
   selector: 'app-inv-main-page',
   templateUrl: './inv-main-page.page.html',
   styleUrls: ['./inv-main-page.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar,IonCard,IonItem,IonThumbnail,IonLabel,IonCardTitle,IonCardSubtitle, CommonModule, FormsModule]
+  imports: [
+    IonContent, IonHeader, IonTitle, IonToolbar,IonCard,IonItem,IonThumbnail,IonLabel,IonCardTitle,IonCardSubtitle, IonSpinner, IonText,
+    CommonModule, FormsModule]
 })
 export class InvMainPagePage implements OnInit {
+
+  productos: any[] = [];
+  loading = true;
+  error?: string;
 
   private stylesService = inject(StylesServiceService)
   private navControl = inject(NavController);
 
-  searchTerm: string = '';
+  search: string = '';
+  page = 1;
+  pageSize = 6;
 
-  constructor(private modalCtrl: ModalController) {
-    this.stylesService.setHeaderTitle("Inventario Main");
-    this.stylesService.setInvAddButton(true);
+  buttonIsEnabled = computed(() => this.stylesService.getInvAddButton());
+  headerTitle = computed(() => this.stylesService.getHeaderTitle());
+
+  constructor(private supa: SupabaseService, private modalCtrl: ModalController) {
+    addIcons({ folder, addCircle });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.stylesService.setHeaderTitle?.('Inventario');
+    await this.cargarProductos();
   }
 
-  items = [
-    {
-      id: '000 000 001',
-      nombre: 'Peluche Punpun Onodera - Oyasumi Punpun',
-      unidades: 10,
-      imagen: 'https://imgs.search.brave.com/_1ESXV2zrVdyNwY97nZVbzL1ldK8B0ghWdoatxbJFKE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmVi/YXlpbWcuY29tL2lt/YWdlcy9nL2w4TUFB/T1N3YkRWbjI3b0kv/cy1sNTAwLmpwZw'
-    },
-    {
-      id: '000 000 002',
-      nombre: 'Peluche Luffy - One Piece',
-      unidades: 5,
-      imagen: 'https://imgs.search.brave.com/42_zbp4NKDGLCilRR1WrtL5joxtuofOKOFon0ysIS5M/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9yZXNv/dXJjZXMuc2VhcnMu/Y29tLm14L21lZGlv/cy1wbGF6YXZpcC9t/a3QvNjRiNDI5MmEx/MGVhMl9zLWwxNjAw/cG5nLmpwZz9zY2Fs/ZT01MDAmcWx0eT03/NQ'
-    },
-    {
-      id: '000 000 003',
-      nombre: 'Figura Guts - Berserk',
-      unidades: 7,
-      imagen: 'https://i.ebayimg.com/images/g/N8EAAOSwTh1jzpGH/s-l500.jpg'
-    },
-    {
-      id: '000 000 004',
-      nombre: 'Figura Levi Ackerman - Attack on Titan',
-      unidades: 4,
-      imagen: 'https://i.ebayimg.com/images/g/0RMAAOSwWxVgoaaN/s-l500.jpg'
-    },
-    {
-      id: '000 000 005',
-      nombre: 'Pelota Pikachu - Pokémon',
-      unidades: 20,
-      imagen: 'https://i.ebayimg.com/images/g/1QcAAOSwfuNloDJE/s-l500.jpg'
-    },
-    {
-      id: '000 000 006',
-      nombre: 'Peluche Doraemon',
-      unidades: 6,
-      imagen: 'https://i.ebayimg.com/images/g/x5YAAOSwEV5lXNQ4/s-l500.jpg'
-    },
-    {
-      id: '000 000 007',
-      nombre: 'Peluche Totoro - Studio Ghibli',
-      unidades: 9,
-      imagen: 'https://i.ebayimg.com/images/g/3uYAAOSwctJkGN7s/s-l500.jpg'
-    },
-    {
-      id: '000 000 008',
-      nombre: 'Figura Naruto Uzumaki',
-      unidades: 3,
-      imagen: 'https://i.ebayimg.com/images/g/H-gAAOSwX31kFLUj/s-l500.jpg'
-    },
-    {
-      id: '000 000 009',
-      nombre: 'Peluche Nezuko - Demon Slayer',
-      unidades: 12,
-      imagen: 'https://i.ebayimg.com/images/g/5iYAAOSw1jVkUyQd/s-l500.jpg'
-    },
-    {
-      id: '000 000 010',
-      nombre: 'Figura Light Yagami - Death Note',
-      unidades: 8,
-      imagen: 'https://i.ebayimg.com/images/g/hSoAAOSwhB9j5uvf/s-l500.jpg'
-    },
-    {
-      id: '000 000 011',
-      nombre: 'Figura Edward Elric - Fullmetal Alchemist',
-      unidades: 2,
-      imagen: 'https://i.ebayimg.com/images/g/BsUAAOSwtZlkFSLc/s-l500.jpg'
-    }
-  ];
+  changePage() {
+    this.navControl.navigateForward('/tabs/inventario/agregar-elemento');
+  }
 
-  itemsPerPage = 6;
-  currentPage = 1;
+  async cargarProductos() {
+    this.loading = true;
+    this.error = undefined;
 
-  //Busqueda
-  get filteredItems() {
-    if (!this.searchTerm.trim()) return this.items;
-    return this.items.filter(item =>
-      item.nombre.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
-      item.id.toLowerCase().includes(this.searchTerm.toLowerCase())
+    const { data, error } = await this.supa.getProductos(100); // puedes ordenar en el servicio
+    if (error) this.error = error.message;
+
+    this.productos = data ?? [];
+    this.page = 1; // al recargar/buscar, vuelve a la primera
+    this.loading = false;
+  }
+
+  // filtros y paginacion
+  get filtered() {
+    const q = this.search.trim().toLowerCase();
+    if (!q) return this.productos;
+    return this.productos.filter(
+      (p) =>
+        (p.nombre ?? '').toLowerCase().includes(q) ||
+        (p.franquicia ?? '').toLowerCase().includes(q) ||
+        (p.descripcion ?? '').toLowerCase().includes(q)
     );
   }
 
-  //Calcular el numero de paginas
   get totalPages() {
-    return Math.ceil(this.filteredItems.length / this.itemsPerPage);
+    return Math.max(1, Math.ceil(this.filtered.length / this.pageSize));
   }
 
-  get paginatedItems() {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredItems.slice(start, start + this.itemsPerPage);
+  get pageItems() {
+    const start = (this.page - 1) * this.pageSize;
+    return this.filtered.slice(start, start + this.pageSize);
   }
 
-  onSearchChange(event: any) {
-    this.searchTerm = event.detail.value;
-    this.currentPage = 1;
+  gotoPage(p: number) {
+    if (p >= 1 && p <= this.totalPages) this.page = p;
   }
-
-  // Genera paginación dinámicamente
-  get visiblePages(): (number | string)[] {
-    const total = this.totalPages;
-    const current = this.currentPage;
-    const pages: (number | string)[] = [];
-
-    if (total <= 7) {
-      // Si hay 7 o menos páginas, se muestran todas
-      for (let i = 1; i <= total; i++) pages.push(i);
-    } else {
-      if (current <= 4) {
-        pages.push(...[1, 2, 3, 4, 5, '...', total]);
-      } else if (current >= total - 3) {
-        pages.push(1, '...');
-        for (let i = total - 4; i <= total; i++) pages.push(i);
-      } else {
-        pages.push(1, '...', current - 1, current, current + 1, '...', total);
-      }
-    }
-
-    return pages;
+  prev() {
+    this.gotoPage(this.page - 1);
   }
-
-  goToPage(page: number | string) {
-    if (typeof page === 'number') {
-      this.currentPage = page;
-    }
+  next() {
+    this.gotoPage(this.page + 1);
   }
-
-  nextPage() {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-    }
-  }
-
-  prevPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-    }
-  }
-
-  async openModal() {
+  async openModal(p: Producto) {
     const modal = await this.modalCtrl.create({
       component: InvAsignarProductoComponent,
-      cssClass: 'modalOperacion'
+      cssClass: 'modalOperacion',
+      componentProps: { productoInicial: p }
     });
     modal.present();
 

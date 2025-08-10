@@ -1,15 +1,15 @@
 <div class="divPrincipal">
-  <img src="https://imgs.search.brave.com/_1ESXV2zrVdyNwY97nZVbzL1ldK8B0ghWdoatxbJFKE/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pLmVi/YXlpbWcuY29tL2lt/YWdlcy9nL2w4TUFB/T1N3YkRWbjI3b0kv/cy1sNTAwLmpwZw" alt=""
+  <img src={{productoInicial.imagen}} alt=""
   style="width: 50%; height: 40%; border-radius: 15px;">
-  <p><b>{{productos[0].nombre}}</b></p>
-  <p>ID: {{productos[0].id}}</p>
-  <p><b>Descripción: </b> {{productos[0].descripcion}}</p>
+  <p><b>{{productoInicial.nombre}}</b></p>
+  <p>ID: {{productoInicial.id_producto}}</p>
+  <p><b>Descripción: </b> {{productoInicial.descripcion}}</p>
   <div style="display: flex;">
     <p><b>Unidades: </b></p>
-    <input type="text" class="inputUnidades">
+    <input type="text" class="inputUnidades" [(ngModel)]="cantidad">
   </div>
   <div class="divBoton">
-    <ion-button expand="block" class="btnOperacion">Agregar a Operacion</ion-button>
+    <ion-button expand="block" class="btnOperacion" (click)="agregar()">Agregar a Operacion</ion-button>
   </div>
   <p class="pRegresar" (click)="volver()">Regresar</p>
 </div>

@@ -2,6 +2,14 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 
+export interface ProductoDB {
+  id_producto: string;
+  nombre: string;
+  imagen?: string | null;
+  descripcion?: string | null;
+  franquicia?: string | null;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private client: SupabaseClient;
@@ -38,4 +46,32 @@ export class SupabaseService {
       .single();
     return { inv, maq };
   }
+
+  getProductoById(id: string) {
+    return this.client
+      .from('producto')
+      .select('id_producto, nombre, imagen, descripcion, franquicia')
+      .eq('id_producto', id)
+      .single()
+      .returns<ProductoDB>();
+  }
+
+  getProductosByIds(ids: string[]) {
+    if (!ids?.length) {
+      return Promise.resolve({
+        data: [] as ProductoDB[],
+        error: null,
+        count: null,
+        status: 200,
+        statusText: 'OK'
+      });
+    }
+
+    return this.client
+      .from('producto')
+      .select('id_producto, nombre, imagen, descripcion, franquicia')
+      .in('id_producto', ids)
+      .returns<ProductoDB[]>();
+  }
+
 }

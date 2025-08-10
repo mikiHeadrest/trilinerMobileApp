@@ -1,6 +1,58 @@
+.headerClass {
+  width: 100%;
+  height: 83px;
+  background-color: #112534;
+  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.25);
+
+  padding: 10px;
+
+  padding-right: 15px;
+  padding-left: 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #d2f1ee;
+
+  border-radius: 0 0 7px 7px;
+}
+
+.headerContent {
+  width: 100%;
+  height: 75%;
+  display: flex;
+
+  align-items: center;
+  gap: 10px;
+}
+
+//Estilos contenedores Header
+.firstInnerContainer {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.secondInnerContainer {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  ion-icon:hover {
+    color: #dfe7b8;
+  }
+}
+
 //Cambiar el color de la searchbar
 ion-searchbar.custom {
-  --background: #D2F1EE;
+  --background: #d2f1ee;
   --color: #112534;
   --placeholder-color: #112534;
   --icon-color: #112534;
@@ -9,40 +61,42 @@ ion-searchbar.custom {
 }
 
 //Cambiar el color del fondo del div de la searchbar
-.divSearch{
-  background-color: #2C4252;
+.divSearch {
+  background-color: #2c4252;
   padding: 1%;
 }
 
 //Contenedor de los objetos del inventario
-.divItems{
+.divItems {
   padding: 1px;
   border-radius: 10px;
   max-width: 95vw;
+  max-height: 100%;
+  min-height: 85%;
   margin: 0 auto; /* centrado horizontal */
   margin-top: 2%;
-  background-color: #1D303C;
+  background-color: #1d303c;
 }
 
 //Cambiar color del fondo de la ventana completa
 ion-content {
-  --background: #041A19;
+  --background: #041a19;
 }
 //Ion-Card
 ion-item {
   --background: #112534;
-  --color: #BAD8D7;
+  --color: #bad8d7;
 }
 
 ion-card-title {
-  --color: #BAD8D7;
+  --color: #bad8d7;
 }
 
 ion-card-subtitle {
-  --color: #BAD8D7;
+  --color: #bad8d7;
 }
 
-//Paginación
+//Paginacion
 .pagination-container {
   display: flex;
   justify-content: center;
@@ -78,4 +132,81 @@ ion-card-subtitle {
 .page-button:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+/* Card: tamaño y paddings consistentes */
+.prod-card {
+  background: #112534;
+  color: #bad8d7;
+  border-radius: 10px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.25);
+  padding: 12px 14px;
+}
+
+.card-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 72px;
+}
+
+/* Miniatura con tamaño fijo */
+ion-thumbnail.thumb {
+  flex: 0 0 56px;
+  --size: 56px;
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #243844;
+}
+ion-thumbnail.thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-info {
+  flex: 1;
+  min-width: 0; /* IMPORTANT: permite truncado */
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+ion-card-title,
+ion-card-subtitle {
+  margin: 0;
+  padding: 0;
+}
+
+/* Título compacto y claro */
+.card-info .title {
+  font-size: 16px;
+  line-height: 1.15;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.subtitle {
+  font-size: 13px;
+  line-height: 1.3;
+  color: #a9c1c6;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.brand {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #86b8c2;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.divItems .prod-card + .prod-card {
+  margin-top: 10px;
 }

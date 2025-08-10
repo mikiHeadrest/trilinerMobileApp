@@ -32,12 +32,32 @@
         <!-- Lista productos -->
         <div class="divContenido2">
           <p>Lista de Elementos Recibidos</p>
-          <div class="divProductos">
-            <ion-icon name="duplicate" style="font-size: 3.5rem; color: #13354F;"></ion-icon>
-            <p class="pProductos"><b>Ningun elemento ha sido agregado</b></p>
-            <p class="pProductos">Para poder crear una Operación, debes por lo menos agregar un elemento a la lista</p>
+            <!-- Sin productos -->
+            <div class="divProductos" *ngIf="operacionService.productos().length === 0">
+              <ion-icon name="duplicate" style="font-size: 3.5rem; color: #13354F;"></ion-icon>
+              <p class="pProductos"><b>Ningún elemento ha sido agregado</b></p>
+              <p class="pProductos">
+                Para poder crear una Operación, debes por lo menos agregar un elemento a la lista
+              </p>
+            </div>
+
+            <!-- Con productos -->
+            <div *ngIf="producto.length > 0">
+              <div class="divConProductos">
+                <div *ngFor="let p of producto" class="divProducto">
+                  <div style="display: flex; align-items: center; justify-content: flex-start;">
+                    <img src={{p.imagen}} alt="" style="height: 80%; object-fit: cover; border-radius: 10px; margin-right: 1rem;">
+                    <div style="width: 100%;">
+                      <b>{{ p.nombre }}</b><br>
+                      ID Producto: {{ p.id_producto }}<br>
+                      Unidades: {{p.cantidad}}
+                    </div>
+                  </div>
+                    
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
         <!-- Botones -->
          <div class="divContenido3">
