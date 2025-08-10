@@ -130,22 +130,22 @@ ion-button{
   appearance: none; -webkit-appearance: none; -moz-appearance: none;
   height: 100%;
   width: 100%;
-  padding: 0 calc(var(--panel) + 8px) 0 12px; /* deja espacio para la flecha */
+  padding: 0 calc(var(--panel) + 8px) 0 12px;
   border: 0;
-  background: transparent;   /* el fondo lo pone el contenedor */
+  background: transparent;
   color: #122330;
   font: 600 14px/1 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   position: relative;
-  z-index: 1;                /* debajo de la flecha */
+  z-index: 1;
 }
 
 .select-pill .arrow{
   position: absolute;
-  right: calc(var(--panel)/2 - 8px); /* centra en el panel derecho */
+  right: calc(var(--panel)/2 - 8px);
   top: 50%;
   transform: translateY(-50%);
   width: 16px; height: 16px;
   fill: #122330;
   pointer-events: none;
-  z-index: 2;                /* encima del select */
+  z-index: 2;
 }
