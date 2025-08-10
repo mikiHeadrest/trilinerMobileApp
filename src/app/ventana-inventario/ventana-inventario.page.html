@@ -36,47 +36,4 @@
 
   <ion-router-outlet></ion-router-outlet>
 
-  <!-- <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Inventario</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div class="divSearch">
-    <ion-searchbar
-      [(ngModel)]="searchTerm"
-      (ionInput)="onSearchChange($event)"
-      placeholder="Buscar productos..."
-      class="custom">
-    </ion-searchbar>
-  </div>
-  <div class="divItems">
-    <ion-card *ngFor="let item of paginatedItems">
-      <ion-item lines="none">
-        <ion-thumbnail slot="start">
-          <img [src]="item.imagen" />
-        </ion-thumbnail>
-        <ion-label>
-          <ion-card-title>{{ item.nombre }}</ion-card-title>
-          <ion-card-subtitle>ID Producto: {{ item.id }}</ion-card-subtitle>
-          <ion-card-subtitle>Unidades disponibles: {{ item.unidades }}</ion-card-subtitle>
-        </ion-label>
-      </ion-item>
-    </ion-card>
-
-    <div class="pagination-container">
-      <button
-        *ngFor="let page of visiblePages"
-        class="page-button"
-        [class.active]="page === currentPage"
-        (click)="goToPage(page)"
-        [disabled]="page === '...'">
-        {{ page }}
-      </button>
-
-      <button class="page-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
-        →
-      </button>
-    </div>
-  </div> -->
 </ion-content>

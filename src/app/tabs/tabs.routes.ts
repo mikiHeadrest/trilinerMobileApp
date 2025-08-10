@@ -20,6 +20,10 @@ export const routes: Routes = [
             loadComponent: () => import('../inv_files/pages/inv-main-page/inv-main-page.page').then(m =>m.InvMainPagePage),
           },
           {
+            path:'agregar-elemento',
+            loadComponent: ()=> import('../inv_files/pages/inv-agregar-elemento/inv-agregar-elemento.page').then(m => m.InvAgregarElementoPage),
+          },
+          {
             path: '**',
             redirectTo: '',
             pathMatch: 'full'
@@ -52,7 +56,17 @@ export const routes: Routes = [
       },
       {
         path: 'monitoreo',
-        loadComponent: () => import('../ventana-monitoreo/ventana-monitoreo.page').then( m => m.VentanaMonitoreoPage)
+        loadComponent: () => import('../ventana-monitoreo/ventana-monitoreo.page').then( m => m.VentanaMonitoreoPage),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('../mc_files/pages/mc-main-page/mc-main-page.page').then( m => m.McMainPagePage)
+          },
+          {
+            path: 'registro-operacion',
+            loadComponent: () => import('../mc_files/pages/registro-operacion/registro-operacion.page').then(m=>m.RegistroOperacionPage)
+          }
+        ]
       },
       {
         path: 'config',

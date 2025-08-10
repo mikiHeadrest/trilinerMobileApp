@@ -8,10 +8,11 @@
 
   <div class="divSearch">
     <ion-searchbar
-      [(ngModel)]="searchTerm"
+      [(ngModel)]=searchTerm
       (ionInput)="onSearchChange($event)"
       placeholder="Buscar productos..."
-      class="custom">
+      class="custom"
+      ngDefaultControl>
     </ion-searchbar>
   </div>
   <div class="divItems">

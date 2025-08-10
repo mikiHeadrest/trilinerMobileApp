@@ -23,17 +23,26 @@
 // Propiedades Imagen
 
 .imageSection{
+
   display: flex;
+  // flex-grow: 1;
   align-items: center;
   justify-content: center;
-  width: 100px;
+
+  width: 60%;
+  max-width: 70px;
+  padding-left: 4px;
+  padding-right: 4px;
+  // antes era 100px, para que sea mas dinamico,
+  //pero lo dejare asi para que sea mas consistente
 }
 
 .imageBox{
+
   overflow: hidden;
   max-height: 70px;
   min-width: 65px;
-  max-width: 100px;
+  max-width: 95px;
   width: 90%;
   height: 90%;
 
@@ -46,7 +55,7 @@
   img{
     object-fit:cover;
     width: 120px;
-    height: 120px;
+    height: 100px;
   }
 
 }

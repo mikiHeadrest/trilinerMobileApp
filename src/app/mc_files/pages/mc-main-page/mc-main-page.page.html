@@ -1,0 +1,155 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">ventanaMonitoreo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <!-- Operaciones activas -->
+  <div class="tituloOperacion">Operaciones Activas</div>
+  <div class="divModelo">Modelo: 0000 - 0000 - 0001</div>
+
+  <div class="divOperaciones">
+
+    <!-- Estado -->
+    <div class="divSeparador">
+      <!-- Izquierda -->
+      <div class="divIzquierdoFondo">
+        <img src="assets/almacen.jpg" class="fondoAlmacen" />
+        <div class="overlayTexto">
+          <div class="estadoTextoGrande">Estado:</div>
+          <div class="estadoTextoGrande">En Operación</div>
+        </div>
+      </div>
+
+      <!-- Derecha -->
+<div class="divDerecho">
+  <div class="filaOperacion">
+    <p>Tipo de Operación: Recepción</p>
+    <p><strong>ID_Operación: 000 000 002</strong></p>
+  </div>
+
+  <div class="contenidoDerecho">
+    <!-- 1. Tarjeta amarilla -->
+    <div class="estadoAmarillo">
+      <img src="" class="estadoImg" />
+      <div>
+        <div><strong>Estado:</strong> Acomodado en Almacén</div>
+        <div class="estadoId">ID: 000 000 004</div>
+      </div>
+      <div class="estadoUnidades">
+        <ion-icon name="arrow-down-outline"></ion-icon>
+        <div class="unidadesTexto">1/2 <br><strong>Unidades</strong></div>
+      </div>
+    </div>
+
+    <!-- 2. Tarjetas de resumen -->
+    <div class="tarjetaResumen despacho">
+      <div><strong>Despachos Realizadas</strong><div>27 de Julio del 2025</div></div>
+      <div class="numeroResumen">2000</div>
+    </div>
+    <div class="tarjetaResumen recepcion">
+      <div><strong>Recepciones Realizadas</strong><div>27 de Julio del 2025</div></div>
+      <div class="numeroResumen">2000</div>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    <!-- Botones -->
+    <ion-grid class="divBotones" fixed>
+      <ion-row class="botones-row">
+        <ion-col size="4" class="boton-col">
+          <ion-button class="btnAccion btnRojo"><b>DETENER</b></ion-button>
+        </ion-col>
+        <ion-col size="4" class="boton-col">
+          <ion-button class="btnAccion btnVerde">RENUDAR</ion-button>
+        </ion-col>
+        <ion-col size="4" class="boton-col">
+          <ion-button class="btnAccion btnAmarillo">PAUSAR</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <!-- Últimas operaciones -->
+    <p class="subtitulo">Ultimas operaciones realizadas</p>
+    <div class="divUltimas">
+      <!-- Falta el ngFor -->
+      <ion-item lines="none" class="cardOperacion">
+        <ion-avatar slot="start"><img src="assets/ralsei.png" /></ion-avatar>
+        <ion-label>
+          <p style="color: white;">Despacho de <strong>Peluche Ralsei sin Gorro</strong></p>
+          <p>Hora: 21:52 <span>OR:UPS</span><br>ID Producto: 000 000 004</p>
+        </ion-label>
+        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
+          <ion-icon slot="end" name="arrow-up-outline"></ion-icon>
+          <P>0001 Unidades</P>
+        </div>
+      </ion-item>
+
+      <ion-item lines="none" class="cardOperacion">
+        <ion-avatar slot="start"><img src="assets/sans.png" /></ion-avatar>
+        <ion-label>
+          <p style="color: white;">Recepción de <strong>Peluche Genocida Sans</strong></p>
+          <p>Hora: 21:50 <span>OR: UPS</span>ID Producto: 000 000 005<br></p>
+        </ion-label>
+        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
+          <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
+          <P>0001 Unidades</P>
+        </div>
+      </ion-item>
+
+      <ion-item lines="none" class="cardOperacion">
+        <ion-avatar slot="start"><img src="assets/goku.png" /></ion-avatar>
+        <ion-label>
+          <p style="color: white;">Recepción de <strong>Peluche Goku</strong></p>
+          <p>Hora: 21:46 <span>OR: UPS</span><br> ID Producto: 000 000 002</p>
+        </ion-label>
+        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
+          <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
+          <P>0001 Unidades</P>
+        </div>
+
+      </ion-item>
+            <ion-item lines="none" class="cardOperacion">
+        <ion-avatar slot="start"><img src="assets/goku.png" /></ion-avatar>
+        <ion-label>
+          <p style="color: white;">Recepción de <strong>Peluche Goku</strong></p>
+          <p>Hora: 21:46 <span>OR: UPS</span><br> ID Producto: 000 000 002</p>
+        </ion-label>
+        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
+          <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
+          <P>0001 Unidades</P>
+        </div>
+      </ion-item>
+    </div>
+
+    <!-- Errores -->
+    <p class="subtitulo">Ultimos Errores Registrados</p>
+    <div class="divUltimos">
+      <ion-item lines="none" class="cardOperacion error">
+        <ion-avatar slot="start"><img src="assets/ralsei.png" /></ion-avatar>
+        <ion-label>
+          <h2>Recepción de <strong>Peluche Ralsei</strong></h2>
+          <p>27 de Julio del 2025 <br>ID Producto: 000 000 004</p>
+        </ion-label>
+        <ion-badge color="danger" slot="end">2/2 Unidades</ion-badge>
+        <ion-icon name="alert-circle-outline" color="danger" slot="end"></ion-icon>
+      </ion-item>
+    </div>
+  </div>
+
+  <!-- Nueva operación -->
+  <div class="tituloOperacion">Asignar nueva Operación</div>
+  <div class="divAsignar">
+    <div class="opBox recepciones" style="border-bottom-right-radius: 70px; border: 2px solid #DCF0FF;">
+      <p>Recepciones Manuales</p>
+      <ion-icon name="cube-outline" size="large"></ion-icon>
+    </div>
+    <div class="opBox despachos" style="border-bottom-left-radius: 70px; border: 2px solid #D7C7B5;" (click)="irDespacho()">
+      <p>Operación de Despacho</p>
+      <ion-icon name="airplane-outline" size="large"></ion-icon>
+    </div>
+  </div>
+</ion-content>

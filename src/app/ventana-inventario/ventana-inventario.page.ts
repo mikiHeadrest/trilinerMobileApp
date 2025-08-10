@@ -1,7 +1,7 @@
 import { Component, computed, inject, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonSearchbar, IonCard, IonLabel, IonItem, IonThumbnail, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonRouterOutlet } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonSearchbar, IonCard, IonLabel, IonItem, IonThumbnail, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonRouterOutlet, NavController } from '@ionic/angular/standalone';
 import { addCircle, folder } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 import { StylesServiceService } from '../services/styles-service.service';
@@ -18,6 +18,7 @@ import { StylesServiceService } from '../services/styles-service.service';
 export class VentanaInventarioPage implements OnInit {
 
   private stylesService = inject(StylesServiceService)
+  private navControl = inject(NavController)
 
 
   buttonIsEnabled = computed(()=>{
@@ -36,6 +37,7 @@ export class VentanaInventarioPage implements OnInit {
   }
 
   changePage(){
+    this.navControl.navigateForward("/tabs/inventario/agregar-elemento")
     console.log("NO IMPLEMENTADO")
   }
 

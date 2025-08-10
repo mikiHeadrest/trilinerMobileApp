@@ -142,3 +142,55 @@
   background-color: #1F374A;
 }
 
+//Paginacion, Contenedores y botones
+.pagination-container {
+  min-width: 90%;
+  max-width: 90%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px;
+
+}
+
+.page-button {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background-color: #071d2b;
+  color: #dfd7ce;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: -3px 3px 0 #000;
+  transition: 0.3s;
+}
+
+.page-button:hover:not(.active):not(:disabled) {
+  background-color: #123245;
+}
+
+.page-button.active {
+  background-color: #c7e8f1;
+  color: #000;
+  font-weight: bold;
+  box-shadow: -3px 3px 0 #000;
+}
+
+.page-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+//texto para regresar
+
+.returnToMainText{
+  color:#b6d4eb;
+  font: 15px;
+  margin-bottom: 6px;
+  padding-bottom: 10px;
+}
+
+.returnToMainText:hover{
+  text-decoration: underline;
+}

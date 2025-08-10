@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { StylesServiceService } from 'src/app/services/styles-service.service';
 
@@ -15,6 +15,8 @@ import { StylesServiceService } from 'src/app/services/styles-service.service';
 export class InvMainPagePage implements OnInit {
 
   private stylesService = inject(StylesServiceService)
+  private navControl = inject(NavController);
+
   searchTerm: string = '';
 
   constructor() {
@@ -162,8 +164,5 @@ export class InvMainPagePage implements OnInit {
     }
   }
 
-  changePage(){
-    console.log("Falta Implementar")
-  }
 
 }
