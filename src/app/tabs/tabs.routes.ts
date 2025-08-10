@@ -41,7 +41,17 @@ export const routes: Routes = [
       },
       {
         path: 'monitoreo',
-        loadComponent: () => import('../ventana-monitoreo/ventana-monitoreo.page').then( m => m.VentanaMonitoreoPage)
+        loadComponent: () => import('../ventana-monitoreo/ventana-monitoreo.page').then( m => m.VentanaMonitoreoPage),
+        children: [
+          {
+            path: '',
+            loadComponent: () => import('../mc_files/pages/mc-main-page/mc-main-page.page').then( m => m.McMainPagePage)
+          },
+          {
+            path: 'registro-operacion',
+            loadComponent: () => import('../mc_files/pages/registro-operacion/registro-operacion.page').then(m=>m.RegistroOperacionPage)
+          }
+        ]
       },
       {
         path: 'config',

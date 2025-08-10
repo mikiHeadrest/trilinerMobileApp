@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Registro operacion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+    <div class="divFondo">
+      <div class="divSubFondo">
+        <!-- Titulo -->
+        <div class="divTitulo">
+          <p><b>Tipo de Operacion:</b></p>
+        </div>
+
+        <!-- Nombre y descripcion-->
+        <div class="divContenido">
+          <p>Nombre de la Operacion</p>
+          <input type="text" class="inputMain">
+          <p>Descripcion de la Operacion</p>
+          <textarea name="" id="" class="areaMain"></textarea>
+        </div>
+
+        <!-- Lista productos -->
+        <div class="divContenido2">
+          <p>Lista de Elementos Recibidos</p>
+          <div class="divProductos">
+            <ion-icon name="duplicate" style="font-size: 3.5rem; color: #13354F;"></ion-icon>
+            <p class="pProductos"><b>Ningun elemento ha sido agregado</b></p>
+            <p class="pProductos">Para poder crear una Operación, debes por lo menos agregar un elemento a la lista</p>
+          </div>
+        </div>
+
+        <!-- Botones -->
+         <div class="divContenido3">
+            <div class="divBotones">
+              <ion-button expand="block">Crear Operacion</ion-button>
+            </div>
+         </div>
+         <div class="divContenido4" (click)="volver()">
+            <p>Regresar a ventana Monitoreo</p>
+         </div>
+      </div>
+    </div>
+</ion-content>

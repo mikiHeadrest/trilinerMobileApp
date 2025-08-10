@@ -5,10 +5,10 @@
     <div class="firstHeaderSection">
       <!-- width = 70% -->
       <div class="searchBarContainer">
-        <div class="searchIconContainer" (click)="show()">
+        <div class="searchIconContainer">
           <ion-icon name="search-outline"></ion-icon>
         </div>
-        <ion-input [(ngModel)]=searchInput color="transparent" class="searchInputStyle" placeholder="Buscar..."></ion-input>
+        <ion-input  [(ngModel)]=searchInput color="transparent" class="searchInputStyle" placeholder="Buscar..."></ion-input>
       </div>
     </div>
 </ion-header>
@@ -21,7 +21,7 @@
         <!-- EmptyState Mensaje -->
       }
       @else{
-        @for (item of getFilteredItems(); track item) {
+        @for (item of getPaginatedItems(); track $index) {
           <!--  -->
           <app-hm-movimientos-dia [currentDate]="item.fecha" [elementList]="item.item" ></app-hm-movimientos-dia>
           <br>
@@ -32,6 +32,42 @@
       <!-- ELIMINAR COMPONENTES DE PRUEBA  -->
 
       <!-- FIN DE COMPONENTES DE PRUEBA -->
+
+      <div class="pagination-container">
+
+        @if(currentPage != 1){
+          <button class="page-button" (click)="previousPage()" [disabled]="currentPage === 1">
+            <ion-icon name="arrow-back" ></ion-icon>
+          </button>
+        }
+
+        @for(page of getVisiblePages(); track page){
+
+          @if(typeof page == 'number'){
+            <button
+            class="page-button"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button>
+          }
+          @else {
+            <button
+            class="page-button"
+            (click)="goToPage(page)"
+            [disabled]="page === '...'">
+            {{ page }}
+          </button>
+          }
+        }
+
+        @if(currentPage != getTotalPages()){
+          <button class="page-button" (click)="nextPage()" >
+            <ion-icon style="rotate:180deg;" name="arrow-back" ></ion-icon>
+          </button>
+        }
+
+      </div>
 
     </div>
   </div>

@@ -7,7 +7,7 @@
       <div class="searchIconContainer">
         <ion-icon name="search-outline"></ion-icon>
       </div>
-      <ion-input color="transparent" class="searchInputStyle" placeholder="Buscar..."></ion-input>
+      <ion-input color="transparent" class="searchInputStyle" placeholder="Buscar..." [(ngModel)]=searchInput></ion-input>
     </div>
   </div>
 
@@ -36,7 +36,7 @@
   <div class="containerOfLists">
     <div style="width: 97%; ">
       <!-- Esto es solo de prueba, tambien le falta paginacion -->
-      @for (element of listOfElements; track element) {
+      @for (element of getVisibleElements(); track $index) {
         <app-hm-info-elemento [elementInfo]="element"></app-hm-info-elemento>
       }
     </div>
@@ -44,6 +44,44 @@
     <!-- ELIMINAR COMPONENTES DE PRUEBA  -->
 
     <!-- FIN DE COMPONENTES DE PRUEBA -->
+
+      <div class="pagination-container">
+
+        @if(currentPage != 1){
+          <button class="page-button" (click)="getPreviousPage()" [disabled]="currentPage === 1">
+            <ion-icon name="arrow-back" ></ion-icon>
+          </button>
+        }
+
+        @for(page of getVisiblePages(); track $index){
+          @if(typeof page == 'number'){
+            <button
+            class="page-button"
+            [class.active]="page === currentPage"
+            (click)="goToPage(page)">
+            {{ page }}
+          </button>
+          }
+          @else{
+            <button
+            class="page-button"
+            (click)="goToPage(page)"
+            [disabled]="page === '...'">
+            {{ page }}
+          </button>
+          }
+        }
+        @if(currentPage <getTotalPages()){
+          <button class="page-button" (click)="getNextPage()" >
+            <ion-icon style="rotate:180deg;" name="arrow-back" ></ion-icon>
+          </button>
+        }
+
+      </div>
+
+      <div (click)="volver()" class="returnToMainText">
+        Salir de busqueda por fecha
+      </div>
 
     </div>
   </div>

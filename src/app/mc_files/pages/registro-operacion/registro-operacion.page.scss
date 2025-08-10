@@ -1,0 +1,103 @@
+ion-content{
+    --background: #050A17;
+    --padding-start: 1rem;
+    --padding-end: 1rem;
+    --padding-top: 1rem;
+    --padding-bottom: 1rem;
+}
+
+ion-button{
+    --background: #112534;
+    --color: #D2F1EE;
+    text-transform: none;
+}
+
+.divFondo{
+    background-color: #112534;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.divSubFondo{
+    background-color: #13354F;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 2%;
+}
+
+.divTitulo{
+    color: #D7C7B5;
+    display: flex;
+    justify-content: center;
+    border-bottom: 2px solid #D7C7B5;
+}
+
+.divContenido{
+    border-bottom: 2px solid #D2F1EE;
+    color: #BAD8D7;
+}
+
+.divContenido2{
+    color: #BAD8D7;
+}
+
+.inputMain{
+    background-color: #336B86;
+    border: 0px;
+    border-radius: 5px;
+    width: 100%;
+    height: 2rem;
+    color: #8DA9A6;
+}
+
+.areaMain{
+    background-color: #336B86;
+    border: 0px;
+    border-radius: 5px;
+    width: 100%;
+    height: 7rem;
+    color: #8DA9A6;
+    margin-bottom: 1rem;
+    max-width: 100%;
+    min-width: 100%;
+    max-height: 10rem;
+    min-height: 7rem;
+}
+
+.divProductos{
+    padding: 7%;
+    width: 100%;
+    height: 12rem;
+    background-color: #336B86;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.pProductos{
+    margin: 0;
+    color: #13354F;
+}
+
+.divContenido3{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+.divBotones{
+    width: 60%;
+}
+
+.divContenido4{
+    display: flex;
+    justify-content: center;
+    text-decoration: underline;
+    color: #BAD8D7;
+}

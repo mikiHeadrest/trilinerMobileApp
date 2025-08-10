@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonSearchbar, IonCard, IonLabel, IonItem, IonThumbnail, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonSearchbar, IonCard, IonLabel, IonItem, IonThumbnail, IonCardTitle, IonCardSubtitle} from '@ionic/angular/standalone';
 import { folder } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
 
@@ -12,7 +12,7 @@ import { addIcons } from 'ionicons';
   templateUrl: './ventana-inventario.page.html',
   styleUrls: ['./ventana-inventario.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonIcon, IonSearchbar, IonCard, IonLabel, IonItem, IonThumbnail, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule,IonIcon, IonSearchbar, IonCard, IonLabel, IonItem, IonThumbnail, IonCardTitle, IonCardSubtitle]
 })
 export class VentanaInventarioPage implements OnInit {
   searchTerm: string = '';

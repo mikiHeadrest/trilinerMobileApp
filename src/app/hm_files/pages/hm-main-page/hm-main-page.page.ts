@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component, inject, NgModule, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, effect, inject, NgModule, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonIcon, IonInput, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
 import { HMMovimientosDiaComponent } from '../../components/hm-movimientos-dia/hm-movimientos-dia.component';
 import { addIcons } from 'ionicons';
-import { caretDownOutline, searchOutline } from 'ionicons/icons';
+import { arrowBack, caretDownOutline, searchOutline } from 'ionicons/icons';
 import { HM_ElementModel } from 'src/app/models/hm_ElementModel.models';
+import { elementAt } from 'rxjs';
 
 
 @Component({
@@ -17,9 +18,9 @@ import { HM_ElementModel } from 'src/app/models/hm_ElementModel.models';
 })
 export class HMMainPagePage implements OnInit {
 
-  searchInput:string="";
+  searchInput = signal("");
   itemsPorPagina = 5;
-  currentPage=1;
+  currentPage= 1;
   // listOfItems:{fecha:string,item:HM_ElementModel[]}[] = []
 
 
@@ -222,6 +223,51 @@ export class HMMainPagePage implements OnInit {
           modified_at:(new Date(2025,8,5,6,16)),
         }
       ]
+    },
+    {
+      fecha:"2 de Agosto del 2025",
+      item: [
+        {
+          id_operacionProducto: 1,
+          id_producto: 1,
+          imagen: "https://www.fangamer.com/cdn/shop/products/product_DR_light_ralsei_plush_photo1.png?crop=center&height=1200&v=1691703459&width=1800",
+          nombre: "Peluche de Ralsei sin Gorro",
+          franquicia: "Deltarune",
+          tipo_operacion: true,
+          unidades: 2,
+          modified_at:(new Date(2025,8,5,17,20)),
+        }
+      ]
+    },
+    {
+      fecha:"1 de Agosto del 2025",
+      item: [
+        {
+          id_operacionProducto: 1,
+          id_producto: 1,
+          imagen: "https://www.fangamer.com/cdn/shop/products/product_DR_light_ralsei_plush_photo1.png?crop=center&height=1200&v=1691703459&width=1800",
+          nombre: "Peluche de Ralsei sin Gorro",
+          franquicia: "Deltarune",
+          tipo_operacion: true,
+          unidades: 2,
+          modified_at:(new Date(2025,8,5,17,20)),
+        }
+      ]
+    },
+    {
+      fecha:"31 de Julio del 2025",
+      item: [
+        {
+          id_operacionProducto: 1,
+          id_producto: 1,
+          imagen: "https://www.fangamer.com/cdn/shop/products/product_DR_light_ralsei_plush_photo1.png?crop=center&height=1200&v=1691703459&width=1800",
+          nombre: "Peluche de Ralsei sin Gorro",
+          franquicia: "Deltarune",
+          tipo_operacion: true,
+          unidades: 2,
+          modified_at:(new Date(2025,8,5,17,20)),
+        }
+      ]
     }
     // ELIMINAR AQUI
   ]
@@ -229,58 +275,52 @@ export class HMMainPagePage implements OnInit {
   private navControl = inject(NavController);
 
   constructor(private changeDetector: ChangeDetectorRef) {
-    addIcons({searchOutline,caretDownOutline})
+    addIcons({searchOutline,caretDownOutline, arrowBack});
   }
 
   ngOnInit() {
   }
 
-  async show(){
-    console.log("Info en search Inpunt:" + this.searchInput)
-    console.log(this.searchInput);
-    let newData = this.getFilteredItems();
-    console.log("FILTERED:" + JSON.stringify(newData));
-    // for(let i= 0;i < newData.length;i++){
-    //   console.log("["+(i+1)+"] Longitud="+newData[i].item.length)
-    //   console.log("JSON:" + JSON.stringify(newData[i].item));
-    // }
-  }
+  filteredItems = computed(()=>{
+    const cleanInput = this.searchInput().trim().toLowerCase();
 
-  getFilteredItems(){
-    let cleanSearchInput = this.searchInput.trim().toLowerCase();
-    if(!cleanSearchInput){
-      console.log("No filtro nada")
-      return this.listOfItems
-    }
-    else{
-      console.log("no se..")
-      let filteredItems: {fecha:string, item:HM_ElementModel[]}[] = [];
+    if(!cleanInput) return this.getItems();
 
-      let newEmptyArray: HM_ElementModel[] = [];
-      this.listOfItems.forEach(item =>{
-          newEmptyArray = item.item.filter(hm_element =>
-          hm_element.id_producto.toString().includes(cleanSearchInput) ||
-          hm_element.nombre.toLowerCase().includes(cleanSearchInput) ||
-          hm_element.franquicia.toLowerCase().includes(cleanSearchInput)
-          )
-          if(newEmptyArray) filteredItems.push({fecha:item.fecha,item:newEmptyArray})
+    // .map - es similar a un for each lo que hace es pasara cada uno de los elementos registrados
+    // dentro del arreglo a una funcion
+    // y como resultado genera un nuevo arreglo
+    console.log("raw: "+this.searchInput());
+    console.log("Clean: "+cleanInput)
+
+    let listOfFilteredItems= this.getItems().map((item)=>{
+      const filtered = item.item.filter(element => {
+          return element.id_producto.toString().toLowerCase().includes(cleanInput) ||
+          element.nombre.toLowerCase().includes(cleanInput) ||
+          element.franquicia.toLowerCase().includes(cleanInput)
         }
       )
-      newEmptyArray.forEach(element => {
-        console.log("verifying each ELEMENT"+JSON.stringify(element))
-      })
+      // element.id_producto.toString().toLowerCase().incluedes(cleanInput)
+      // son comprobocaciones que dan valores true or false, los elementos se filtran si el valor retorando por
+      // elemento es verdadero o falso :3
 
-      return filteredItems;
+      return{
+        fecha: item.fecha,
+        item: filtered
+      }
 
-      // return this.listOfItems.forEach(item => {
-      //     item.item.filter(hm_element => {
-      //     hm_element.id_producto.toString().includes(cleanSearchInput) ||
-      //     hm_element.nombre.toLowerCase().includes(cleanSearchInput) ||
-      //     hm_element.franquicia.toLowerCase().includes(cleanSearchInput)
-      //   })
-      // })
-    }
-  }
+    }).filter(element => { return (element.item.length > 0)} )
+
+    console.log("Filtro:" + JSON.stringify(listOfFilteredItems))
+    // -- ^TESTEO
+    const itemsToReturn = listOfFilteredItems.map((item)=>{
+
+    })
+
+
+    return listOfFilteredItems;
+    // Por ultimo se filtran los datos por la cantidad de elementos que elementos que hay, para no mostrar fechas
+    // que no tienen nada registrado
+  })
 
   getItems(){
     return this.listOfItems;
@@ -290,6 +330,82 @@ export class HMMainPagePage implements OnInit {
     this.navControl.navigateForward("/tabs/historial-movimientos/byDate/"+date);
   }
 
+  getTotalPages(){
+    return Math.ceil(this.filteredItems().length / this.itemsPorPagina)
+  }
 
+  getPaginatedItems(){
+    const start = (this.currentPage-1) * this.itemsPorPagina
+    return this.filteredItems().slice(start, start + this.itemsPorPagina);
+  }
 
+  getVisiblePages = computed(()=>{
+
+    const totalPage:number = this.getTotalPages()!;
+    const currentPage = this.currentPage;
+
+    console.log(currentPage)
+
+    const pages: (number|string)[] = []
+
+    //casos que manejen un numero de paginas mayor a 7
+    if(totalPage >= 7){
+
+      // Pagina actual alejada por mas de 7 pagina de la ultima pagina
+      if((totalPage-currentPage )> 7){
+      // Significa que se debe ver [...] a la derecha (al final)
+        for(let i=currentPage; i<currentPage+7;i++){
+          if(i != (currentPage+6)){
+            pages.push(i+1);
+          } else{
+            pages.push('...');
+          }
+        }
+
+      }
+      else if((totalPage - currentPage )< 7){
+        //Pagina actual cerca de las ultimas paginas
+        // Dentro del rango de pagina totalPage esta muy cercano
+        // (6 cantidades)
+        const firstValueOnList = totalPage-7;
+        for(let i = firstValueOnList; i<totalPage;i++){
+          if(i!=firstValueOnList){
+            pages.push('...')
+          }
+          else{
+            pages.push(i+1)
+          }
+        }
+
+      }
+    }
+    else{
+      for(let i=0; i<totalPage;i++){
+        pages.push(i+1)
+      }
+    }
+
+    // HASTA EL FINAL DE TODO ESTO SE CAMBIA LA POSICION DE LA PAGINA A LA PRIMERA
+    this.currentPage = 1
+    // con esto cambia de posicion siempre al principio
+    //Antes manejaba currentPage como signal, por si hay errores por eso
+
+    return pages
+  })
+
+  // loadFirstPage(){
+  //   this.currentPage.set(1)
+  // }
+
+  goToPage(page:number|string){
+    if(typeof page == 'number') this.currentPage = (page);
+  }
+
+  previousPage(){
+    if(this.currentPage > 1) this.currentPage = (this.currentPage - 1);
+  }
+
+  nextPage(){
+    if(this.currentPage < this.getTotalPages()) this.currentPage = (this.currentPage+1);
+  }
 }
