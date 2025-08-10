@@ -14,6 +14,17 @@ export const routes: Routes = [
       {
         path: 'inventario',
         loadComponent: () => import('../ventana-inventario/ventana-inventario.page').then( m => m.VentanaInventarioPage),
+        children: [
+          {
+            path:'',
+            loadComponent: () => import('../inv_files/pages/inv-main-page/inv-main-page.page').then(m =>m.InvMainPagePage),
+          },
+          {
+            path: '**',
+            redirectTo: '',
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'historial-movimientos',

@@ -32,6 +32,29 @@
 
 }
 
+//Estilos contenedores Header
+.firstInnerContainer{
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  gap:10px
+}
+
+.secondInnerContainer{
+  width: 20%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  ion-icon:hover{
+    color:#dfe7b8;
+  }
+}
+
+
 //Cambiar el color de la searchbar
 ion-searchbar.custom {
   --background: #D2F1EE;
