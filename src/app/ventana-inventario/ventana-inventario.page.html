@@ -1,39 +1,90 @@
 <ion-header [translucent]="true" class="headerClass">
-
-  <div style="height: 25%; background-color: aliceblue;">
-    <br>
-  </div>
+  <div style="height: 25%; background-color: aliceblue"><br /></div>
 
   <div class="headerContent">
-
-    <div style="display: flex;  width: 100%; height: 100%;">
-
+    <div style="display: flex; width: 100%; height: 100%">
       <!-- Primer Contenedor Header -->
       <div class="firstInnerContainer">
-
-        <ion-icon name="folder" style="height:25px;width: 25px;">
-        </ion-icon>
-
-        <span>
-          <b>{{headerTitle()}}</b>
-        </span>
-
+        <ion-icon name="folder" style="height: 25px; width: 25px"></ion-icon>
+        <span><b>{{ headerTitle() || 'Inventario Main' }}</b></span>
       </div>
 
-      @if(buttonIsEnabled()){
+      <!-- Solo se manejara un inventario -->
+      <!--
+      @if (buttonIsEnabled()) {
         <div class="secondInnerContainer">
-        <ion-icon (click)="changePage()" style="height:25px;width: 25px;" name="add-circle"></ion-icon>
-      </div>
-
+          <ion-icon
+            (click)="changePage()"
+            style="height: 25px; width: 25px"
+            name="add-circle">
+          </ion-icon>
+        </div>
       }
-
+      -->
     </div>
-
   </div>
 </ion-header>
 
 <ion-content>
+  <!-- Buscador -->
+  <div class="divSearch">
+    <ion-searchbar
+      class="custom"
+      placeholder="Buscar productos..."
+      [(ngModel)]="search"
+      (ionInput)="page = 1"
+    >
+    </ion-searchbar>
+  </div>
 
-  <ion-router-outlet></ion-router-outlet>
+  <!-- Loading -->
+  @if (loading) {
+  <div class="ion-padding"><ion-spinner></ion-spinner> Cargando...</div>
+  }
 
+  <!-- Error -->
+  @if (error) {
+  <ion-text color="danger" class="ion-padding">{{ error }}</ion-text>
+  }
+
+  <!-- Cards de productos -->
+  @if (!loading && !error) {
+  <div class="divItems">
+    @for (p of pageItems; track p.id_producto) {
+    <ion-card class="prod-card">
+      <div class="card-row">
+        <ion-thumbnail class="thumb">
+          <img [src]="p.imagen" alt="{{ p.nombre }}" />
+        </ion-thumbnail>
+
+        <div class="card-info">
+          <ion-card-title class="title">{{ p.nombre }}</ion-card-title>
+          <ion-card-subtitle class="subtitle">
+            {{ p.descripcion }}
+          </ion-card-subtitle>
+          <ion-card-subtitle class="brand">
+            {{ p.franquicia }}
+          </ion-card-subtitle>
+        </div>
+      </div>
+    </ion-card>
+    }
+  </div>
+
+  <!-- Paginacion -->
+  <div class="pagination-container" *ngIf="totalPages > 1">
+    <button class="page-button" (click)="prev()" [disabled]="page<=1">←</button>
+    <button
+      class="page-button"
+      [class.active]="page===i"
+      *ngFor="let i of [].constructor(totalPages); index as idx"
+      (click)="gotoPage(idx+1)"
+    >
+      {{ idx+1 }}
+    </button>
+    <button class="page-button" (click)="next()" [disabled]="page>=totalPages">
+      →
+    </button>
+  </div>
+  }
 </ion-content>
