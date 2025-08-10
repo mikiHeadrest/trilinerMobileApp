@@ -23,7 +23,7 @@ export class RegistroOperacionPage implements OnInit {
   public operacionService = inject(OperacionService);
 
 
-  producto: any;
+  producto: any[] = [];
   cargando = false;
   errorMsg: string | null = null;
 
