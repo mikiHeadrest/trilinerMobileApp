@@ -7,7 +7,7 @@ import { inject, Injectable } from '@angular/core';
 })
 export class StorageService {
 
-  private imgbbApiKey = 'no';
+  private imgbbApiKey = 'ff7538e426e00494b7eee1844f9572f2';
   private http = inject(HttpClient)
 
   constructor() {

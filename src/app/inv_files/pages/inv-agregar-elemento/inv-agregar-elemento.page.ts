@@ -5,17 +5,18 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, NavController } from '@ion
 import { HeaderComponent } from "../../components/header/header.component";
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { StorageService } from 'src/app/services/storage.service';
+import { provideHttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-inv-agregar-elemento',
   templateUrl: './inv-agregar-elemento.page.html',
   styleUrls: ['./inv-agregar-elemento.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HeaderComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent]
 })
 export class InvAgregarElementoPage implements OnInit {
 
-  // private storageService = inject(StorageService)
+  private storageService = inject(StorageService)
 
   private navControl = inject(NavController)
 
