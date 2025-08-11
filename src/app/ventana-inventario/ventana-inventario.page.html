@@ -1,39 +1,40 @@
-<ion-header [translucent]="true" class="headerClass">
+<ion-content>
+
+  <ion-router-outlet></ion-router-outlet>
+
+</ion-content>
+<!-- <ion-header [translucent]="true" class="headerClass">
 
   <div style="height: 25%; background-color: aliceblue;">
     <br>
-  </div>
+  </div> -->
 
-  <div class="headerContent">
+  <!-- <div class="headerContent">
 
-    <div style="display: flex;  width: 100%; height: 100%;">
+    <div style="display: flex;  width: 100%; height: 100%;"> -->
 
       <!-- Primer Contenedor Header -->
-      <div class="firstInnerContainer">
+      <!-- <div class="firstInnerContainer">
 
         <ion-icon name="folder" style="height:25px;width: 25px;">
         </ion-icon>
 
         <span>
           <b>{{headerTitle()}}</b>
-        </span>
+        </span> -->
 
-      </div>
+      <!-- </div> -->
 
-      @if(buttonIsEnabled()){
+      <!-- @if(buttonIsEnabled()){
         <div class="secondInnerContainer">
         <ion-icon (click)="changePage()" style="height:25px;width: 25px;" name="add-circle"></ion-icon>
       </div>
 
-      }
+      } -->
 
-    </div>
+    <!-- </div>
 
   </div>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
 
-  <ion-router-outlet></ion-router-outlet>
-
-</ion-content>

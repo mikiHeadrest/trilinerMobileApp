@@ -2,18 +2,21 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
-import { StylesServiceService } from 'src/app/services/styles-service.service';
+import { HeaderComponent } from "../../components/header/header.component";
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-inv-agregar-elemento',
   templateUrl: './inv-agregar-elemento.page.html',
   styleUrls: ['./inv-agregar-elemento.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HeaderComponent]
 })
 export class InvAgregarElementoPage implements OnInit {
 
-  private stylesService = inject(StylesServiceService)
+  // private storageService = inject(StorageService)
+
   private navControl = inject(NavController)
 
   newElement: FormGroup;
@@ -36,15 +39,33 @@ export class InvAgregarElementoPage implements OnInit {
   }
 
   ngOnInit() {
-    this.stylesService.setHeaderTitle("Agregar un Nuevo Elemento")
-    this.stylesService.setInvAddButton(false);
-    console.log("man")
   }
 
   goBack(){
-    this.stylesService.setHeaderTitle("Inventario")
-    this.stylesService.setInvAddButton(true);
     this.navControl.back()
   }
+
+  // async takePhoto(){
+  //   const image = await Camera.getPhoto({
+  //     quality:60,
+  //     allowEditing:false,
+  //     resultType : CameraResultType.DataUrl
+  //   });
+
+  //   console.log(image)
+
+  //   // this.presentLoading('uploadImg','Subiendo imagen dentro de la base de datos')
+
+  //   try{
+  //     this.currenImgtUrl = await this.storageService.uploadBase64Image(image.dataUrl!);
+  //     console.log("Foto guardada en: " + this.currenImgtUrl);
+  //   }
+  //   catch(e){
+  //     // toast con mensaje de derror
+  //   }
+  //   // this.dismissLoader('uploadImg')
+  //   // espera
+
+  // }
 
 }

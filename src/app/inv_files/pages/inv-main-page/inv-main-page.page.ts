@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, NavController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { StylesServiceService } from 'src/app/services/styles-service.service';
+import { HeaderComponent } from "src/app/inv_files/components/header/header.component";
 
 @Component({
   selector: 'app-inv-main-page',
   templateUrl: './inv-main-page.page.html',
   styleUrls: ['./inv-main-page.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar,IonCard,IonItem,IonThumbnail,IonLabel,IonCardTitle,IonCardSubtitle, CommonModule, FormsModule]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, IonCard, IonItem, IonThumbnail, IonLabel, IonCardTitle, IonCardSubtitle, CommonModule, FormsModule, HeaderComponent]
 })
 export class InvMainPagePage implements OnInit {
 
@@ -166,5 +167,9 @@ export class InvMainPagePage implements OnInit {
     }
   }
 
+  mainPageFunction(){
+    console.log("HOLA SALUDOS")
+    this.navControl.navigateForward('tabs/inventario/agregar-elemento')
+  }
 
 }
