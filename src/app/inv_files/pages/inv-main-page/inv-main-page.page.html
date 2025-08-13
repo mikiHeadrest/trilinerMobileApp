@@ -1,4 +1,3 @@
-
 <div style="background-color:#2C4252;">
   <app-header
   [headerTitle]="`Inventario`"
@@ -6,45 +5,68 @@
   [buttonName]="`add-circle`"
   [clickButtonFunction]="mainPageFunction"
   ></app-header>
+  <div class="divSearch">
+    <ion-searchbar
+      class="custom"
+      placeholder="Buscar productos..."
+      [(ngModel)]="search"
+      (ionInput)="currentPage = 1"
+      ngDefaultControl
+    >
+    </ion-searchbar>
+  </div>
 </div>
 
 <ion-content >
-  <div class="divSearch">
-    <ion-searchbar
-      [(ngModel)]=searchTerm
-      (ionInput)="onSearchChange($event)"
-      placeholder="Buscar productos..."
-      class="custom"
-      ngDefaultControl>
-    </ion-searchbar>
-  </div>
+
+  <!-- Loading -->
+  @if (loading) {
+  <div class="ion-padding"><ion-spinner></ion-spinner> Cargando...</div>
+  }
+
+  <!-- Error -->
+  @if (error) {
+  <ion-text color="danger" class="ion-padding">{{ error }}</ion-text>
+  }
+
+  <!-- Cards de productos -->
+  @if (!loading && !error) {
   <div class="divItems">
-    <ion-card *ngFor="let item of paginatedItems">
-      <ion-item lines="none">
-        <ion-thumbnail slot="start">
-          <img [src]="item.imagen" />
+    @for (p of pageItems; track p.id_producto) {
+    <ion-card class="prod-card" (click)="openModal(p)">
+      <div class="card-row">
+        <ion-thumbnail class="thumb">
+          <img [src]="p.imagen" alt="{{ p.nombre }}" />
         </ion-thumbnail>
-        <ion-label>
-          <ion-card-title>{{ item.nombre }}</ion-card-title>
-          <ion-card-subtitle>ID Producto: {{ item.id }}</ion-card-subtitle>
-          <ion-card-subtitle>Unidades disponibles: {{ item.unidades }}</ion-card-subtitle>
-        </ion-label>
-      </ion-item>
+
+        <div class="card-info">
+          <ion-card-title class="title">{{ p.nombre }}</ion-card-title>
+          <ion-card-subtitle class="subtitle">
+            {{ p.descripcion }}
+          </ion-card-subtitle>
+          <ion-card-subtitle class="brand">
+            {{ p.franquicia }}
+          </ion-card-subtitle>
+        </div>
+      </div>
     </ion-card>
-
-    <div class="pagination-container">
-      <button
-        *ngFor="let page of visiblePages"
-        class="page-button"
-        [class.active]="page === currentPage"
-        (click)="goToPage(page)"
-        [disabled]="page === '...'">
-        {{ page }}
-      </button>
-
-      <button class="page-button" (click)="nextPage()" [disabled]="currentPage === totalPages">
-        →
-      </button>
-    </div>
+    }
   </div>
+
+  <!-- Paginacion -->
+  <div class="pagination-container" *ngIf="totalPages > 1">
+    <button class="page-button" (click)="prevPage()" [disabled]="currentPage<=1">←</button>
+    <button
+      class="page-button"
+      [class.active]="currentPage===i"
+      *ngFor="let i of [].constructor(totalPages); index as idx"
+      (click)="goToPage(idx+1)"
+    >
+      {{ idx+1 }}
+    </button>
+    <button class="page-button" (click)="nextPage()" [disabled]="currentPage>=totalPages">
+      →
+    </button>
+  </div>
+  }
 </ion-content>

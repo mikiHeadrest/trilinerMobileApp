@@ -9,6 +9,12 @@ export class StorageService {
 
   private imgbbApiKey = 'ff7538e426e00494b7eee1844f9572f2';
   private http = inject(HttpClient)
+  private undefinedImage:string = "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+
+  // Imagen para objetos sin imagen
+  getUndefinedImage(){
+    return this.undefinedImage;
+  }
 
   constructor() {
     if(sessionStorage.getItem("inv-router")){

@@ -18,4 +18,4 @@ bootstrapApplication(AppComponent, {
 
 });
 
-// necesario para poder hacer solicitudes Http?
+//provideHttpClient() necesario para poder hacer solicitudes Http

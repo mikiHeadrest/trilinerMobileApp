@@ -30,15 +30,18 @@ export class HeaderComponent  implements OnInit {
    }
 
   ngOnInit() {
-    console.log("BooleanLoaded:" + this.hasSideButton?.valueOf())
-    console.log("NameLoaded:" + this.buttonName?.valueOf())
-    console.log("clickButtonFunction: " + this.clickButtonFunction?.call)
 
+    // Esto es para que muestre un error dentro de la consola
     if(!(this.clickButtonFunction && this.buttonName && this.hasSideButton)){
-      console.error("PASA TODOS LOS COMPONENTES PARA QUE SE MUESTRE EL ICONO")
-      console.log("BooleanLoaded:" + this.hasSideButton?.valueOf())
-      console.log("NameLoaded:" + this.buttonName?.valueOf())
-      console.log("clickButtonFunction: " + this.clickButtonFunction?.call)
+
+      // si al crear el header se detecta uno de estos parametros pero no todos, te salta este error
+      // para que se muestre el boton debes de cargar todos estos elementos
+      if(this.clickButtonFunction || this.buttonName || this.hasSideButton){
+        console.error("PASA TODOS LOS COMPONENTES PARA QUE SE MUESTRE EL ICONO")
+        console.log("BooleanLoaded:" + this.hasSideButton?.valueOf())
+        console.log("NameLoaded:" + this.buttonName?.valueOf())
+        console.log("clickButtonFunction: " + this.clickButtonFunction?.call)
+      }
     }
 
   }

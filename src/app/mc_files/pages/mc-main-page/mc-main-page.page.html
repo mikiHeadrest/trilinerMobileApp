@@ -6,7 +6,7 @@
   </ion-header>
   <!-- Operaciones activas -->
   <div class="tituloOperacion">Operaciones Activas</div>
-  <div class="divModelo">Modelo: 0000 - 0000 - 0001</div>
+  <div class="divModelo">Modelo: {{ maquinas[0]?.modelo}}</div>
 
   <div class="divOperaciones">
 
@@ -24,8 +24,8 @@
       <!-- Derecha -->
       <div class="divDerecho">
         <div class="filaOperacion">
-          <p>Tipo de Operación: Recepción</p>
-          <p><strong>ID_Operación: 000 000 002</strong></p>
+          <p>Tipo de Operación: {{opsInv[0]?.tipo}}</p>
+          <p><strong>ID_Operación: {{opsInv[0]?.id}}</strong></p>
         </div>
 
         <div class="contenidoDerecho">
@@ -34,22 +34,25 @@
             <img src="" class="estadoImg" />
             <div>
               <div><strong>Estado:</strong> Acomodado en Almacén</div>
+
               <div class="estadoId">ID: 000 000 004</div>
             </div>
             <div class="estadoUnidades">
               <ion-icon name="arrow-down-outline"></ion-icon>
-              <div class="unidadesTexto">1/2 <br><strong>Unidades</strong></div>
+              <!-- Yo creo que para las unidades van a ser inserciones unicas y haremos una funcion para sumar las veces que sale en el inventario e inactivo y el mismo producto
+               y ese seria el total, en este caso 2, pero seria ver como hacer para cuando se complete 1, aun no se como hacerlo-->
+              <div class="unidadesTexto">1/{{movs[0].unidades}} <br><strong>Unidades</strong></div>
             </div>
           </div>
 
           <!-- 2. Tarjetas de resumen -->
           <div class="tarjetaResumen despacho">
-            <div><strong>Despachos Realizadas</strong><div>27 de Julio del 2025</div></div>
-            <div class="numeroResumen">2000</div>
+            <div><strong>Despachos Realizadas</strong><div>{{fechaActual}}</div></div>
+            <div class="numeroResumen">{{totalDespacho}}</div>
           </div>
           <div class="tarjetaResumen recepcion">
-            <div><strong>Recepciones Realizadas</strong><div>27 de Julio del 2025</div></div>
-            <div class="numeroResumen">2000</div>
+            <div><strong>Recepciones Realizadas</strong><div>{{fechaActual}}</div></div>
+            <div class="numeroResumen">{{totalRecepcion}}</div>
           </div>
         </div>
       </div>
@@ -76,53 +79,37 @@
     <p class="subtitulo">Ultimas operaciones realizadas</p>
     <div class="divUltimas">
       <!-- Falta el ngFor -->
-      <ion-item lines="none" class="cardOperacion">
-        <ion-avatar slot="start"><img src="assets/ralsei.png" /></ion-avatar>
-        <ion-label>
-          <p style="color: white;">Despacho de <strong>Peluche Ralsei sin Gorro</strong></p>
-          <p>Hora: 21:52 <span>OR:UPS</span><br>ID Producto: 000 000 004</p>
-        </ion-label>
-        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
-          <ion-icon slot="end" name="arrow-up-outline"></ion-icon>
-          <P>0001 Unidades</P>
-        </div>
-      </ion-item>
+      <ng-container *ngIf="movs?.length; else sinMovs">
+        <ion-item lines="none" class="cardOperacion"
+                  *ngFor="let m of movs; trackBy: trackById">
 
-      <ion-item lines="none" class="cardOperacion">
-        <ion-avatar slot="start"><img src="assets/sans.png" /></ion-avatar>
-        <ion-label>
-          <p style="color: white;">Recepción de <strong>Peluche Genocida Sans</strong></p>
-          <p>Hora: 21:50 <span>OR: UPS</span>ID Producto: 000 000 005<br></p>
-        </ion-label>
-        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
-          <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
-          <P>0001 Unidades</P>
-        </div>
-      </ion-item>
+          <ion-avatar slot="start">
+            <img [src]="productoDe(m.productoId)?.imagen || 'assets/placeholder.png'" />
+          </ion-avatar>
 
-      <ion-item lines="none" class="cardOperacion">
-        <ion-avatar slot="start"><img src="assets/goku.png" /></ion-avatar>
-        <ion-label>
-          <p style="color: white;">Recepción de <strong>Peluche Goku</strong></p>
-          <p>Hora: 21:46 <span>OR: UPS</span><br> ID Producto: 000 000 002</p>
-        </ion-label>
-        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
-          <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
-          <P>0001 Unidades</P>
-        </div>
+          <ion-label>
+            <p style="color: white;">
+              {{ m.tipo }} de
+              <strong>{{ productoDe(m.productoId)?.nombre || 'Producto' }}</strong>
+            </p>
+            <p>
+              {{ m.createdAt}}
+              <span>OR: {{ productoDe(m.productoId)?.franquicia || 'UPS' }}</span><br>
+              ID Producto: {{ m.productoId }}
+            </p>
+          </ion-label>
 
-      </ion-item>
-            <ion-item lines="none" class="cardOperacion">
-        <ion-avatar slot="start"><img src="assets/goku.png" /></ion-avatar>
-        <ion-label>
-          <p style="color: white;">Recepción de <strong>Peluche Goku</strong></p>
-          <p>Hora: 21:46 <span>OR: UPS</span><br> ID Producto: 000 000 002</p>
-        </ion-label>
-        <div style="align-items: center; justify-content: center; display: flex; flex-direction: column;">
-          <ion-icon slot="end" name="arrow-down-outline"></ion-icon>
-          <P>0001 Unidades</P>
-        </div>
-      </ion-item>
+          <div style="align-items:center; justify-content:center; display:flex; flex-direction:column;">
+            <ion-icon slot="end" [name]="iconoMovimiento(m)" style="font-size: 1.5rem;"></ion-icon>
+            <p>{{ m.unidades }} Unidades</p>
+          </div>
+
+        </ion-item>
+      </ng-container>
+
+      <ng-template #sinMovs>
+        <div class="empty-container">No hay movimientos</div>
+      </ng-template>
     </div>
 
   </div>

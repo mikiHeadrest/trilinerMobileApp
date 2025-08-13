@@ -1,0 +1,15 @@
+<div class="divPrincipal">
+  <img src={{productoInicial.imagen}} alt=""
+  style="width: 50%; height: 40%; border-radius: 15px;">
+  <p><b>{{productoInicial.nombre}}</b></p>
+  <p>ID: {{productoInicial.id_producto}}</p>
+  <p><b>Descripción: </b> {{productoInicial.descripcion}}</p>
+  <div style="display: flex;">
+    <p><b>Unidades: </b></p>
+    <input type="text" class="inputUnidades" [(ngModel)]="cantidad">
+  </div>
+  <div class="divBoton">
+    <ion-button expand="block" class="btnOperacion" (click)="agregar()">Agregar a Operacion</ion-button>
+  </div>
+  <p class="pRegresar" (click)="volver()">Regresar</p>
+</div>
