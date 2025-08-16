@@ -101,5 +101,4 @@ export class McMainPagePage implements OnInit {
     return m.tipo === 'Despacho' ? 'arrow-up-outline' : 'arrow-down-outline';
   }
 
-
 }

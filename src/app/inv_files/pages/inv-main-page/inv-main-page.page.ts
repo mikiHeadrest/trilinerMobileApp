@@ -1,12 +1,14 @@
 import { Component, computed, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavController, ModalController, IonCard, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonItem, IonLabel, IonThumbnail, IonTitle, IonToolbar, IonSpinner, IonText } from '@ionic/angular/standalone';
+import { NavController, ModalController, IonCard, IonCardSubtitle, IonCardTitle, IonContent,IonThumbnail, IonSpinner, IonText } from '@ionic/angular/standalone';
 
 import { InvAsignarProductoComponent } from '../../components/inv-asignar-producto/inv-asignar-producto.component';
 
 import { addIcons } from 'ionicons';
 import { StylesServiceService } from 'src/app/services/styles-service.service';
+import { HeaderComponent } from "src/app/inv_files/components/header/header.component";
+
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { addCircle, folder } from 'ionicons/icons';
 
@@ -24,8 +26,10 @@ export interface Producto {
   styleUrls: ['./inv-main-page.page.scss'],
   standalone: true,
   imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar,IonCard,IonItem,IonThumbnail,IonLabel,IonCardTitle,IonCardSubtitle, IonSpinner, IonText,
-    CommonModule, FormsModule]
+    IonContent,  IonCard, IonThumbnail, IonCardTitle, IonCardSubtitle, IonSpinner, IonText,
+    CommonModule, FormsModule,
+    HeaderComponent
+]
 })
 export class InvMainPagePage implements OnInit {
 
@@ -37,7 +41,7 @@ export class InvMainPagePage implements OnInit {
   private navControl = inject(NavController);
 
   search: string = '';
-  page = 1;
+  currentPage = 1;
   pageSize = 6;
 
   buttonIsEnabled = computed(() => this.stylesService.getInvAddButton());
@@ -64,7 +68,7 @@ export class InvMainPagePage implements OnInit {
     if (error) this.error = error.message;
 
     this.productos = data ?? [];
-    this.page = 1; // al recargar/buscar, vuelve a la primera
+    this.currentPage = 1; // al recargar/buscar, vuelve a la primera
     this.loading = false;
   }
 
@@ -85,19 +89,52 @@ export class InvMainPagePage implements OnInit {
   }
 
   get pageItems() {
-    const start = (this.page - 1) * this.pageSize;
+    const start = (this.currentPage - 1) * this.pageSize;
     return this.filtered.slice(start, start + this.pageSize);
   }
 
-  gotoPage(p: number) {
-    if (p >= 1 && p <= this.totalPages) this.page = p;
+
+  // Genera paginación dinámicamente
+  get visiblePages(): (number | string)[] {
+    const total = this.totalPages;
+    const current = this.currentPage;
+    const pages: (number | string)[] = [];
+
+    if (total <= 7) {
+      // Si hay 7 o menos páginas, se muestran todas
+      for (let i = 1; i <= total; i++) pages.push(i);
+    } else {
+      if (current <= 4) {
+        pages.push(...[1, 2, 3, 4, 5, '...', total]);
+      } else if (current >= total - 3) {
+        pages.push(1, '...');
+        for (let i = total - 4; i <= total; i++) pages.push(i);
+      } else {
+        pages.push(1, '...', current - 1, current, current + 1, '...', total);
+      }
+    }
+
+    return pages;
   }
-  prev() {
-    this.gotoPage(this.page - 1);
+
+  goToPage(page: number | string) {
+    if (typeof page === 'number') {
+      this.currentPage = page;
+    }
   }
-  next() {
-    this.gotoPage(this.page + 1);
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
   }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
   async openModal(p: Producto) {
     const modal = await this.modalCtrl.create({
       component: InvAsignarProductoComponent,
@@ -108,6 +145,14 @@ export class InvMainPagePage implements OnInit {
 
     const { data, role } = await modal.onWillDismiss();
 
+  }
+
+  // Esta es la funcion que se le va a pasar al boton declarado dentro del
+  // componente Header
+  mainPageFunction(){
+    console.log("HOLA");
+    this.navControl.navigateForward("/tabs/inventario/agregar-elemento")
+    // navegara a agregar elementos
   }
 
 }

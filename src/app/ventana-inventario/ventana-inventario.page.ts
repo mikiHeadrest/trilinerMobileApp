@@ -1,27 +1,12 @@
+// MODIFICAR TODO ESTO
+
 import { Component, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   IonContent,
-  IonHeader,
-  IonIcon,
-  IonTitle,
-  IonToolbar,
-  IonSearchbar,
-  IonText,
-  IonButton,
-  IonSpinner,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
-  IonItem,
-  IonLabel,
-  IonThumbnail,
   IonRouterOutlet,
   NavController,
-  IonList,
 } from '@ionic/angular/standalone';
 import { addCircle, folder } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
@@ -37,15 +22,6 @@ import { SupabaseService } from '../services/supabase.service';
     CommonModule,
     FormsModule,
     IonContent,
-    IonHeader,
-    IonIcon,
-    IonSearchbar,
-    IonText,
-    IonSpinner,
-    IonCard,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonThumbnail,
     IonRouterOutlet
   ],
 })

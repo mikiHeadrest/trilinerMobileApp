@@ -35,12 +35,13 @@
             <img src="" class="estadoImg" />
             <div>
               <div><strong>Estado:</strong> Acomodado en Almacén</div>
-              <!-- id del producto-->
+
               <div class="estadoId">ID: 000 000 004</div>
             </div>
             <div class="estadoUnidades">
               <ion-icon name="arrow-down-outline"></ion-icon>
-              <!-- unidades del producto -->
+              <!-- Yo creo que para las unidades van a ser inserciones unicas y haremos una funcion para sumar las veces que sale en el inventario e inactivo y el mismo producto
+               y ese seria el total, en este caso 2, pero seria ver como hacer para cuando se complete 1, aun no se como hacerlo-->
               <div class="unidadesTexto">1/{{movs[0].unidades}} <br><strong>Unidades</strong></div>
             </div>
           </div>
@@ -84,7 +85,7 @@
                   *ngFor="let m of movs; trackBy: trackById">
 
           <ion-avatar slot="start">
-            <img [src]="" />
+            <img [src]="productoDe(m.productoId)?.imagen || 'assets/placeholder.png'" />
           </ion-avatar>
 
           <ion-label>

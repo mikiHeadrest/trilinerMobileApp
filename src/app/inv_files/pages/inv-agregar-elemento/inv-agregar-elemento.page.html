@@ -1,13 +1,58 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>inv-agregar-elemento</ion-title>
-  </ion-toolbar>
-</ion-header>
+<div style="background-color:#2C4252;">
+  <app-header
+  [headerTitle]="`Agregar Producto`"
+  ></app-header>
+</div>
+<!-- ESTILOS CORRECTOS -->
+<ion-content>
+<div class="contentContainer">
+    <div class="listOfItems">
+      <form [formGroup]="newElement" style="width: 100%; display: flex; flex-direction:column; align-items: center; gap: 12px;">
+        <div class="imageContainer" (click)="takePhoto()" >
+          <img class="imageStyle" src={{currentImgUrl}} >
+          <span>Sube una imagen</span>
+        </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">inv-agregar-elemento</ion-title>
-    </ion-toolbar>
-  </ion-header>
+        <div class="inactiveInputDecorator">
+          <span>Id del Producto</span>
+          <input readonly formControlName="id_producto">
+          <!-- Cargar valor precargado -->
+          @if(newElement.hasError('id_producto')){
+            <span class="errorMessage">Error message</span>
+          }
+        </div>
+
+        <div class="inputContainer" [ngClass]="{'inputErrorDecorator' : newElement.get('nombre')!.dirty && newElement.get('nombre')!.invalid }" >
+          <span>Nombre del Producto</span>
+          <input formControlName="nombre">
+          @if(newElement.get('nombre')?.invalid && newElement.get("nombre")!.dirty ){
+            <span class="errorMessage">Ingresa un nombre del producto, minimo 3 letras..</span>
+          }
+        </div>
+
+        <div class="inputContainer" [ngClass]="{'inputErrorDecorator' : newElement.get('franquicia')!.dirty && newElement.get('franquicia')!.invalid }">
+          <span>Nombre de Franquicia</span>
+          <input formControlName="franquicia">
+          @if(newElement.get('franquicia')!.invalid && newElement.get("franquicia")!.dirty){
+            <span class="errorMessage">Ingresa un nombre de franqucia</span>
+          }
+        </div>
+
+        <div class="inputContainer" [ngClass]="{'inputErrorDecorator' : newElement.get('descripcion')!.dirty && newElement.get('descripcion')!.invalid }">
+          <span>Descripcion del Producto</span>
+          <br>
+          <textarea formControlName="descripcion"></textarea>
+          @if(newElement.get('descripcion')!.invalid && newElement.get("descripcion")!.dirty){
+            <span class="errorMessage">Ingresa una descripcion del producto...</span>
+          }
+        </div>
+
+        <button class="buttonAgregar" (click)="submitForm()" >Aceptar</button>
+
+        <a  class="regresarLink" (click)="goBack()">Regresar...</a>
+      </form>
+
+
+    </div>
+  </div>
 </ion-content>

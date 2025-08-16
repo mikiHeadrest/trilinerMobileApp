@@ -1,15 +1,23 @@
-<ion-content>
-  <!-- Buscador -->
+<div style="background-color:#2C4252;">
+  <app-header
+  [headerTitle]="`Inventario`"
+  [hasSideButton]="true"
+  [buttonName]="`add-circle`"
+  [clickButtonFunction]="mainPageFunction"
+  ></app-header>
   <div class="divSearch">
     <ion-searchbar
       class="custom"
       placeholder="Buscar productos..."
       [(ngModel)]="search"
-      (ionInput)="page = 1"
+      (ionInput)="currentPage = 1"
       ngDefaultControl
     >
     </ion-searchbar>
   </div>
+</div>
+
+<ion-content >
 
   <!-- Loading -->
   @if (loading) {
@@ -47,16 +55,16 @@
 
   <!-- Paginacion -->
   <div class="pagination-container" *ngIf="totalPages > 1">
-    <button class="page-button" (click)="prev()" [disabled]="page<=1">←</button>
+    <button class="page-button" (click)="prevPage()" [disabled]="currentPage<=1">←</button>
     <button
       class="page-button"
-      [class.active]="page===i"
+      [class.active]="currentPage===i"
       *ngFor="let i of [].constructor(totalPages); index as idx"
-      (click)="gotoPage(idx+1)"
+      (click)="goToPage(idx+1)"
     >
       {{ idx+1 }}
     </button>
-    <button class="page-button" (click)="next()" [disabled]="page>=totalPages">
+    <button class="page-button" (click)="nextPage()" [disabled]="currentPage>=totalPages">
       →
     </button>
   </div>
