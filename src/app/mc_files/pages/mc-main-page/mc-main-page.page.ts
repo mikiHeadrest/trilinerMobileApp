@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonButton, IonIte
 import { airplaneOutline, alertCircleOutline, arrowDownOutline, arrowUpOutline, cubeOutline, desktop } from 'ionicons/icons';
 import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
+import { SupabaseService } from 'src/app/services/supabase.service';
 
   interface Maquina{
     id: number,
@@ -47,8 +48,8 @@ import { addIcons } from 'ionicons';
   ]
 })
 export class McMainPagePage implements OnInit {
-  totalDespacho: number = 2000;
-  totalRecepcion: number = 2000;
+  totalDespacho: number = 0;
+  totalRecepcion: number = 0;
   fechaActual: String = new Date().toISOString().split('T')[0];
 
   maquinas: Maquina[] = [
@@ -74,12 +75,14 @@ export class McMainPagePage implements OnInit {
   private navControl = inject(NavController);
   productMap = new Map<number, Producto>();
   
-  constructor() { 
+  constructor(private supabase: SupabaseService) { 
     addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline});
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.productMap = new Map(this.productos.map(p => [p.id, p]));
+    this.totalDespacho = await this.supabase.getTotalOperaciones(true);
+    this.totalRecepcion = await this.supabase.getTotalOperaciones(false);
   }
 
   productoDe(id: number) {

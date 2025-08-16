@@ -14,7 +14,7 @@
     <div class="divSeparador">
       <!-- Izquierda -->
       <div class="divIzquierdoFondo">
-        <img src="assets/almacen.jpg" class="fondoAlmacen" />
+        <img src="" class="fondoAlmacen" />
         <div class="overlayTexto">
           <div class="estadoTextoGrande">Estado:</div>
           <div class="estadoTextoGrande">En Operación</div>
@@ -31,16 +31,16 @@
         <div class="contenidoDerecho">
           <!-- 1. Tarjeta amarilla -->
           <div class="estadoAmarillo">
+            <!-- Imagen del producto-->
             <img src="" class="estadoImg" />
             <div>
               <div><strong>Estado:</strong> Acomodado en Almacén</div>
-
+              <!-- id del producto-->
               <div class="estadoId">ID: 000 000 004</div>
             </div>
             <div class="estadoUnidades">
               <ion-icon name="arrow-down-outline"></ion-icon>
-              <!-- Yo creo que para las unidades van a ser inserciones unicas y haremos una funcion para sumar las veces que sale en el inventario e inactivo y el mismo producto
-               y ese seria el total, en este caso 2, pero seria ver como hacer para cuando se complete 1, aun no se como hacerlo-->
+              <!-- unidades del producto -->
               <div class="unidadesTexto">1/{{movs[0].unidades}} <br><strong>Unidades</strong></div>
             </div>
           </div>
@@ -84,7 +84,7 @@
                   *ngFor="let m of movs; trackBy: trackById">
 
           <ion-avatar slot="start">
-            <img [src]="productoDe(m.productoId)?.imagen || 'assets/placeholder.png'" />
+            <img [src]="" />
           </ion-avatar>
 
           <ion-label>

@@ -46,6 +46,7 @@ import { SupabaseService } from '../services/supabase.service';
     IonCardTitle,
     IonCardSubtitle,
     IonThumbnail,
+    IonRouterOutlet
   ],
 })
 export class VentanaInventarioPage implements OnInit {

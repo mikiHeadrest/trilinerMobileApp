@@ -44,6 +44,7 @@ ion-button{
 
 .divContenido2{
     color: #BAD8D7;
+    max-height: 36rem;
 }
 
 .inputMain{
@@ -90,6 +91,8 @@ ion-button{
     align-items: center;
     justify-content: center;
     border-radius: 10px;
+    overflow-y: hidden;
+    overflow-y: scroll;
 }
 .divProducto{
     height: 30%;

@@ -7,7 +7,7 @@ import { duplicate } from 'ionicons/icons';
 import { NavController } from '@ionic/angular';
 import { OperacionService } from 'src/app/services/operacion.service';
 import { SupabaseService } from 'src/app/services/supabase.service';
-
+import { createClient } from '@supabase/supabase-js';
 @Component({
   selector: 'app-registro-operacion',
   templateUrl: './registro-operacion.page.html',
@@ -18,6 +18,12 @@ import { SupabaseService } from 'src/app/services/supabase.service';
     CommonModule, FormsModule]
 })
 export class RegistroOperacionPage implements OnInit {
+  //Recepcion = true y Despacho = false
+  tipo: boolean = true; 
+  nombre: string = '';
+  descripcion: string = '';
+  ubi: string = '';
+  idInventario?: number;
   private navControl = inject(NavController);
   private supabaseService = inject(SupabaseService);
   public operacionService = inject(OperacionService);
@@ -30,10 +36,15 @@ export class RegistroOperacionPage implements OnInit {
   listaProductos: any[] = [];
   ids: string[] = [];
 
+  private mapaUbiId: Record<string, number> = {
+    a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8
+  };
+
+  
   constructor() { 
     addIcons({duplicate});
       effect(() => {
-      const seleccion = this.operacionService.productos(); // [{ idProducto, cantidad }, ...]
+      const seleccion = this.operacionService.productos();
       const ids = [...new Set(seleccion.map(p => p.idProducto))];
       this.cargar(ids, seleccion);
     });
@@ -43,7 +54,11 @@ export class RegistroOperacionPage implements OnInit {
 
   }
 
-  
+  private supabase = createClient(
+    'https://xfkavfcpkvwfwwvegwep.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inhma2F2ZmNwa3Z3Znd3dmVnd2VwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM5MzQ4MjAsImV4cCI6MjA2OTUxMDgyMH0.NrwMwj5uzSJDhFYkeUZNCFWutWd7e7Orqqx4mhLXOUA'
+  );
+
   private async cargar(
     ids: string[],
     seleccion: { idProducto: string; cantidad: number }[]
@@ -60,7 +75,6 @@ export class RegistroOperacionPage implements OnInit {
       const { data, error } = await this.supabaseService.getProductosByIds(ids);
       if (error) throw error;
 
-      // Une detalles de Supabase + cantidad guardada
       this.producto = (data ?? []).map(prod => {
         const qty = seleccion.find(s => s.idProducto === prod.id_producto)?.cantidad ?? 0;
         return { ...prod, cantidad: qty };
@@ -76,8 +90,63 @@ export class RegistroOperacionPage implements OnInit {
     }
   }
 
+ //INSERCION DE UNA OPERACION
+  async operacion(){
+    try {
+      const tipoBool = this.tipo === true;
+      const idInventario = this.mapaUbiId[this.ubi] ?? null;
+
+      const payloadHeader = {
+        tipo_operacion: tipoBool,
+        estado: false,
+        id_inventario: idInventario,
+        nombre: this.nombre?.trim() || null,
+        descripcion: this.descripcion?.trim() || null
+      };
+
+      const { data: header, error: errHeader } = await this.supabase
+        .from('operacion_inventario')
+        .insert([payloadHeader])
+        .select('id_operacionInventario')
+        .single();
+
+      if (errHeader) throw errHeader;
+      const idOperacion = header.id_operacionInventario;
+      console.log('Operación creada con ID:', idOperacion);
+      const lineas = (this.producto || []).map((item: any) => ({
+        id_producto: item.id_producto,
+        unidades: item.cantidad,
+        id_maquina: 1,
+        id_operacionInventario: idOperacion,
+        isAllocated: false
+      }));
+
+      if (!lineas.length) {
+        console.warn('No hay productos para insertar en operacion_producto');
+        return;
+      }
+
+      const { data: detalles, error: errLineas } = await this.supabase
+        .from('operacion_producto')
+        .insert(lineas)
+        .select('id_operacionProducto, id_producto, unidades, id_maquina');
+
+      if (errLineas) throw errLineas;
+
+      console.log('Líneas agregadas:', detalles);
+      this.producto = [{}];
+
+    } catch (e) {
+      console.error('Error al crear la operación con líneas:', e);
+    }
+  }
+//BOTON PARA VOLVER
   volver(){
     this.navControl.back();
+  }
+
+  agregarProductos(){
+    this.navControl.navigateForward("/tabs/inventario/");
   }
 
 }

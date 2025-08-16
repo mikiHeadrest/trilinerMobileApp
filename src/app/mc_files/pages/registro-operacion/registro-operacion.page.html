@@ -10,9 +10,9 @@
         <div class="divTitulo">
           <p><b>Tipo de Operacion:</b></p>
           <div class="select-pill">
-            <select class="pill-select" value="recepcion">
+            <select class="pill-select" value="recepcion" [(ngModel)]="tipo">
               <option value="recepcion">Recepcion</option>
-              <option value="recepcion">Despacho</option>
+              <option value="despacho">Despacho</option>
             </select>
 
             <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
@@ -24,16 +24,31 @@
         <!-- Nombre y descripcion-->
         <div class="divContenido">
           <p>Nombre de la Operacion</p>
-          <input type="text" class="inputMain">
+          <input type="text" class="inputMain" [(ngModel)]="nombre">
           <p>Descripcion de la Operacion</p>
-          <textarea name="" id="" class="areaMain"></textarea>
+          <textarea name="" id="" class="areaMain" [(ngModel)]="descripcion"></textarea>
         </div>
+
+        <!-- Ubicación -->
+          <p *ngIf="tipo == true">Ubicación de la Operación</p>
+          <div class="select-pill">
+            <select  class="pill-select" id="">
+              <option value="a">1,1</option>
+              <option value="b">1,2</option>
+              <option value="c">2,1</option>
+              <option value="d">2,2</option>
+              <option value="e">3,1</option>
+              <option value="f">3,2</option>
+              <option value="g">4,1</option>
+              <option value="h">4,2</option>
+            </select>
+         </div>
 
         <!-- Lista productos -->
         <div class="divContenido2">
           <p>Lista de Elementos Recibidos</p>
             <!-- Sin productos -->
-            <div class="divProductos" *ngIf="operacionService.productos().length === 0">
+            <div class="divProductos" *ngIf="operacionService.productos().length === 0" (click)="agregarProductos()">
               <ion-icon name="duplicate" style="font-size: 3.5rem; color: #13354F;"></ion-icon>
               <p class="pProductos"><b>Ningún elemento ha sido agregado</b></p>
               <p class="pProductos">
@@ -62,7 +77,7 @@
         <!-- Botones -->
          <div class="divContenido3">
             <div class="divBotones">
-              <ion-button expand="block">Crear Operacion</ion-button>
+              <ion-button expand="block" (click)="operacion()">Crear Operacion</ion-button>
             </div>
          </div>
          <div class="divContenido4" (click)="volver()">

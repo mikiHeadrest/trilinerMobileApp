@@ -29,7 +29,7 @@ export class SupabaseService {
       .limit(limit);
   }
 
-  // IDs por nombre (útil para crear operaciones)
+  // IDs por nombre
   async getIds(
     nInv = environment.inventarioNombre,
     nMaq = environment.maquinaNombre
@@ -53,8 +53,7 @@ export class SupabaseService {
       .select('id_producto, nombre, imagen, descripcion, franquicia')
       .eq('id_producto', id)
       .single()
-      .returns<ProductoDB>();
-  }
+      .returns<ProductoDB>();  }
 
   getProductosByIds(ids: string[]) {
     if (!ids?.length) {
@@ -73,5 +72,11 @@ export class SupabaseService {
       .in('id_producto', ids)
       .returns<ProductoDB[]>();
   }
-
+  
+  async getTotalOperaciones(tipo: boolean) {
+    const { data, error } = await this.client.rpc('total_operaciones_por_tipo', { tipo });
+    if (error) throw error;
+    console.log(data);
+    return data; // data será el número
+  }
 }

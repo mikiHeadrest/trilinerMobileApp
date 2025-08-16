@@ -20,7 +20,7 @@
   <!-- Contenedor: Estado Actual -->
   <ion-card class="estado-card">
     <div class="estado-container">
-      <img src="assets/img1.webp" class="estado-img" />
+      <img src="" class="estado-img" />
       <div class="estado-texto">
         <h2 class="textm">Modelo: 0000 0000 0001</h2>
         <p class="texte">
@@ -66,7 +66,7 @@
     <ion-card-content class="item">
       <ion-item class="custom-item" *ngFor="let op of historial">
         <ion-avatar class-="img-container" slot="start">
-          <img [src]="op.img" alt="Producto" />
+          <img [src]="" alt="Producto" />
         </ion-avatar>
         <ion-label>
           <h3>{{ op.nombre }}</h3>
@@ -100,7 +100,7 @@
       <ion-card-content class="tarjeta-body">
         <ng-container *ngIf="consulta.img; else resumenOperaciones">
           <ion-avatar slot="start">
-            <img [src]="consulta.img" alt="Peluche" />
+            <img [src]="" alt="Peluche" />
           </ion-avatar>
           <div class="info">
             <h3 style="color: #dcd3a3">{{ consulta.nombre }}</h3>
