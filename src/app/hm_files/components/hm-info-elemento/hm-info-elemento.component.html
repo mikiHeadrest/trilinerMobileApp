@@ -26,7 +26,9 @@
         }
         de
         <b>{{elementInfo.nombre}} </b> - {{elementInfo.franquicia}} </span></div>
-    <span>Hora de operacion: {{elementInfo.modified_at.getHours()}}:{{elementInfo.modified_at.getMinutes()}}</span>
+    @if(elementInfo.modified_at){
+      <span>Hora de operacion: {{elementInfo.modified_at.getHours()}}:{{elementInfo.modified_at.getMinutes()}}</span>
+    }
     <span>ID_Producto: {{elementInfo.id_producto}}</span>
   </div>
 

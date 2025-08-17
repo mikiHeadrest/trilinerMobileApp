@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Timestamp } from 'rxjs';
+import { HM_ElementModel } from '../models/hm_ElementModel.models';
 
 export interface ProductoDB {
   id_producto: string;
@@ -116,7 +117,26 @@ export class SupabaseService {
     return 0;
   }
 
+  // tipo_operacion - tabla operacion_inventario
+  // id_operacionProcuto, unidades- tabla operacion_producto
+  // id_producto,nombre,imagen,franquicia - tabla: inventario
+
+  // sort by modifiedt_at -
 
 
+  async historialMovsElements():Promise<{fecha:string,item:HM_ElementModel[]}[]>{
+    const {data,error} = await this.client
+    .rpc('gethistorialmovs')
+
+
+    if(error){
+      console.error("Error al obtener el historalMovs " + JSON.stringify(error))
+    }
+    else{
+      console.log("Se pasaron los datos de forma correcta!")
+    }
+    return data
+
+  }
 
 }

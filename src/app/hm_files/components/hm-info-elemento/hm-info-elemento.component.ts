@@ -27,7 +27,9 @@ export class HMInfoElementoComponent  implements OnInit {
     addIcons({arrowDown});
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("Elemento recibido: "+JSON.stringify(this.elementInfo))
+  }
 
   infoElement(elementInfo:HM_ElementModel){
     this.router.navigate(['/tabs/historial-movimientos/elemento/'+elementInfo.id_producto],{queryParams:elementInfo});
