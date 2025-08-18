@@ -9,6 +9,10 @@ export const routes: Routes = [
     path: 'test-page',
     loadComponent: () => import('./test-page/test-page.page').then( m => m.TestPagePage)
   },
+  {
+    path: 'conexion-bluetooth',
+    loadComponent: () => import('./conexion-bluetooth/conexion-bluetooth.page').then( m => m.ConexionBluetoothPage)
+  },
 
   // {
   //   path: '',

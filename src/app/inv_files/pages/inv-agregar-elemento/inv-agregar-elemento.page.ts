@@ -11,6 +11,7 @@ import { SupabaseService } from 'src/app/services/supabase.service';
 import { ProductoDB } from 'src/app/services/supabase.service';
 import { alertCircleOutline, alertOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { InvMainPagePage } from '../inv-main-page/inv-main-page.page';
 // No se ocupa el modelo de productos :3
 
 @Component({
@@ -52,7 +53,7 @@ export class InvAgregarElementoPage implements OnInit {
   }
 
   goBack(){
-    this.navControl.back()
+    this.navControl.back();
   }
 
   async takePhoto(){
@@ -102,6 +103,7 @@ export class InvAgregarElementoPage implements OnInit {
 
         this.supabaseService.insertProducto(newElement);
         this.createToast("Insercion exitosa dentro de la base de Datos...")
+        this.goBack();
 
       }
       catch(e){

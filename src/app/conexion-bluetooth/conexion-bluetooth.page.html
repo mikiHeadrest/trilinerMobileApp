@@ -1,0 +1,84 @@
+<ion-content class="ion-padding" [fullscreen]="true">
+  <div class="tituloOperacion">Conectar dispositivo</div>
+
+  <div class="divOperaciones">
+    <div class="divUltimas tarjetaBluetooth">
+      
+    <ion-searchbar
+      class="buscadorOperacion"
+      placeholder="Buscar"
+      (ionInput)="filter($event.target?.value || '')">
+    </ion-searchbar>
+
+      <div class="contenedorActualizar">
+        <ion-button class="btnAccion btnAzul" expand="block"
+                    (click)="refreshDevices()" [disabled]="loading">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          {{ loading ? 'Actualizando…' : 'ACTUALIZAR' }}
+        </ion-button>
+        <div class="contadorResultados" *ngIf="!loading">{{ filtered.length }} resultados</div>
+      </div>
+
+      <!-- Lista real -->
+      <ion-list class="listaEmparejados" *ngIf="!loading">
+        <ion-item lines="none" class="itemEmparejado"
+                  *ngFor="let d of filtered" (click)="connect(d)">
+          <ion-avatar slot="start" class="avatarItem">
+            <ion-icon name="hardware-chip"></ion-icon>
+          </ion-avatar>
+
+          <ion-label>
+            <div class="nombreItem"><b>{{ d.name || '(sin nombre)' }}</b></div>
+            <div class="metaItem">{{ d.id }}</div>
+          </ion-label>
+
+          <ion-button slot="end" size="small"
+                      class="btnAccion btnVerde btnMini"
+                      (click)="connect(d); $event.stopPropagation();">
+            Conectar
+          </ion-button>
+        </ion-item>
+
+        <div class="empty-container" *ngIf="!filtered.length">
+          <ion-icon name="search-outline"></ion-icon>
+          <span>Sin dispositivos emparejados o sin coincidencias</span>
+        </div>
+      </ion-list>
+
+      <!-- Estado de conexión + Siguiente -->
+      <div style="padding: 8px 6px 12px;">
+        <div *ngIf="isConnected" style="margin-bottom:8px; opacity:.9;">
+          <b>Conectado a:</b> {{ connectedDevice?.name || '(sin nombre)' }} — {{ connectedDevice?.id }}
+        </div>
+
+        <ion-button expand="block"
+                    class="btnAccion btnVerde"
+                    [disabled]="!isConnected"
+                    (click)="goNext()">
+          Siguiente
+        </ion-button>
+      </div>
+
+      <!-- Skeletons mientras carga -->
+      <ion-list class="listaEmparejados" *ngIf="loading">
+        <ion-item class="itemEmparejado" lines="none" *ngFor="let i of [1,2,3,4]">
+          <ion-skeleton-text animated style="width:40px;height:40px;border-radius:12px;"></ion-skeleton-text>
+          <ion-label class="etiquetaItem">
+            <ion-skeleton-text animated style="width:60%"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width:40%"></ion-skeleton-text>
+          </ion-label>
+          <ion-skeleton-text animated style="width:90px;height:32px;border-radius:10px;"></ion-skeleton-text>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+
+  <!-- Toast de éxito -->
+  <ion-toast
+    [isOpen]="toastOpen"
+    [message]="toastMsg"
+    color="success"
+    duration="1600"
+    (didDismiss)="toastOpen = false">
+  </ion-toast>
+</ion-content>

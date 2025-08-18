@@ -6,6 +6,7 @@ import { airplaneOutline, alertCircleOutline, arrowDownOutline, arrowUpOutline, 
 import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { SupabaseService } from 'src/app/services/supabase.service';
+import { SppService } from '../../../services/spp.service';
 
   interface Maquina{
     id: number,
@@ -75,7 +76,7 @@ export class McMainPagePage implements OnInit {
   private navControl = inject(NavController);
   productMap = new Map<number, Producto>();
   
-  constructor(private supabase: SupabaseService) { 
+  constructor(private supabase: SupabaseService, public spp: SppService) { 
     addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline});
   }
 
@@ -91,6 +92,14 @@ export class McMainPagePage implements OnInit {
 
   irDespacho(){
     this.navControl.navigateForward("/tabs/monitoreo/registro-operacion");
+  }
+
+  irPrueba(){
+    if(this.spp.connected()){
+      this.irDespacho();
+    }else{
+      this.navControl.navigateForward("/conexion-bluetooth")
+    }
   }
 
   trackById(index: number, item: { id: number }) {

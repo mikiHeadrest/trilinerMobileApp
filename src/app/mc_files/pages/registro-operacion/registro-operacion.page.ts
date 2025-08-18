@@ -8,6 +8,7 @@ import { NavController } from '@ionic/angular';
 import { OperacionService } from 'src/app/services/operacion.service';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { createClient } from '@supabase/supabase-js';
+import { SppService } from '../../../services/spp.service';
 @Component({
   selector: 'app-registro-operacion',
   templateUrl: './registro-operacion.page.html',
@@ -19,6 +20,7 @@ import { createClient } from '@supabase/supabase-js';
 })
 export class RegistroOperacionPage implements OnInit {
   //Recepcion = true y Despacho = false
+  encendido: boolean = false;
   tipo: boolean = true; 
   nombre: string = '';
   descripcion: string = '';
@@ -41,7 +43,7 @@ export class RegistroOperacionPage implements OnInit {
   };
 
   
-  constructor() { 
+  constructor(public spp: SppService) { 
     addIcons({duplicate});
       effect(() => {
       const seleccion = this.operacionService.productos();
@@ -138,6 +140,16 @@ export class RegistroOperacionPage implements OnInit {
 
     } catch (e) {
       console.error('Error al crear la operación con líneas:', e);
+    }
+  }
+
+  async pruebaLed(){
+    if(this.encendido == false){
+      this.spp.sendLine("ON")
+      this.encendido = true;
+    }else if(this.encendido == true){
+      this.spp.sendLine("OFF");
+      this.encendido = false;
     }
   }
 //BOTON PARA VOLVER

@@ -6,6 +6,13 @@
   </ion-header>
     <div class="divFondo">
       <div class="divSubFondo">
+        <div class="estadoBar">
+          <ion-icon name="bluetooth" aria-hidden="true"></ion-icon>
+          <span class="estadoTxt" [class.ok]="spp.connected()" [class.bad]="!spp.connected()">
+            {{ spp.connected() ? 'Conectado' : 'Desconectado' }}
+          </span>
+          <span class="estadoDev" *ngIf="spp.connected()"> — {{ spp.device()?.name || spp.device()?.id }}</span>
+        </div>
         <!-- Titulo -->
         <div class="divTitulo">
           <p><b>Tipo de Operacion:</b></p>
@@ -30,7 +37,7 @@
         </div>
 
         <!-- Ubicación -->
-          <p *ngIf="tipo == true">Ubicación de la Operación</p>
+          <p>Ubicación de la Operación</p>
           <div class="select-pill">
             <select  class="pill-select" id="">
               <option value="a">1,1</option>
@@ -77,7 +84,7 @@
         <!-- Botones -->
          <div class="divContenido3">
             <div class="divBotones">
-              <ion-button expand="block" (click)="operacion()">Crear Operacion</ion-button>
+              <ion-button expand="block" (click)="pruebaLed()">Crear Operacion</ion-button>
             </div>
          </div>
          <div class="divContenido4" (click)="volver()">
