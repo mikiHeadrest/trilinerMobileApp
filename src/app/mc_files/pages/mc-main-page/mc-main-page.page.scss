@@ -65,18 +65,21 @@ ion-content{
   margin-bottom: 10px;
 }
 
+// Contenedor de Estado de Triliner
 .divIzquierdoFondo {
   width: 30%;
   height: 160px;
   position: relative;
   border-radius: 10px;
   overflow: hidden;
+  border: 2px solid #fff;
 }
 
 .fondoAlmacen {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: brightness(50%);
 }
 
 .overlayTexto {
@@ -207,9 +210,7 @@ ion-content{
   overflow-y: scroll;
 }
 
-.divUltimos{
-  max-height: 120px;
-}
+
 
 .cardOperacion {
   margin-bottom: 8px;
@@ -251,4 +252,131 @@ ion-content{
 .despachos:hover{
   background-color: #D7C7B5;
   color: #050A17;
+}
+
+// Hola
+
+.divUltimos{
+  max-height: 120px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.divLastOperationsContainer{
+  margin-top: 8px;
+  max-height: 14.2rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 10px;
+  background-color:#3F586B
+}
+
+.divUltimas{
+  max-height: 13.6rem;
+  background-color: #3F586B;
+  border-radius: 10px;
+
+  overflow-y: scroll;
+}
+
+.innerPad{
+  max-height:110px;
+  background-color: #1A501A;
+
+}
+
+// Estilos de contenedores
+
+.elementContainer{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 10%;
+  min-height: 60px;
+  max-height: 100px;
+  background-color: #112534;
+  gap:5px;
+  padding: 3px;
+
+  // Espaciado entre elementos
+  margin-top:3px;
+  margin-bottom: 3px;
+
+  // margin-top:10px ;
+}
+
+// Estilos imagen ultimos contenedores
+.imageSection{
+
+  display: flex;
+  // flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+
+  width: 60%;
+  max-width: 70px;
+  padding-left: 4px;
+  padding-right: 4px;
+  // antes era 100px, para que sea mas dinamico,
+  //pero lo dejare asi para que sea mas consistente
+}
+
+.imageBox{
+
+  overflow: hidden;
+  max-height: 70px;
+  min-width: 65px;
+  max-width: 95px;
+  width: 90%;
+  height: 90%;
+
+  border: 3px solid;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img{
+    object-fit:cover;
+    width: 120px;
+    height: 100px;
+  }
+
+}
+
+.textSection{
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  flex-grow: 7;
+  justify-content: center;
+  font-size: 12px;
+}
+
+.iconSection{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  flex-grow: 3;
+  max-width: 81px;
+
+  justify-content: center;
+  align-items: center;
+
+  ion-icon{
+    height:30px;
+    width:30px;
+  }
+
+  .quantity{
+    font-size: 11px;
+  }
+
+  .text{
+    font-size: 8px;
+  }
+
 }

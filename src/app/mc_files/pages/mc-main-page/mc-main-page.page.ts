@@ -1,10 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonButton, IonItem, IonAvatar, IonLabel, IonBadge, IonGrid, IonRow, IonCol} from '@ionic/angular/standalone';
-import { airplaneOutline, alertCircleOutline, arrowDownOutline, arrowUpOutline, cubeOutline, desktop } from 'ionicons/icons';
+import { airplaneOutline, alertCircleOutline, arrowDown, arrowDownOutline, arrowUpOutline, cubeOutline, desktop } from 'ionicons/icons';
 import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
+import { monitoreoElement, SupabaseService } from 'src/app/services/supabase.service';
 
   interface Maquina{
     id: number,
@@ -47,6 +48,9 @@ import { addIcons } from 'ionicons';
   ]
 })
 export class McMainPagePage implements OnInit {
+  recentElements:WritableSignal<monitoreoElement[]> = signal([]);
+  supabaseService = inject(SupabaseService)
+
   totalDespacho: number = 2000;
   totalRecepcion: number = 2000;
   fechaActual: String = new Date().toISOString().split('T')[0];
@@ -73,13 +77,14 @@ export class McMainPagePage implements OnInit {
 
   private navControl = inject(NavController);
   productMap = new Map<number, Producto>();
-  
-  constructor() { 
-    addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline});
+
+  constructor() {
+    addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline, arrowDown});
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.productMap = new Map(this.productos.map(p => [p.id, p]));
+    this.recentElements.set(await this.supabaseService.getMostRecentOperations())
   }
 
   productoDe(id: number) {
@@ -96,6 +101,10 @@ export class McMainPagePage implements OnInit {
 
   iconoMovimiento(m: OperacionProducto) {
     return m.tipo === 'Despacho' ? 'arrow-up-outline' : 'arrow-down-outline';
+  }
+
+  getRecentElements(){
+    return this.recentElements();
   }
 
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Timestamp } from 'rxjs';
@@ -13,8 +13,22 @@ export interface ProductoDB {
   created_at?: Date | null;
 }
 
+export interface monitoreoElement {
+  id_operacionIventario: number,
+  estado: boolean,
+  id_operacionProducto: number,
+  unidades:number,
+  modified_at:Date,
+  id_producto:number,
+  nombre:string,
+  imagen:string,
+  franquicia:string,
+  isAllocated:boolean
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
+  private listOfItems:WritableSignal<{fecha:string,item:HM_ElementModel[]}[]> = signal<{fecha:string,item:HM_ElementModel[]}[]>([]);
   private client: SupabaseClient;
 
   constructor() {
@@ -134,9 +148,28 @@ export class SupabaseService {
     }
     else{
       console.log("Se pasaron los datos de forma correcta!")
+      this.listOfItems = data;
     }
     return data
 
+  }
+
+  async gethistoralMovsElements(){
+    await this.historialMovsElements()
+    return this.listOfItems();
+  }
+
+  async getMostRecentOperations():Promise<monitoreoElement[]>{
+    const {data,error} = await this.client
+    .rpc("getrecentoperations");
+
+    if(error){
+      console.log("error al realizar la insercion")
+    }
+    else {
+      console.log("Datos obtenidos:"+JSON.stringify(data));
+    }
+    return data;
   }
 
 }
