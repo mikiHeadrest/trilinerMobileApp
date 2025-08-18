@@ -17,14 +17,16 @@
   <div class="contentContainer">
     <div class="containerOfLists">
     <div style="width: 95%;">
-      @if(getItems().length == 0){
-        <!-- EmptyState Mensaje -->
-      }
-      @else{
-        @for (item of getPaginatedItems(); track $index) {
-          <!--  -->
-          <app-hm-movimientos-dia [currentDate]="item.fecha" [elementList]="item.item" ></app-hm-movimientos-dia>
-          <br>
+      @if(getItems()) {
+        @if(getItems().length > 0 ){
+          @for (item of getPaginatedItems(); track $index) {
+            <!--  -->
+            <app-hm-movimientos-dia [currentDate]="item.fecha" [elementList]="item.item" ></app-hm-movimientos-dia>
+            <br>
+          }
+        }
+        @else {
+          <!-- EmptyState -->
         }
       }
     </div>
@@ -35,36 +37,38 @@
 
       <div class="pagination-container">
 
-        @if(currentPage != 1){
-          <button class="page-button" (click)="previousPage()" [disabled]="currentPage === 1">
-            <ion-icon name="arrow-back" ></ion-icon>
-          </button>
-        }
-
-        @for(page of getVisiblePages(); track page){
-
-          @if(typeof page == 'number'){
-            <button
-            class="page-button"
-            [class.active]="page === currentPage"
-            (click)="goToPage(page)">
-            {{ page }}
-          </button>
+        @if(getItems()){
+          @if(currentPage != 1){
+            <button class="page-button" (click)="previousPage()" [disabled]="currentPage === 1">
+              <ion-icon name="arrow-back" ></ion-icon>
+            </button>
           }
-          @else {
-            <button
-            class="page-button"
-            (click)="goToPage(page)"
-            [disabled]="page === '...'">
-            {{ page }}
-          </button>
-          }
-        }
 
-        @if(currentPage != getTotalPages()){
-          <button class="page-button" (click)="nextPage()" >
-            <ion-icon style="rotate:180deg;" name="arrow-back" ></ion-icon>
-          </button>
+          @for(page of getVisiblePages(); track page){
+
+            @if(typeof page == 'number'){
+              <button
+              class="page-button"
+              [class.active]="page === currentPage"
+              (click)="goToPage(page)">
+              {{ page }}
+            </button>
+            }
+            @else {
+              <button
+              class="page-button"
+              (click)="goToPage(page)"
+              [disabled]="page === '...'">
+              {{ page }}
+            </button>
+            }
+          }
+
+          @if(currentPage != getTotalPages()){
+            <button class="page-button" (click)="nextPage()" >
+              <ion-icon style="rotate:180deg;" name="arrow-back" ></ion-icon>
+            </button>
+          }
         }
 
       </div>

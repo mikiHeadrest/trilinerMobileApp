@@ -26,6 +26,16 @@ export interface monitoreoElement {
   isAllocated:boolean
 }
 
+export interface monitoreoLatestElement{
+  estado:boolean,
+  tipo_operacion: boolean,
+  id_operacioninventario: number,
+  isallocated:boolean,
+  unidades:number,
+  id_producto: number,
+  imagen:string
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private listOfItems:WritableSignal<{fecha:string,item:HM_ElementModel[]}[]> = signal<{fecha:string,item:HM_ElementModel[]}[]>([]);
@@ -177,5 +187,18 @@ export class SupabaseService {
     if (error) throw error;
     console.log(data);
     return data; // data será el número
+  }
+
+  // obtiene el primer elemento de la fila
+  // o el ultimo elemento acomodad recepcion/despacho
+  async getLatestProductoOperation():Promise<monitoreoLatestElement>{
+    const {data,error} = await this.client
+    .rpc('getlatestproductoperation').single();
+    if(error){
+      console.error("error al obtener el ultimo producto:" +error )
+      throw error
+    }
+    // console.log("Data"+ JSON.stringify(data)) prueba-- eliminar
+    return data as monitoreoLatestElement;
   }
 }

@@ -23,6 +23,7 @@ export class HMMainPagePage implements OnInit {
   itemsPorPagina = 5;
   currentPage= 1;
 
+
   listOfItems!:{fecha:string,item:HM_ElementModel[]}[];
 
   // le quite lo de que era una signal por si da errores, obtiene su valor de la signal que esta declarada en supabase.service
@@ -41,12 +42,12 @@ export class HMMainPagePage implements OnInit {
   async ngOnInit() {
     this.presentLoading('loadHistorialMovs',"Cargando el historial de movimientos")
     this.listOfItems = await this.supabaseService.historialMovsElements()
-
     // this.listOfItems.set(await this.supabaseService.historialMovsElements())
     // ^ signalList | modificacion por si ocupa ser list
 
     console.log("listOfitems: "+JSON.stringify(this.listOfItems))
     this.dismissLoader('loadHistorialMovs')
+
   }
 
   filteredItems = computed(()=>{

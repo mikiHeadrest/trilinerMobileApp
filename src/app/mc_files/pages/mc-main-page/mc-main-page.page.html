@@ -4,136 +4,134 @@
       <ion-title size="large">ventanaMonitoreo</ion-title>
     </ion-toolbar>
   </ion-header>
-  <!-- Operaciones activas -->
-  <div class="tituloOperacion">Operaciones Activas</div>
-  <div class="divModelo">Modelo: NO IMPLEMENTADO</div>
 
-  <div class="divOperaciones">
+  <div class="mainContentContainer">
+    <div class="innerContentContainer">
 
-    <!-- Estado -->
-    <div class="divSeparador">
-      <!-- Izquierda -->
-      <div class="divIzquierdoFondo">
-        <img src="https://panel.gilygil.com/resources/noticias/63da814912349.jpg" class="fondoAlmacen" />
-        <div class="overlayTexto">
-          <div class="estadoTextoGrande">Estado:</div>
-          <div class="estadoTextoGrande">En Operación</div>
-        </div>
-      </div>
-
-      <!-- Derecha -->
-      <div class="divDerecho">
-        <div class="filaOperacion">
-          <p>Tipo de Operación: {{opsInv[0]?.tipo}}</p>
-          <p><strong>ID_Operación: {{opsInv[0]?.id}}</strong></p>
-        </div>
-
-        <div class="contenidoDerecho">
-          <!-- 1. Tarjeta amarilla -->
-          <div class="estadoAmarillo">
-            <!-- Imagen del producto-->
-            <img src="" class="estadoImg" />
-            <div>
-              <div><strong>Estado:</strong> Acomodado en Almacén</div>
-
-              <div class="estadoId">ID: 000 000 004</div>
-            </div>
-            <div class="estadoUnidades">
-              <ion-icon name="arrow-down-outline"></ion-icon>
-              <!-- Yo creo que para las unidades van a ser inserciones unicas y haremos una funcion para sumar las veces que sale en el inventario e inactivo y el mismo producto
-               y ese seria el total, en este caso 2, pero seria ver como hacer para cuando se complete 1, aun no se como hacerlo-->
-              <div class="unidadesTexto">1/{{movs[0].unidades}} <br><strong>Unidades</strong></div>
+      <!-- Operaciones activas -->
+      <div class="tituloOperacion">Operaciones Activas<div class="innerFill"></div></div>
+      <div class="divModelo">Modelo: DS-3000</div>
+      <div class="divOperaciones">
+        <!-- Estado -->
+        <div class="divSeparador">
+          <!-- Izquierda -->
+          <div class="divIzquierdoFondo">
+            <img src="https://panel.gilygil.com/resources/noticias/63da814912349.jpg" class="fondoAlmacen" />
+            <div class="overlayTexto">
+              <div class="estadoTextoGrande">Estado:</div>
+              <div class="estadoTextoGrande">En Operación</div>
             </div>
           </div>
+          <!-- Derecha -->
+          <div class="divDerecho">
+              <div class="filaOperacion">
+                <p>Tipo de Operación:
+                @if(latestElement().estado){
+                  Recepcion
+                }
+                @else {
+                  Despacho
+                }
+                </p>
+                <p>ID_Operación:<strong>
+                  @if(latestElement().id_operacioninventario){
+                    {{latestElement().id_operacioninventario}}
+                  }
+                </strong></p>
 
-          <!-- 2. Tarjetas de resumen -->
-          <div class="tarjetaResumen despacho">
-            <div><strong>Despachos Realizadas</strong><div>{{fechaActual}}</div></div>
-            <div class="numeroResumen">{{totalDespacho}}</div>
-          </div>
-          <div class="tarjetaResumen recepcion">
-            <div><strong>Recepciones Realizadas</strong><div>{{fechaActual}}</div></div>
-            <div class="numeroResumen">{{totalRecepcion}}</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Botones -->
-    <ion-grid class="divBotones" fixed>
-      <ion-row class="botones-row">
-        <ion-col size="4" class="boton-col">
-          <ion-button class="btnAccion btnRojo"><b>DETENER</b></ion-button>
-        </ion-col>
-        <ion-col size="4" class="boton-col">
-          <ion-button class="btnAccion btnVerde">RENUDAR</ion-button>
-        </ion-col>
-        <ion-col size="4" class="boton-col">
-          <ion-button class="btnAccion btnAmarillo">PAUSAR</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-
-    <!-- Últimas operaciones -->
-    @if(recentElements().length > 0){
-      <p class="subtitulo">Ultimas operaciones realizadas</p>
-
-      <div class="divLastOperationsContainer">
-
-        <div class="divUltimas">
-
-          <!-- Contenido dentro de operaciones realizadas -->
-          @for(item of getRecentElements();track $index){
-
-            <div class="elementContainer">
-
-              <div class="imageSection">
-                <div class="imageBox">
-                  <img src={{item.imagen}}>
+              </div>
+              <div class="contenidoDerecho">
+                <!-- 1. Tarjeta amarilla -->
+                <div class="estadoAmarillo">
+                  <!-- Imagen del producto-->
+                  <img src={{latestElement().imagen}} alt="imagen" class="estadoImg" />
+                  <div>
+                    <div><strong>Estado:</strong> Acomodado en Almacén</div>
+                    <div class="estadoId">ID: {{latestElement().id_producto}}</div>
+                  </div>
+                  <div class="estadoUnidades">
+                    <ion-icon name="arrow-down-outline"></ion-icon>
+                    <!-- Yo creo que para las unidades van a ser inserciones unicas y haremos una funcion para sumar las veces que sale en el inventario e inactivo y el mismo producto
+                    y ese seria el total, en este caso 2, pero seria ver como hacer para cuando se complete 1, aun no se como hacerlo-->
+                    <div class="unidadesTexto">{{latestElement().unidades}}/{{latestElement().unidades}} <br><strong>Unidades</strong></div>
+                  </div>
                 </div>
+              <!-- 2. Tarjetas de resumen -->
+              <div class="tarjetaResumen despacho">
+                <div><strong>Despachos Realizadas</strong><div>{{fechaActual}}</div></div>
+                <div class="numeroResumen">{{totalDespacho}}</div>
               </div>
-
-              <div class="textSection">
-                <div style=" text-overflow: ellipsis; font-size: 16px;">
-                  <span>
-                    @if(item.estado){
-                      Recepcion
-                    }
-                    @else{
-                      Despacho
-                    }
-                    de <b>{{item.nombre}}</b> - {{item.franquicia}}</span>
-                </div>
-                <span>Hora de Operacion: 10:20</span>
-                <span>ID_producto:{{item.id_producto}}</span>
-              </div>
-
-              <div class="iconSection">
-                <ion-icon name="arrow-down" style="height:30px; width:30px;" ></ion-icon>
-                <span class="quantity">{{item.unidades}}</span>
-                <span class="text">Unidades</span>
+              <div class="tarjetaResumen recepcion">
+                <div><strong>Recepciones Realizadas</strong><div>{{fechaActual}}</div></div>
+                <div class="numeroResumen">{{totalRecepcion}}</div>
               </div>
             </div>
-          }
-
+          </div>
         </div>
-
+        <!-- Botones -->
+        <ion-grid class="divBotones" fixed>
+          <ion-row class="botones-row">
+            <ion-col size="4" class="boton-col">
+              <ion-button class="btnAccion btnRojo"><b>DETENER</b></ion-button>
+            </ion-col>
+            <ion-col size="4" class="boton-col">
+              <ion-button class="btnAccion btnVerde">RENUDAR</ion-button>
+            </ion-col>
+            <ion-col size="4" class="boton-col">
+              <ion-button class="btnAccion btnAmarillo">PAUSAR</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <!-- Últimas operaciones -->
+        @if(recentElements().length > 0){
+          <p class="subtitulo">Ultimas operaciones realizadas</p>
+          <div class="divLastOperationsContainer">
+            <div class="divUltimas">
+              <!-- Contenido dentro de operaciones realizadas -->
+              @for(item of getRecentElements();track $index){
+                <div class="elementContainer">
+                  <div class="imageSection">
+                    <div class="imageBox">
+                      <img src={{item.imagen}}>
+                    </div>
+                  </div>
+                  <div class="textSection">
+                    <div style=" text-overflow: ellipsis; font-size: 16px;">
+                      <span>
+                        @if(item.estado){
+                          Recepcion
+                        }
+                        @else{
+                          Despacho
+                        }
+                        de <b>{{item.nombre}}</b> - {{item.franquicia}}</span>
+                    </div>
+                    <span>Hora de Operacion: 10:20</span>
+                    <span>ID_producto:{{item.id_producto}}</span>
+                  </div>
+                  <div class="iconSection">
+                    <ion-icon name="arrow-down" style="height:30px; width:30px;" ></ion-icon>
+                    <span class="quantity">{{item.unidades}}</span>
+                    <span class="text">Unidades</span>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
       </div>
-    }
-  </div>
-
-  <!-- Nueva operación -->
-  <div class="tituloOperacion">Asignar nueva Operación</div>
-  <div class="divAsignar">
-    <div class="opBox recepciones" style="border-bottom-right-radius: 70px; border: 2px solid #DCF0FF;" (click)="irPrueba()">
-      <p>Recepciones Manuales</p>
-      <ion-icon name="cube-outline" size="large"></ion-icon>
-    </div>
-    <div class="opBox despachos" style="border-bottom-left-radius: 70px; border: 2px solid #D7C7B5;" (click)="irPrueba()">
-      <p>Operación de Despacho</p>
-      <ion-icon name="airplane-outline" size="large"></ion-icon>
+      <!-- Nueva operación -->
+      <div class="tituloOperacion">Asignar nueva Operación</div>
+      <div class="divAsignar">
+        <div class="opBox recepciones" style="border-bottom-right-radius: 70px; border: 2px solid #DCF0FF;" (click)="irPrueba()">
+          <p>Recepciones Manuales</p>
+          <ion-icon name="cube-outline" size="large"></ion-icon>
+        </div>
+        <div class="opBox despachos" style="border-bottom-left-radius: 70px; border: 2px solid #D7C7B5;" (click)="irPrueba()">
+          <p>Operación de Despacho</p>
+          <ion-icon name="airplane-outline" size="large"></ion-icon>
+        </div>
+      </div>
     </div>
   </div>
 </ion-content>
