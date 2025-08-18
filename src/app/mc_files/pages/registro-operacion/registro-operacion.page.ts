@@ -1,6 +1,5 @@
 import { Component, effect, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButton, IonSelect, IonSelectOption } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { duplicate } from 'ionicons/icons';
@@ -9,6 +8,7 @@ import { OperacionService } from 'src/app/services/operacion.service';
 import { SupabaseService } from 'src/app/services/supabase.service';
 import { createClient } from '@supabase/supabase-js';
 import { SppService } from '../../../services/spp.service';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-registro-operacion',
   templateUrl: './registro-operacion.page.html',
@@ -26,6 +26,7 @@ export class RegistroOperacionPage implements OnInit {
   descripcion: string = '';
   ubi: string = '';
   idInventario?: number;
+  ubicacion: string = '';
   private navControl = inject(NavController);
   private supabaseService = inject(SupabaseService);
   public operacionService = inject(OperacionService);
@@ -143,15 +144,21 @@ export class RegistroOperacionPage implements OnInit {
     }
   }
 
-  async pruebaLed(){
-    if(this.encendido == false){
-      this.spp.sendLine("ON")
-      this.encendido = true;
-    }else if(this.encendido == true){
-      this.spp.sendLine("OFF");
-      this.encendido = false;
-    }
+  async pruebaLed() {
+    await this.spp.moveToSlot(this.ubicacion);
+    const slot = this.spp.currentSlot();
+    console.log('Ubicación conocida:', slot ?? '(desconocida)');
+    console.log("Z: "+this.estadoZ);
+    console.log("X: "+this.estadoX);
+    console.log("IR: "+this.estadoIR);
+    console.log("GRIP: "+this.estadoPinza);
   }
+
+  estadoZ   = this.spp.posZ();    // número
+  estadoX   = this.spp.posX();    // número
+  estadoIR  = this.spp.ir();      // {Z,X,GRIP}
+  estadoPinza = this.spp.grip();  // 'OPEN'|'CLOSED'|'MOV'
+
 //BOTON PARA VOLVER
   volver(){
     this.navControl.back();

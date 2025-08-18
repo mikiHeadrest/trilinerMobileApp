@@ -138,6 +138,7 @@
   border-top-right-radius: 10px;
   gap: 25px;
   padding-left: 3%;
+  overflow-x: scroll;
 }
 
 .contenidoDerecho {
@@ -401,13 +402,14 @@
 .textSection{
   white-space: nowrap;
   text-overflow: ellipsis;
-  overflow: hidden;
+  overflow-y: scroll;
   display: flex;
   flex-direction: column;
 
   flex-grow: 7;
   justify-content: center;
   font-size: 12px;
+
 }
 
 .iconSection{
@@ -433,4 +435,8 @@
     font-size: 8px;
   }
 
+}
+
+.estadoTextoGrande{
+  font-size: 12px;
 }
