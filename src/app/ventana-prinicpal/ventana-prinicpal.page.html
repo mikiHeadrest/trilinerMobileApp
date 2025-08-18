@@ -20,7 +20,7 @@
   <!-- Contenedor: Estado Actual -->
   <ion-card class="estado-card">
     <div class="estado-container">
-      <img src="" class="estado-img" />
+      <img src="https://panel.gilygil.com/resources/noticias/63da814912349.jpg" class="estado-img" />
       <div class="estado-texto">
         <h2 class="textm">Modelo: 0000 0000 0001</h2>
         <p class="texte">
@@ -33,7 +33,7 @@
   <!-- Contenedor: Metricas del Día -->
   <ion-card class="content-card">
     <p class="textd">El día de hoy se han realizado:</p>
-    <p class="textb">{{fecha}}</p>
+    <p class="textb">{{fecha| date: 'dd/MM/yyyy'}}</p>
     <ion-card-content class="containerTrans">
       <div
         style="
@@ -43,14 +43,28 @@
         "
       >
         <div>
-          <h1 style="color: #dcd3a3">{{recepcion}}</h1>
+          <h1 style="color: #dcd3a3">
+             @if(todaysoperations.totalrecepcion == null){
+              0
+            }
+            @else{
+              {{todaysoperations.totalrecepcion}}
+            }
+          </h1>
           <p style="color: #d3ba79">Transacciones de Recepción</p>
         </div>
         <div>
           <p style="font-size: 48px; color: #c3ddd8">|</p>
         </div>
         <div>
-          <h1 style="color: #c3ddd8">{{despacho}}</h1>
+          <h1 style="color: #c3ddd8">
+            @if(todaysoperations.totaldespacho == null){
+              0
+            }
+            @else{
+              {{todaysoperations.totaldespacho}}
+            }
+          </h1>
           <p style="color: #bfd3d0">Transacciones de Despacho</p>
         </div>
       </div>
@@ -64,17 +78,24 @@
 
   <ion-card>
     <ion-card-content class="item">
-      <ion-item class="custom-item" *ngFor="let op of historial">
+      <ion-item class="custom-item" *ngFor="let op of mainRecentElements()">
         <ion-avatar class-="img-container" slot="start">
-          <img [src]="" alt="Producto" />
+          <img [src]="op.imagen" alt="Producto" />
         </ion-avatar>
         <ion-label>
           <h3>{{ op.nombre }}</h3>
           <p>
-            {{ op.tipo }} - {{ op.unidades }} unidad(es)<br />
-            ID Montacargas: {{ op.idMontacargas }}<br />
-            Origen: {{ op.origen }}<br />
-            Fecha: {{ op.fecha | date: 'dd/MM/yyyy HH:mm' }}
+            Tipo de Operacion:
+            @if(op.tipo_operacion){
+              Recepcion
+            }
+            @else{
+              Despacho
+            }
+            - {{ op.unidades }} unidad(es)<br />
+            <!-- ID Montacargas: {{ op.idMontacargas }}<br /> -->
+            <!-- Origen: {{ op.origen }}<br />  rip-->
+            Fecha: {{ op.modified_at | date: 'dd/MM/yyyy HH:mm' }}
           </p>
         </ion-label>
       </ion-item>
@@ -87,32 +108,78 @@
       Consultas Transaccionales
     </ion-title>
 
-    <ion-card class="tarjeta" *ngFor="let consulta of consultas">
-      <ion-card-header class="tarjeta-header">
-        <ion-card-title
-          [style.color]="consulta.img ? '#dcd3a3' : 'white'"
-          style="font-size: 16px"
-        >
-          {{ consulta.titulo }}
+    <!-- Consulta de Mayor Numero de Despachos -->
+    @if(mostDeliveries.totalunidades > 0){
+      <ion-card class="tarjeta">
+        <ion-card-header class="tarjeta-header">
+          <ion-card-title
+          [style.color]="mostDeliveries.imagen ? '#dcd3a3' : 'white'"
+          style="font-size:16px"
+          >
+          Producto con mayor numero de despachos
         </ion-card-title>
-      </ion-card-header>
+        </ion-card-header>
 
-      <ion-card-content class="tarjeta-body">
-        <ng-container *ngIf="consulta.img; else resumenOperaciones">
+        <ion-card-content class="tarjeta-body">
           <ion-avatar slot="start">
-            <img [src]="" alt="Peluche" />
+            <img src="{{mostDeliveries.imagen}}">
           </ion-avatar>
+
           <div class="info">
-            <h3 style="color: #dcd3a3">{{ consulta.nombre }}</h3>
-            <small>ID Producto: {{ consulta.id }}</small>
+            <h3 style="color: #dcd3a3">{{ mostDeliveries.nombre }}</h3>
+            <small>ID Producto: {{ mostDeliveries.id_producto }}</small>
           </div>
           <div class="dato">
             <span>Unidades:</span>
-            <h1 style="color: #dcd3a3">{{ consulta.unidades }}</h1>
+            <h1 style="color: #dcd3a3">{{ mostDeliveries.totalunidades }}</h1>
           </div>
-        </ng-container>
 
-        <ng-template #resumenOperaciones>
+        </ion-card-content>
+      </ion-card>
+    }
+
+    <!-- Consulta de Mayor Numero en Stock -->
+    @if(mostStored.totalunidades > 0){
+      <ion-card class="tarjeta">
+        <ion-card-header class="tarjeta-header">
+          <ion-card-title
+          [style.color]="mostStored.imagen ? '#dcd3a3' : 'white'"
+          style="font-size:16px"
+          >
+          Producto con mayor unidades disponibles
+        </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="tarjeta-body">
+          <ion-avatar slot="start">
+            <img src="{{mostStored.imagen}}">
+          </ion-avatar>
+
+          <div class="info">
+            <h3 style="color: #dcd3a3">{{ mostStored.nombre }}</h3>
+            <small>ID Producto: {{ mostStored.id_producto }}</small>
+          </div>
+          <div class="dato">
+            <span>Unidades:</span>
+            <h1 style="color: #dcd3a3">{{ mostStored.totalunidades }}</h1>
+          </div>
+
+        </ion-card-content>
+      </ion-card>
+    }
+
+    <!-- Dia con mayor numero de operaciones -->
+    @if(dateMostMovement.totaldemovimientos > 0){
+      <ion-card class="tarjeta">
+        <ion-card-header class="tarjeta-header">
+          <ion-card-title
+          style="font-size:16px; color:white;"
+          >
+          Dia con mayor número de Operaciones
+        </ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content class="tarjeta-body">
           <div
             class="info"
             style="display: flex; align-items: center; gap: 10px"
@@ -122,21 +189,23 @@
               style="font-size: 50px; color: white"
             ></ion-icon>
             <div>
-              <h3 style="color: white">Fecha: {{ consulta.fecha }}</h3>
+              <h3 style="color: white">Fecha: {{ dateMostMovement.fecha }}</h3>
               <small>
-                Operaciones de Recepción: {{ consulta.recepcion }}<br />
-                Operaciones de Despacho: {{ consulta.despacho }}
+                Operaciones de Recepción: {{ dateMostMovement.totalrecepcion }}<br />
+                Operaciones de Despacho: {{ dateMostMovement.totaldespacho }}
               </small>
             </div>
           </div>
 
           <div class="dato">
             <span>Total de Operaciones:</span>
-            <h1 style="color: white">{{ consulta.total }}</h1>
+            <h1 style="color: white">{{ dateMostMovement.totaldemovimientos }}</h1>
           </div>
-        </ng-template>
-      </ion-card-content>
-    </ion-card>
+
+        </ion-card-content>
+      </ion-card>
+    }
+
     </div>
   </ion-content>
 

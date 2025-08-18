@@ -71,8 +71,6 @@ export class McMainPagePage implements OnInit {
   totalRecepcion: number = 0;
   fechaActual: String = new Date().toISOString().split('T')[0];
 
-  productMap = new Map<number, Producto>();
-
   constructor() {
     addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline, arrowDown});
   }
@@ -88,9 +86,6 @@ export class McMainPagePage implements OnInit {
 
   }
 
-  productoDe(id: number) {
-    return this.productMap.get(id);
-  }
 
   irDespacho(){
     this.navControl.navigateForward("/tabs/monitoreo/registro-operacion");

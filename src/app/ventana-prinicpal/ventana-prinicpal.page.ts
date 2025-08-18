@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { addIcons } from 'ionicons';
@@ -19,6 +19,8 @@ import {
   IonToolbar,
   IonIcon,
 } from '@ionic/angular/standalone';
+import { mainElement, mainMostMovementQuery, mainQueries, mainTodaysMovementsQuery, SupabaseService } from '../services/supabase.service';
+import { SppService } from '../services/spp.service';
 
 addIcons({
   'calendar-outline': calendarOutline,
@@ -56,66 +58,76 @@ interface Operacion {
   ],
 })
 export class VentanaPrinicpalPage implements OnInit {
-  estado: string = 'En Operación';
-  fecha: string = '06-08-25';
-  recepcion: number = 100;
-  despacho: number = 100;
+  private supabaseService = inject(SupabaseService);
+  private sppService = inject(SppService);
 
-  historial: Operacion[] = [
-    {
-      tipo: 'Despacho',
-      nombre: 'Peluche Punpun Onodera - Oyasumi Punpun',
-      unidades: 1,
-      idMontacargas: '0000 0001',
-      origen: 'FedEx',
-      fecha: new Date(2025, 6, 22, 7, 20),
-      img: 'assets/punpun.png',
-    },
-    {
-      tipo: 'Recepción',
-      nombre: "Peluche Toy Bonnie - Five Nights At Freddy's",
-      unidades: 21,
-      idMontacargas: '0000 0001',
-      origen: 'Mercado Libre',
-      fecha: new Date(2025, 6, 22, 7, 10),
-      img: 'assets/bonnie.png',
-    },
-    {
-      tipo: 'Recepción',
-      nombre: 'Consola Nintendo Switch 2 - N...',
-      unidades: 1,
-      idMontacargas: '0000 0001',
-      origen: 'Nintendo',
-      fecha: new Date(2025, 6, 21, 21, 58),
-      img: 'assets/switch2.png',
-    },
-  ];
 
-  consultas = [
-    {
-      titulo: 'Producto con mayor número de despachos',
-      nombre: 'Peluche Punpun Onodera - Oyasumi Punpun',
-      id: '000 000 001',
-      unidades: 32,
-      img: 'assets/punpun.png',
-    },
-    {
-      titulo: 'Producto con mayor número de Stock',
-      nombre: "Peluche Toy Bonnie - Five Nights At Freddy's",
-      id: '000 000 001',
-      unidades: 42,
-      img: 'assets/bonnie.png',
-    },
-    {
-      titulo: 'Día con mayor número de Operaciones',
-      fecha: '21 - Junio - 2025',
-      recepcion: 20,
-      despacho: 40,
-      total: 60,
-    },
-  ];
+  imgNotFound:string = 'https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png'
+  mainRecentElements:WritableSignal<mainElement[]> = signal([]);
+
+  todaysoperations:mainTodaysMovementsQuery = ({
+    fecha:new Date(),
+    totalrecepcion: 0,
+    totaldespacho: 0
+  })
+
+  // los cargo con valores estaticos, pero despues los lleno con consultas de la DB
+  mostDeliveries:mainQueries = ({
+    id_producto:0,
+    imagen:this.imgNotFound,
+    nombre:"Loading",
+    franquicia:"Loading",
+    totalunidades: 0
+  })
+  mostStored:mainQueries = ({
+    id_producto:0,
+    imagen:this.imgNotFound,
+    nombre:"Loading",
+    franquicia:"Loading",
+    totalunidades: 0
+  })
+  dateMostMovement:mainMostMovementQuery = ({
+    fecha:new Date(), //le asigna por defecto la fecha de hoy
+    totaldemovimientos: 0,
+    totalrecepcion: 0,
+    totaldespacho: 0
+  })
+
+  isMachineActive = computed(()=>{
+    return this.sppService.connected()
+  })
+
+  estado: string = 'Cargando';
+  fecha= new Date();
+  recepcion: number = 0;
+  despacho: number = 0;
+
 
   constructor() {}
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.recepcion = await this.supabaseService.getTotalOperaciones(true);
+    this.despacho = await this.supabaseService.getTotalOperaciones(false);
+
+    this.todaysoperations = await this.supabaseService.getTodaysOperations();
+    console.log("todays" + this.todaysoperations.fecha)
+
+    this.mostDeliveries = await this.supabaseService.getMostDeliveries();
+    this.mostStored = await this.supabaseService.getProductoMostStored();
+    this.dateMostMovement = await this.supabaseService.getMostMovement();
+
+    this.currentStatus()
+
+    this.mainRecentElements.set(await this.supabaseService.getMainRecentElements())
+  }
+
+  async currentStatus(){
+    console.log("machineStatus"+ this.isMachineActive())
+    if(this.isMachineActive()){
+      this.estado = "En Operacion"
+    }
+    else{
+      this.estado = "Desconectado..."
+    }
+  }
 }

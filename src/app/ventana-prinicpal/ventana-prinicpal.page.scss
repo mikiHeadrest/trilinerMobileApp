@@ -66,8 +66,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: brightness(0.75); /* oscurece la imagen*/
-  border: 2px solid #d2f1ee;
+  filter: brightness(0.4); /* oscurece la imagen*/
+  border: 3px solid #d2f1ee;
 }
 
 .estado-texto {
@@ -104,7 +104,8 @@
 }
 .textb {
   position: absolute;
-  margin-left: 320px;
+  margin-left: 310px;
+
   margin-top: 7px;
   color: #b6dad5;
 }

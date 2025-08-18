@@ -36,6 +36,40 @@ export interface monitoreoLatestElement{
   imagen:string
 }
 
+export interface mainElement{
+  tipo_operacion:boolean,
+  id_producto:number,
+  modified_at?:Date,
+  unidades:number,
+  nombre:string,
+  franquicia:string,
+  imagen:string,
+
+  // true: Despacho
+  //false: Recepcion
+}
+
+export interface mainQueries{
+  id_producto: number,
+  imagen: string,
+  nombre: string,
+  franquicia:string,
+  totalunidades:number
+}
+
+export interface mainMostMovementQuery{
+  fecha:Date,
+  totaldemovimientos:number,
+  totalrecepcion:number,
+  totaldespacho:number
+}
+
+export interface mainTodaysMovementsQuery{
+  fecha:Date,
+  totalrecepcion:number,
+  totaldespacho:number
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
   private listOfItems:WritableSignal<{fecha:string,item:HM_ElementModel[]}[]> = signal<{fecha:string,item:HM_ElementModel[]}[]>([]);
@@ -201,4 +235,71 @@ export class SupabaseService {
     // console.log("Data"+ JSON.stringify(data)) prueba-- eliminar
     return data as monitoreoLatestElement;
   }
+
+  async getMainRecentElements():Promise<mainElement[]>{
+    const {data,error} = await this.client
+    .rpc('getmainrecentelements')
+
+    if(error){
+      console.error("Error en el main Elements: "+error)
+    }
+    return data;
+
+  }
+
+  async getProductoMostStored():Promise<mainQueries>{
+    const {data,error} = await this.client
+    .rpc('getproductomoststored')
+    .single()
+
+    if(error){
+      console.error("Most Stored Error: "+error)
+      throw error
+    }
+
+    console.log(JSON.stringify(data))
+    return data as mainQueries
+  }
+
+  // no se decir despachos en ingles - deliveries :3
+  async getMostDeliveries():Promise<mainQueries>{
+    const {data,error} = await this.client
+    .rpc('getproductomostdeliveries')
+    .single()
+
+    if(error){
+      console.error("mostDeliveries error: " +error)
+      throw error
+    }
+
+    return data as mainQueries
+  }
+
+  // se calcula de la suma de todas las unidades, y estos se agrupan por fechas
+  // por si se preguntan por que el numero alto, es por los altos numeros
+  // en la base de datos
+  async getMostMovement():Promise<mainMostMovementQuery>{
+    const {data,error} = await this.client
+    .rpc('getdatemostoperations')
+    .single()
+
+    if(error){
+      console.error("MostMovmentMain error: " + error)
+    }
+
+    return data as mainMostMovementQuery
+  }
+
+  async getTodaysOperations():Promise<mainTodaysMovementsQuery>{
+    const {data,error} = await this.client
+    .rpc('gettodaysoperations')
+    .single()
+
+    if(error){
+      console.error("Error operaciones Hoy:"+error)
+    }
+    console.log(JSON.stringify(data))
+    return data as mainTodaysMovementsQuery
+  }
+
 }
