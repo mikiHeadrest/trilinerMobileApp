@@ -12,5 +12,5 @@ export interface HM_ElementModel{
 
   unidades:number,
 
-  modified_at:Date, //De Operacion-Producto
+  modified_at?:Date, //De Operacion-Producto
 }

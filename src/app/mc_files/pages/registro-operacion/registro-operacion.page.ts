@@ -15,7 +15,7 @@ import { SppService } from '../../../services/spp.service';
   styleUrls: ['./registro-operacion.page.scss'],
   standalone: true,
   imports: [
-    IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButton, IonSelect, IonSelectOption,
+    IonContent, IonHeader, IonTitle, IonToolbar, IonIcon, IonButton,
     CommonModule, FormsModule]
 })
 export class RegistroOperacionPage implements OnInit {

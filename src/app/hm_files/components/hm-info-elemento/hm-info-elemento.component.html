@@ -1,5 +1,5 @@
 
-<div (click)="infoElement(elementInfo)" class="elementContainer" [ngStyle]="{'color' : elementInfo.tipo_operacion ? '#D7C7B5' : '#BAD8D7'}" >
+<div (click)="infoElement(elementInfo)" class="elementContainer" [ngStyle]="{'color' : elementInfo.tipo_operacion ? '#BAD8D7': '#D7C7B5'}" >
   <!-- imagen -->
   <!-- flex-grow: 3; max-width: 100px; -->
   <div class="imageSection">
@@ -18,7 +18,7 @@
   <div class="textSection">
     <div style=" text-overflow: ellipsis; font-size: 16px;">
       <span >
-        @if (elementInfo.tipo_operacion == true) {
+        @if (elementInfo.tipo_operacion != true) {
           Despacho
         }
         @else {
@@ -26,13 +26,15 @@
         }
         de
         <b>{{elementInfo.nombre}} </b> - {{elementInfo.franquicia}} </span></div>
-    <span>Hora de operacion: {{elementInfo.modified_at.getHours()}}:{{elementInfo.modified_at.getMinutes()}}</span>
+    @if(elementInfo.modified_at){
+      <span>Hora de operacion: {{elementDate?.getHours()}}:{{elementDate?.getMinutes()}}</span>
+    }
     <span>ID_Producto: {{elementInfo.id_producto}}</span>
   </div>
 
   <!-- icono -->
   <div class="iconSection">
-    <ion-icon name="arrow-down" style="height:30px; width:30px;" [ngStyle]="{'rotate' : elementInfo.tipo_operacion ? '180deg' : ''}" ></ion-icon>
+    <ion-icon name="arrow-down" style="height:30px; width:30px;" [ngStyle]="{'rotate' : elementInfo.tipo_operacion ? '' : '180deg'}" ></ion-icon>
     <span class="quantity">{{elementInfo.unidades}}</span>
     <span class="text">Unidades</span>
   </div>

@@ -6,7 +6,7 @@
   </ion-header>
   <!-- Operaciones activas -->
   <div class="tituloOperacion">Operaciones Activas</div>
-  <div class="divModelo">Modelo: {{ maquinas[0]?.modelo}}</div>
+  <div class="divModelo">Modelo: NO IMPLEMENTADO</div>
 
   <div class="divOperaciones">
 
@@ -14,7 +14,7 @@
     <div class="divSeparador">
       <!-- Izquierda -->
       <div class="divIzquierdoFondo">
-        <img src="" class="fondoAlmacen" />
+        <img src="https://panel.gilygil.com/resources/noticias/63da814912349.jpg" class="fondoAlmacen" />
         <div class="overlayTexto">
           <div class="estadoTextoGrande">Estado:</div>
           <div class="estadoTextoGrande">En Operación</div>
@@ -77,42 +77,51 @@
 
 
     <!-- Últimas operaciones -->
-    <p class="subtitulo">Ultimas operaciones realizadas</p>
-    <div class="divUltimas">
-      <!-- Falta el ngFor -->
-      <ng-container *ngIf="movs?.length; else sinMovs">
-        <ion-item lines="none" class="cardOperacion"
-                  *ngFor="let m of movs; trackBy: trackById">
+    @if(recentElements().length > 0){
+      <p class="subtitulo">Ultimas operaciones realizadas</p>
 
-          <ion-avatar slot="start">
-            <img [src]="productoDe(m.productoId)?.imagen || 'assets/placeholder.png'" />
-          </ion-avatar>
+      <div class="divLastOperationsContainer">
 
-          <ion-label>
-            <p style="color: white;">
-              {{ m.tipo }} de
-              <strong>{{ productoDe(m.productoId)?.nombre || 'Producto' }}</strong>
-            </p>
-            <p>
-              {{ m.createdAt}}
-              <span>OR: {{ productoDe(m.productoId)?.franquicia || 'UPS' }}</span><br>
-              ID Producto: {{ m.productoId }}
-            </p>
-          </ion-label>
+        <div class="divUltimas">
 
-          <div style="align-items:center; justify-content:center; display:flex; flex-direction:column;">
-            <ion-icon slot="end" [name]="iconoMovimiento(m)" style="font-size: 1.5rem;"></ion-icon>
-            <p>{{ m.unidades }} Unidades</p>
-          </div>
+          <!-- Contenido dentro de operaciones realizadas -->
+          @for(item of getRecentElements();track $index){
 
-        </ion-item>
-      </ng-container>
+            <div class="elementContainer">
 
-      <ng-template #sinMovs>
-        <div class="empty-container">No hay movimientos</div>
-      </ng-template>
-    </div>
+              <div class="imageSection">
+                <div class="imageBox">
+                  <img src={{item.imagen}}>
+                </div>
+              </div>
 
+              <div class="textSection">
+                <div style=" text-overflow: ellipsis; font-size: 16px;">
+                  <span>
+                    @if(item.estado){
+                      Recepcion
+                    }
+                    @else{
+                      Despacho
+                    }
+                    de <b>{{item.nombre}}</b> - {{item.franquicia}}</span>
+                </div>
+                <span>Hora de Operacion: 10:20</span>
+                <span>ID_producto:{{item.id_producto}}</span>
+              </div>
+
+              <div class="iconSection">
+                <ion-icon name="arrow-down" style="height:30px; width:30px;" ></ion-icon>
+                <span class="quantity">{{item.unidades}}</span>
+                <span class="text">Unidades</span>
+              </div>
+            </div>
+          }
+
+        </div>
+
+      </div>
+    }
   </div>
 
   <!-- Nueva operación -->

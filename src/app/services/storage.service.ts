@@ -9,7 +9,9 @@ export class StorageService {
 
   private imgbbApiKey = 'ff7538e426e00494b7eee1844f9572f2';
   private http = inject(HttpClient)
+
   private undefinedImage:string = "https://upload.wikimedia.org/wikipedia/commons/a/a3/Image-not-found.png"
+  private monitoreoImage:string = "https://panel.gilygil.com/resources/noticias/63da814912349.jpg"
 
   // Imagen para objetos sin imagen
   getUndefinedImage(){

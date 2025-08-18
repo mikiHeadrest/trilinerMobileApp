@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import { Timestamp } from 'rxjs';
+import { HM_ElementModel } from '../models/hm_ElementModel.models';
 
 export interface ProductoDB {
   id_producto: string;
@@ -12,8 +13,22 @@ export interface ProductoDB {
   created_at?: Date | null;
 }
 
+export interface monitoreoElement {
+  id_operacionIventario: number,
+  estado: boolean,
+  id_operacionProducto: number,
+  unidades:number,
+  modified_at:Date,
+  id_producto:number,
+  nombre:string,
+  imagen:string,
+  franquicia:string,
+  isAllocated:boolean
+}
+
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
+  private listOfItems:WritableSignal<{fecha:string,item:HM_ElementModel[]}[]> = signal<{fecha:string,item:HM_ElementModel[]}[]>([]);
   private client: SupabaseClient;
 
   constructor() {
@@ -114,6 +129,47 @@ export class SupabaseService {
       return lastNum
     }
     return 0;
+  }
+
+  // tipo_operacion - tabla operacion_inventario
+  // id_operacionProcuto, unidades- tabla operacion_producto
+  // id_producto,nombre,imagen,franquicia - tabla: inventario
+
+  // sort by modifiedt_at -
+
+
+  async historialMovsElements():Promise<{fecha:string,item:HM_ElementModel[]}[]>{
+    const {data,error} = await this.client
+    .rpc('gethistorialmovs')
+
+
+    if(error){
+      console.error("Error al obtener el historalMovs " + JSON.stringify(error))
+    }
+    else{
+      console.log("Se pasaron los datos de forma correcta!")
+      this.listOfItems = data;
+    }
+    return data
+
+  }
+
+  async gethistoralMovsElements(){
+    await this.historialMovsElements()
+    return this.listOfItems();
+  }
+
+  async getMostRecentOperations():Promise<monitoreoElement[]>{
+    const {data,error} = await this.client
+    .rpc("getrecentoperations");
+
+    if(error){
+      console.log("error al realizar la insercion")
+    }
+    else {
+      console.log("Datos obtenidos:"+JSON.stringify(data));
+    }
+    return data;
   }
 
   async getTotalOperaciones(tipo: boolean) {

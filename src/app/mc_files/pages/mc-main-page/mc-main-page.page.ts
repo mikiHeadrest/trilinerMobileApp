@@ -1,12 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonButton, IonItem, IonAvatar, IonLabel, IonBadge, IonGrid, IonRow, IonCol} from '@ionic/angular/standalone';
-import { airplaneOutline, alertCircleOutline, arrowDownOutline, arrowUpOutline, cubeOutline, desktop } from 'ionicons/icons';
+import { airplaneOutline, alertCircleOutline, arrowDown, arrowDownOutline, arrowUpOutline, cubeOutline, desktop } from 'ionicons/icons';
 import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { SupabaseService } from 'src/app/services/supabase.service';
-import { SppService } from '../../../services/spp.service';
+import { monitoreoElement, SupabaseService } from 'src/app/services/supabase.service';
+import { SppService } from 'src/app/services/spp.service';
 
   interface Maquina{
     id: number,
@@ -45,10 +45,15 @@ import { SppService } from '../../../services/spp.service';
   templateUrl: './mc-main-page.page.html',
   styleUrls: ['./mc-main-page.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonIcon, IonButton, IonItem, IonAvatar, IonLabel, IonBadge, IonGrid, IonRow, IonCol,
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonIcon, IonButton, IonGrid, IonRow, IonCol,
   ]
 })
 export class McMainPagePage implements OnInit {
+  recentElements:WritableSignal<monitoreoElement[]> = signal([]);
+  supabaseService = inject(SupabaseService)
+  private navControl = inject(NavController);
+  private spp = inject(SppService);
+
   totalDespacho: number = 0;
   totalRecepcion: number = 0;
   fechaActual: String = new Date().toISOString().split('T')[0];
@@ -73,17 +78,17 @@ export class McMainPagePage implements OnInit {
     { id: 103, tipo: 'Recepcion', createdAt: '21:46', unidades: 3, maquinaId: 1, productoId: 2 },
   ];
 
-  private navControl = inject(NavController);
   productMap = new Map<number, Producto>();
-  
-  constructor(private supabase: SupabaseService, public spp: SppService) { 
-    addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline});
+
+  constructor() {
+    addIcons({desktop, arrowUpOutline, arrowDownOutline, alertCircleOutline, cubeOutline, airplaneOutline, arrowDown});
   }
 
   async ngOnInit() {
     this.productMap = new Map(this.productos.map(p => [p.id, p]));
-    this.totalDespacho = await this.supabase.getTotalOperaciones(true);
-    this.totalRecepcion = await this.supabase.getTotalOperaciones(false);
+    this.recentElements.set(await this.supabaseService.getMostRecentOperations());
+    this.totalDespacho = await this.supabaseService.getTotalOperaciones(true);
+    this.totalRecepcion = await this.supabaseService.getTotalOperaciones(false);
   }
 
   productoDe(id: number) {
@@ -109,5 +114,10 @@ export class McMainPagePage implements OnInit {
   iconoMovimiento(m: OperacionProducto) {
     return m.tipo === 'Despacho' ? 'arrow-up-outline' : 'arrow-down-outline';
   }
+
+  getRecentElements(){
+    return this.recentElements();
+  }
+
 
 }

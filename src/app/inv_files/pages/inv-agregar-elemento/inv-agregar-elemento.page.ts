@@ -19,7 +19,7 @@ import { InvMainPagePage } from '../inv-main-page/inv-main-page.page';
   templateUrl: './inv-agregar-elemento.page.html',
   styleUrls: ['./inv-agregar-elemento.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, ReactiveFormsModule,IonIcon],
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, ReactiveFormsModule],
 })
 export class InvAgregarElementoPage implements OnInit {
 
