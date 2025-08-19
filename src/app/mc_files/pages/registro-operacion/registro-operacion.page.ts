@@ -150,10 +150,13 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
       // ------- EVENTO: JOB:DONE -------
       if (line === 'JOB:DONE') {
         console.log('✔️ Trabajo finalizado, regresando a Home');
+        this.idsLineasUltimaOperacion = [];
+        this.ultimoIdOperacionProducto = undefined;
+        this.operacionService.vaciarCarrito();
         this.botonBloqueado = false;
       }
 
-    }); // <- cierra subscribe
+    });
   }
 
   ngOnDestroy() {
@@ -169,7 +172,6 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
 
     try {
       if (ids.length === 0) {
-        this.producto = [];
         return;
       }
       const { data, error } = await this.supabaseService.getProductosByIds(ids);
@@ -244,7 +246,6 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
       this.idsLineasUltimaOperacion = (detalles ?? []).map((d: any) => d.id_operacionProducto);
       this.ultimoIdOperacionProducto = this.idsLineasUltimaOperacion.at(-1);
 
-      this.producto = [{}];
     } catch (e) {
       console.error('Error al crear la operación con líneas:', e);
     }
