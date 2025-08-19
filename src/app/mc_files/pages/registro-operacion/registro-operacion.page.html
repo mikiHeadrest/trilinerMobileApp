@@ -4,93 +4,120 @@
       <ion-title size="large">Registro operacion</ion-title>
     </ion-toolbar>
   </ion-header>
-    <div class="divFondo">
-      <div class="divSubFondo">
-        <div class="estadoBar">
-          <ion-icon name="bluetooth" aria-hidden="true"></ion-icon>
-          <span class="estadoTxt" [class.ok]="spp.connected()" [class.bad]="!spp.connected()">
-            {{ spp.connected() ? 'Conectado' : 'Desconectado' }}
-          </span>
-          <span class="estadoDev" *ngIf="spp.connected()"> — {{ spp.device()?.name || spp.device()?.id }}</span>
+  <div class="divFondo">
+    <div class="divSubFondo">
+      <div class="estadoBar">
+        <ion-icon name="bluetooth" aria-hidden="true"></ion-icon>
+        <span
+          class="estadoTxt"
+          [class.ok]="spp.connected()"
+          [class.bad]="!spp.connected()"
+        >
+          {{ spp.connected() ? 'Conectado' : 'Desconectado' }}
+        </span>
+        <span class="estadoDev" *ngIf="spp.connected()">
+          — {{ spp.device()?.name || spp.device()?.id }}</span
+        >
+      </div>
+      <span>X: {{estadoX}} Z: {{estadoZ}}</span>
+      <!-- Titulo -->
+      <div class="divTitulo">
+        <p><b>Tipo de Operacion:</b></p>
+        <div class="select-pill">
+          <select
+            class="pill-select"
+            value="recepcion"
+            [(ngModel)]="tipoSelect"
+          >
+            <option value="recepcion">Recepcion</option>
+            <option value="despacho">Despacho</option>
+          </select>
+
+          <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7 10l5 5 5-5z"></path>
+          </svg>
         </div>
-        <span>X: {{estadoX}} Z: {{estadoZ}}</span>
-        <!-- Titulo -->
-        <div class="divTitulo">
-          <p><b>Tipo de Operacion:</b></p>
-          <div class="select-pill">
-            <select class="pill-select" value="recepcion" [(ngModel)]="tipoSelect">
-              <option value="recepcion">Recepcion</option>
-              <option value="despacho">Despacho</option>
-            </select>
+      </div>
 
-            <svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7 10l5 5 5-5z"></path>
-            </svg>
-          </div>
+      <!-- Nombre y descripcion-->
+      <div class="divContenido">
+        <p>Nombre de la Operacion</p>
+        <input type="text" class="inputMain" [(ngModel)]="nombre" />
+        <p>Descripcion de la Operacion</p>
+        <textarea
+          name=""
+          id=""
+          class="areaMain"
+          [(ngModel)]="descripcion"
+        ></textarea>
+      </div>
+
+      <!-- Ubicación -->
+      <p>Ubicación de la Operación</p>
+      <div class="select-pill">
+        <select
+          class="pill-select"
+          id=""
+          [(ngModel)]="ubicacion"
+          ngDefaultControl
+        >
+          <option value="a">1,1</option>
+          <option value="b">1,2</option>
+          <option value="c">2,1</option>
+          <option value="d">2,2</option>
+          <option value="e">3,1</option>
+          <option value="f">3,2</option>
+          <option value="g">4,1</option>
+          <option value="h">4,2</option>
+        </select>
+      </div>
+
+      <!-- Lista productos -->
+      <div class="divContenido2">
+        <p>Lista de Elementos Recibidos</p>
+        <!-- Sin productos -->
+        <div
+          class="divProductos"
+          *ngIf="operacionService.productos().length === 0"
+          (click)="agregarProductos()"
+        >
+          <ion-icon
+            name="duplicate"
+            style="font-size: 3.5rem; color: #13354f"
+          ></ion-icon>
+          <p class="pProductos"><b>Ningún elemento ha sido agregado</b></p>
+          <p class="pProductos">
+            Para poder crear una Operación, debes por lo menos agregar un
+            elemento a la lista
+          </p>
         </div>
 
-        <!-- Nombre y descripcion-->
-        <div class="divContenido">
-          <p>Nombre de la Operacion</p>
-          <input type="text" class="inputMain" [(ngModel)]="nombre">
-          <p>Descripcion de la Operacion</p>
-          <textarea name="" id="" class="areaMain" [(ngModel)]="descripcion"></textarea>
-        </div>
-
-        <!-- Ubicación -->
-          <p>Ubicación de la Operación</p>
-          <div class="select-pill">
-            <select  class="pill-select" id="" [(ngModel)]="ubicacion" ngDefaultControl>
-              <option value="a">1,1</option>
-              <option value="b">1,2</option>
-              <option value="c">2,1</option>
-              <option value="d">2,2</option>
-              <option value="e">3,1</option>
-              <option value="f">3,2</option>
-              <option value="g">4,1</option>
-              <option value="h">4,2</option>
-            </select>
-         </div>
-
-        <!-- Lista productos -->
-        <div class="divContenido2">
-          <p>Lista de Elementos Recibidos</p>
-            <!-- Sin productos -->
-            <div class="divProductos" *ngIf="operacionService.productos().length === 0" (click)="agregarProductos()">
-              <ion-icon name="duplicate" style="font-size: 3.5rem; color: #13354F;"></ion-icon>
-              <p class="pProductos"><b>Ningún elemento ha sido agregado</b></p>
-              <p class="pProductos">
-                Para poder crear una Operación, debes por lo menos agregar un elemento a la lista
-              </p>
-            </div>
-
-            <!-- Con productos -->
-            <div *ngIf="producto.length > 0">
-              <div class="divConProductos">
-                <div *ngFor="let p of producto" class="divProducto">
-                  <div style="display: flex; align-items: center; justify-content: flex-start;">
-                    <img src={{p.imagen}} alt="" style="height: 80%; object-fit: cover; border-radius: 10px; margin-right: 1rem;">
-                    <div style="width: 100%;">
-                      <b>{{ p.nombre }}</b><br>
-                      ID Producto: {{ p.id_producto }}<br>
-                      Unidades: {{p.cantidad}}
-                    </div>
-                  </div>
-                    
-                </div>
+        <!-- Con productos -->
+        <div *ngIf="producto.length > 0">
+          <div class="divConProductos">
+            <div *ngFor="let p of producto" class="divProducto">
+              <img class="thumb" [src]="p.imagen" [alt]="p.nombre" />
+              <div class="meta">
+                <b class="title">{{ p.nombre }}</b>
+                <div class="line">ID Producto: {{ p.id_producto }}</div>
+                <div class="line">Unidades: {{ p.cantidad }}</div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-        <!-- Botones -->
-         <div class="divContenido3">
-            <div class="divBotones">
-              <ion-button expand="block" (click)="pruebaLed()">Crear Operacion</ion-button>
-            </div>
-         </div>
-         <div class="divContenido4" (click)="volver()">
-            <p>Regresar a ventana Monitoreo</p>
-         </div>
+      <!-- Botones -->
+      <div class="divContenido3">
+        <div class="divBotones">
+          <ion-button expand="block" (click)="pruebaLed()"
+            >Crear Operacion</ion-button
+          >
+        </div>
+      </div>
+      <div class="divContenido4" (click)="volver()">
+        <p>Regresar a ventana Monitoreo</p>
       </div>
     </div>
+  </div>
 </ion-content>
