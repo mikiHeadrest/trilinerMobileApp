@@ -10,29 +10,6 @@ import { monitoreoElement, SupabaseService, monitoreoLatestElement } from 'src/a
 
 import { SppService } from 'src/app/services/spp.service';
 
-  interface Maquina{
-    id: number,
-    nombre: string,
-    descripcion?: string,
-    modelo: string,
-    createdAt: string
-  }
-
-  interface Producto{
-    id: number,
-    nombre: string,
-    imagen: string,
-    descripcion?: string,
-    createdAt: string,
-    franquicia?: string
-  }
-
-  interface OperacionInventario{
-    id: number,
-    tipo: string,
-    createdAt: string,
-    estado: string
-  }
   interface OperacionProducto {
       id: number,
       tipo: string,
