@@ -17,6 +17,10 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="homeContent">
+  <!-- Refrescar -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <!-- Contenedor: Estado Actual -->
   <ion-card class="estado-card">
     <div class="estado-container">

@@ -92,6 +92,10 @@ export class McMainPagePage implements OnInit {
     setTimeout(async () => {
       // Any calls to load data go here
       this.recentElements.set(await this.supabaseService.getMostRecentOperations());
+      this.totalDespacho = await this.supabaseService.getTotalOperaciones(true);
+      this.totalRecepcion = await this.supabaseService.getTotalOperaciones(false);
+
+      this.latestElement.set(await this.supabaseService.getLatestProductoOperation());
       event.target.complete();
     }, 2000);
   }

@@ -18,6 +18,9 @@ import {
   IonTitle,
   IonToolbar,
   IonIcon,
+  IonRefresher,
+  IonRefresherContent,
+  RefresherCustomEvent,
 } from '@ionic/angular/standalone';
 import { mainElement, mainMostMovementQuery, mainQueries, mainTodaysMovementsQuery, SupabaseService } from '../services/supabase.service';
 import { SppService } from '../services/spp.service';
@@ -110,7 +113,6 @@ export class VentanaPrinicpalPage implements OnInit {
     this.despacho = await this.supabaseService.getTotalOperaciones(false);
 
     this.todaysoperations = await this.supabaseService.getTodaysOperations();
-    console.log("todays" + this.todaysoperations.fecha)
 
     this.mostDeliveries = await this.supabaseService.getMostDeliveries();
     this.mostStored = await this.supabaseService.getProductoMostStored();
@@ -129,5 +131,22 @@ export class VentanaPrinicpalPage implements OnInit {
     else{
       this.estado = "Desconectado..."
     }
+  }
+
+  handleRefresh(event: RefresherCustomEvent) {
+    setTimeout(async () => {
+      // Any calls to load data go here
+      this.recepcion = await this.supabaseService.getTotalOperaciones(true);
+      this.despacho = await this.supabaseService.getTotalOperaciones(false);
+
+      this.todaysoperations = await this.supabaseService.getTodaysOperations();
+
+      this.mostDeliveries = await this.supabaseService.getMostDeliveries();
+      this.mostStored = await this.supabaseService.getProductoMostStored();
+      this.dateMostMovement = await this.supabaseService.getMostMovement();
+
+      this.mainRecentElements.set(await this.supabaseService.getMainRecentElements())
+      event.target.complete();
+    }, 2000);
   }
 }
