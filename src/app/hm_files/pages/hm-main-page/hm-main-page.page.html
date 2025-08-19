@@ -14,6 +14,10 @@
 </ion-header>
 
 <ion-content >
+  <!-- Refrescar -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="contentContainer">
     <div class="containerOfLists">
     <div style="width: 95%;">

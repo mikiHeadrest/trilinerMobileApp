@@ -1,8 +1,8 @@
-import { Component, computed, EventEmitter, inject, OnInit, Output } from '@angular/core';
+import { Component, computed, EventEmitter, inject, OnInit, Output,  } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { NavController, ModalController, IonCard, IonCardSubtitle, IonCardTitle, IonContent,IonThumbnail, IonSpinner, IonText } from '@ionic/angular/standalone';
-
+import { NavController, ModalController, IonCard, IonCardSubtitle, IonCardTitle, IonContent,IonThumbnail, IonSpinner, IonText, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
+import { RefresherCustomEvent } from '@ionic/core';
 import { InvAsignarProductoComponent } from '../../components/inv-asignar-producto/inv-asignar-producto.component';
 
 import { addIcons } from 'ionicons';
@@ -26,7 +26,7 @@ export interface Producto {
   styleUrls: ['./inv-main-page.page.scss'],
   standalone: true,
   imports: [
-    IonContent,  IonCard, IonThumbnail, IonCardTitle, IonCardSubtitle, IonSpinner, IonText,
+    IonContent,  IonCard, IonThumbnail, IonCardTitle, IonCardSubtitle, IonSpinner, IonText, IonRefresher, IonRefresherContent,
     CommonModule, FormsModule,
     HeaderComponent
 ]
@@ -152,4 +152,11 @@ export class InvMainPagePage implements OnInit {
     this.navControl.navigateForward("/tabs/inventario/agregar-elemento")
   }
 
+  handleRefresh(event: RefresherCustomEvent) {
+    setTimeout(async () => {
+      // Any calls to load data go here
+      await this.cargarProductos();
+      event.target.complete();
+    }, 2000);
+  }
 }

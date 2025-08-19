@@ -220,7 +220,6 @@ export class SupabaseService {
   async getTotalOperaciones(tipo: boolean) {
     const { data, error } = await this.client.rpc('total_operaciones_por_tipo', { tipo });
     if (error) throw error;
-    console.log(data);
     return data; // data será el número
   }
 

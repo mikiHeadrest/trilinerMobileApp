@@ -1,13 +1,14 @@
 import { ChangeDetectorRef, Component, computed, effect, inject, NgModule, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonIcon, IonInput, IonTitle, IonToolbar, LoadingController, NavController } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonIcon, IonInput, IonTitle, IonToolbar, LoadingController, NavController, IonRefresher, IonRefresherContent } from '@ionic/angular/standalone';
 import { HMMovimientosDiaComponent } from '../../components/hm-movimientos-dia/hm-movimientos-dia.component';
 import { addIcons } from 'ionicons';
 import { arrowBack, caretDownOutline, searchOutline } from 'ionicons/icons';
 import { HM_ElementModel } from 'src/app/models/hm_ElementModel.models';
 import { elementAt } from 'rxjs';
 import { SupabaseService } from 'src/app/services/supabase.service';
+import { RefresherCustomEvent } from '@ionic/core';
 
 
 @Component({
@@ -15,7 +16,7 @@ import { SupabaseService } from 'src/app/services/supabase.service';
   templateUrl: './hm-main-page.page.html',
   styleUrls: ['./hm-main-page.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HMMovimientosDiaComponent, IonContent, IonHeader, IonInput, IonIcon,FormsModule, ]
+  imports: [IonContent, CommonModule, FormsModule, HMMovimientosDiaComponent, IonContent, IonHeader, IonInput, IonIcon, IonRefresher, IonRefresherContent, FormsModule, ]
 })
 export class HMMainPagePage implements OnInit {
 
@@ -191,4 +192,10 @@ export class HMMainPagePage implements OnInit {
     return await this.loadingCtrl.dismiss(null,'',loadingId).then(()=>{console.log('bye')});
   }
 
+      handleRefresh(event: RefresherCustomEvent) {
+      setTimeout(async () => {
+        this.listOfItems = await this.supabaseService.historialMovsElements()
+        event.target.complete();
+      }, 2000);
+    }
 }
