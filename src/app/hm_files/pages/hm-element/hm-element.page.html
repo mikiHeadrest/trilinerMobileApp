@@ -16,10 +16,14 @@
       </div>
 
       <div class="statusContainer">
-        <span style="color: #62C862;"><b>Estado Actual: </b>NO IMPLEMENTADO</span>
-        <p>
-          ID_Dispositivo: <span> NO IMPLEMENTADO </span>
-        </p>
+        <span [ngStyle]="{'color' : infoFaltante.isallocated ? '#62C862' : 'yellow' }" ><b>Estado Actual: </b>
+          @if(infoFaltante.isallocated){
+            Completado
+          }
+          @else{
+            En proceso
+          }
+        </span>
       </div>
 
       <div style=" width: 88%; text-align: center;">
@@ -33,22 +37,29 @@
 
       <div class="divBar">
       </div>
+        <div style=" width: 88%; text-align: justify;">
 
-      <div style=" width: 88%; text-align: justify;">
-        <span class="smallTitle">Nombre de Operación</span>
-        <p>
-          NO IMPLEMENTADO
-        </p>
+        @if(infoFaltante.nombre_op != null){
+          <span class="smallTitle">Nombre de Operación</span>
+          <p>
+            {{infoFaltante.nombre_op}}
+          </p>
+        }
 
-        <span class="smallTitle">Descripcion de la Operación</span>
-        <p>
-          NO IMPLEMENTADO
-        </p>
 
-        <span class="smallTitle">Fecha de Operación</span>
-        <p>
-          NO IMPLEMENTADO
-        </p>
+        @if(infoFaltante.desc_op !=null){
+          <span class="smallTitle">Descripcion de la Operación</span>
+            <p>
+              {{infoFaltante.desc_op}}
+            </p>
+        }
+
+        @if(infoFaltante.fecha != null){
+          <span class="smallTitle">Fecha de Operación</span>
+          <p>
+            {{infoFaltante.fecha}}
+          </p>
+        }
 
       </div>
 

@@ -15,7 +15,7 @@ export interface ProductoDB {
 
 export interface monitoreoElement {
   id_operacionIventario: number,
-  estado: boolean,  
+  estado: boolean,
   id_operacionProducto: number,
   unidades:number,
   modified_at:Date,
@@ -69,6 +69,13 @@ export interface mainTodaysMovementsQuery{
   fecha:Date,
   totalrecepcion:number,
   totaldespacho:number
+}
+
+export interface histMovsInfo{
+  isallocated:boolean,
+  nombre_op:string,
+  desc_op:string,
+  fecha:Date
 }
 
 @Injectable({ providedIn: 'root' })
@@ -313,6 +320,18 @@ export class SupabaseService {
     }
 
     return data;
+  }
+
+  async getAllInfoById(id:number):Promise<histMovsInfo>{
+    const {data,error} = await this.client
+    .rpc('getallinfobyid',{id})
+    .single()
+
+    if(error){
+      console.error("Error al obtener info")
+    }
+
+    return data as histMovsInfo
   }
 
 }

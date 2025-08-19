@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonButton } from '@ionic/a
 import { ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { HM_ElementModel } from 'src/app/models/hm_ElementModel.models';
+import { histMovsInfo, SupabaseService } from 'src/app/services/supabase.service';
 
 @Component({
   selector: 'app-hm-element',
@@ -17,6 +18,7 @@ export class HMElementPage implements OnInit {
 
   private navControl = inject(NavController);
   private activatedRoute = inject(ActivatedRoute);
+  private supabaseService = inject(SupabaseService)
 
   // hice que tuviera estos valores por defecto para que cargara
   // HACER QUE LA PAGINA CARGE TODO Y DESPUES SE HABRA, no hacer esto
@@ -35,9 +37,17 @@ export class HMElementPage implements OnInit {
       modified_at:new Date(Date.now()),
   };
 
+  infoFaltante:histMovsInfo = {
+    isallocated:false,
+    nombre_op:"Cargando..",
+    desc_op:"Cargando..",
+    fecha: new Date()
+  }
+
+
   constructor() { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     if ((this.activatedRoute.snapshot.queryParamMap.get('tipo_operacion')) == 'true' ){
       this.elementInfo.tipo_operacion == true;
@@ -45,6 +55,8 @@ export class HMElementPage implements OnInit {
     else{
       this.elementInfo.tipo_operacion == false
     }
+    const id_operacionProd = parseInt(this.activatedRoute.snapshot.queryParamMap.get('id_operacionProducto')!)
+    this.infoFaltante = await this.supabaseService.getAllInfoById(id_operacionProd)
 
     this.elementInfo={
       id_operacionProducto: parseInt(this.activatedRoute.snapshot.queryParamMap.get('id_operacionProducto')!),

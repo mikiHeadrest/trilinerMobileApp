@@ -6,6 +6,7 @@ import { addIcons } from 'ionicons';
 import { arrowDown } from 'ionicons/icons';
 
 import { HM_ElementModel } from 'src/app/models/hm_ElementModel.models';
+import { histMovsInfo } from 'src/app/services/supabase.service';
 
 @Component({
   selector: 'app-hm-info-elemento',
