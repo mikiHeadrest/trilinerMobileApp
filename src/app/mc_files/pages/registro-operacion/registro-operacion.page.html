@@ -13,11 +13,12 @@
           </span>
           <span class="estadoDev" *ngIf="spp.connected()"> — {{ spp.device()?.name || spp.device()?.id }}</span>
         </div>
+        <span>X: {{estadoX}} Z: {{estadoZ}}</span>
         <!-- Titulo -->
         <div class="divTitulo">
           <p><b>Tipo de Operacion:</b></p>
           <div class="select-pill">
-            <select class="pill-select" value="recepcion" [(ngModel)]="tipo">
+            <select class="pill-select" value="recepcion" [(ngModel)]="tipoSelect">
               <option value="recepcion">Recepcion</option>
               <option value="despacho">Despacho</option>
             </select>

@@ -21,12 +21,13 @@ import { FormsModule } from '@angular/forms';
 export class RegistroOperacionPage implements OnInit {
   //Recepcion = true y Despacho = false
   encendido: boolean = false;
+  tipoSelect: string = "recepcion"
   tipo: boolean = true; 
   nombre: string = '';
   descripcion: string = '';
   ubi: string = '';
   idInventario?: number;
-  ubicacion: string = '';
+  ubicacion: string = 'a';
   private navControl = inject(NavController);
   private supabaseService = inject(SupabaseService);
   public operacionService = inject(OperacionService);
@@ -96,6 +97,11 @@ export class RegistroOperacionPage implements OnInit {
  //INSERCION DE UNA OPERACION
   async operacion(){
     try {
+      if(this.tipoSelect == "recepcion"){
+        this.tipo = true;
+      }else if(this.tipoSelect == "despacho"){
+        this.tipo = false;
+      }
       const tipoBool = this.tipo === true;
       const idInventario = this.mapaUbiId[this.ubi] ?? null;
 
