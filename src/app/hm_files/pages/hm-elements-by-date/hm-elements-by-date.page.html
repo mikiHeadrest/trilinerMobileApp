@@ -16,8 +16,8 @@
   <div class="bgDateSelector">
     <div class="dateSelectorContainer" >
 
-      <div class="dateArrowIcon">
-        <ion-icon name="arrow-back-circle"></ion-icon>
+      <div class="dateArrowIcon" (click)="volver()">
+        <ion-icon name="close-circle-outline"></ion-icon>
       </div>
       <div (click)="volver()" class="dateInfoContainer">
         <div class="dateInfoBox">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <div class="dateArrowIcon">
-        <ion-icon style="rotate: 180deg; " name="arrow-back-circle"></ion-icon>
+        <ion-icon name="server-outline"></ion-icon>
       </div>
     </div>
   </div>
