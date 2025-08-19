@@ -42,7 +42,7 @@
               </div>
               <div class="contenidoDerecho">
                 <!-- 1. Tarjeta amarilla -->
-                <div class="estadoAmarillo">
+                <div class="estadoAmarillo" [ngClass]="" >
                   <!-- Imagen del producto-->
                   <img src={{latestElement().imagen}} alt="imagen" class="estadoImg" />
                   <div>
@@ -89,7 +89,7 @@
             <div class="divUltimas">
               <!-- Contenido dentro de operaciones realizadas -->
               @for(item of getRecentElements();track $index){
-                <div class="elementContainer">
+                <div class="elementContainer" [ngStyle]="{'color' : item.tipo_operacion ? '#BAD8D7': '#D7C7B5'}">
                   <div class="imageSection">
                     <div class="imageBox">
                       <img src={{item.imagen}}>
@@ -110,7 +110,7 @@
                     <span>ID_producto:{{item.id_producto}}</span>
                   </div>
                   <div class="iconSection">
-                    <ion-icon name="arrow-down" style="height:30px; width:30px;" ></ion-icon>
+                    <ion-icon name="arrow-down" style="height:30px; width:30px;" [ngStyle]="{'rotate' : item.tipo_operacion ? '' :'180deg' } " ></ion-icon>
                     <span class="quantity">{{item.unidades}}</span>
                     <span class="text">Unidades</span>
                   </div>

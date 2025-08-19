@@ -23,7 +23,8 @@ export interface monitoreoElement {
   nombre:string,
   imagen:string,
   franquicia:string,
-  isAllocated:boolean
+  isAllocated:boolean,
+  tipo_operacion:boolean
 }
 
 export interface monitoreoLatestElement{
@@ -33,7 +34,7 @@ export interface monitoreoLatestElement{
   isallocated:boolean,
   unidades:number,
   id_producto: number,
-  imagen:string
+  imagen:string,
 }
 
 export interface mainElement{
@@ -240,6 +241,7 @@ export class SupabaseService {
     const {data,error} = await this.client
     .rpc('getmainrecentelements')
 
+    console.log(JSON.stringify(data))
     if(error){
       console.error("Error en el main Elements: "+error)
     }
@@ -300,6 +302,18 @@ export class SupabaseService {
     }
     console.log(JSON.stringify(data))
     return data as mainTodaysMovementsQuery
+  }
+
+  async getElementsByDate(fecha:string):Promise<HM_ElementModel[]>{
+    const {data,error} = await this.client
+    .rpc('getallelementsbydate',{fecha})
+
+    if(error){
+      console.error("ElementsByDate error:" + error)
+      throw error
+    }
+
+    return data;
   }
 
 }
