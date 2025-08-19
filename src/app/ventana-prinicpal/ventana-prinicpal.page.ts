@@ -58,6 +58,8 @@ interface Operacion {
     IonItem,
     IonLabel,
     IonIcon,
+    IonRefresher,
+    IonRefresherContent,
   ],
 })
 export class VentanaPrinicpalPage implements OnInit {
