@@ -13,7 +13,6 @@
           </span>
           <span class="estadoDev" *ngIf="spp.connected()"> — {{ spp.device()?.name || spp.device()?.id }}</span>
         </div>
-        <span>X: {{estadoX}} Z: {{estadoZ}}</span>
         <!-- Titulo -->
         <div class="divTitulo">
           <p><b>Tipo de Operacion:</b></p>
@@ -85,7 +84,7 @@
         <!-- Botones -->
          <div class="divContenido3">
             <div class="divBotones">
-              <ion-button expand="block" (click)="pruebaLed()">Crear Operacion</ion-button>
+              <ion-button expand="block" (click)="pruebaLed()" [disabled]="botonBloqueado">Crear Operacion</ion-button>
             </div>
          </div>
          <div class="divContenido4" (click)="volver()">

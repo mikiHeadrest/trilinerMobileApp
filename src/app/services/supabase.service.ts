@@ -15,7 +15,7 @@ export interface ProductoDB {
 
 export interface monitoreoElement {
   id_operacionIventario: number,
-  estado: boolean,
+  estado: boolean,  
   id_operacionProducto: number,
   unidades:number,
   modified_at:Date,
@@ -23,7 +23,8 @@ export interface monitoreoElement {
   nombre:string,
   imagen:string,
   franquicia:string,
-  isAllocated:boolean
+  isAllocated:boolean,
+  tipo_operacion: boolean,
 }
 
 export interface monitoreoLatestElement{

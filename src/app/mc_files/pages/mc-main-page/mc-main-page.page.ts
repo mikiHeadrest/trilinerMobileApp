@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, Signal, signal, WritableSignal } from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonButton, IonItem, IonAvatar, IonLabel, IonBadge, IonGrid, IonRow, IonCol} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonIcon, IonTitle, IonToolbar, IonButton, IonItem, IonAvatar, IonLabel, IonBadge, IonGrid, IonRow, IonCol, IonRefresher, IonRefresherContent, RefresherCustomEvent,} from '@ionic/angular/standalone';
 import { airplaneOutline, alertCircleOutline, arrowDown, arrowDownOutline, arrowUpOutline, cubeOutline, desktop } from 'ionicons/icons';
 import { NavController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
@@ -47,7 +47,7 @@ import { SppService } from 'src/app/services/spp.service';
   templateUrl: './mc-main-page.page.html',
   styleUrls: ['./mc-main-page.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonIcon, IonButton, IonGrid, IonRow, IonCol,
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, IonIcon, IonButton, IonGrid, IonRow, IonCol, IonRefresher, IonRefresherContent,
   ]
 })
 export class McMainPagePage implements OnInit {
@@ -111,5 +111,11 @@ export class McMainPagePage implements OnInit {
     return this.recentElements();
   }
 
-
+  handleRefresh(event: RefresherCustomEvent) {
+    setTimeout(async () => {
+      // Any calls to load data go here
+      this.recentElements.set(await this.supabaseService.getMostRecentOperations());
+      event.target.complete();
+    }, 2000);
+  }
 }

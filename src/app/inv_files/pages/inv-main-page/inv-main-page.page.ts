@@ -147,12 +147,9 @@ export class InvMainPagePage implements OnInit {
 
   }
 
-  // Esta es la funcion que se le va a pasar al boton declarado dentro del
-  // componente Header
   mainPageFunction(){
     console.log("HOLA");
     this.navControl.navigateForward("/tabs/inventario/agregar-elemento")
-    // navegara a agregar elementos
   }
 
 }

@@ -14,7 +14,6 @@ export class SppService {
   device    = signal<PairedDevice | null>(null);
   lastMsg   = signal('(sin datos)');
 
-  // 👇 NUEVO: estado “conocido” desde la consola
   currentSlot = signal<number | null>(null);        // 1..8 si se conoce
   posZ        = signal<number>(0);
   posX        = signal<number>(0);
@@ -25,7 +24,6 @@ export class SppService {
   rxStream   = this.rx$.asObservable();
   private sub?: Subscription;
 
-  // Esperas puntuales a una línea (útil para “esperar llegada”)
   private waiters: Array<{re:RegExp; resolve:()=>void; reject:(e:Error)=>void; t:any}> = [];
 
   constructor(private bt: BluetoothSerial, private perms: AndroidPermissions) {}
@@ -66,10 +64,13 @@ export class SppService {
     this.sub = this.bt.subscribe('\n').subscribe((s: string) => {
       const line = s.trim();
       if (!line) return;
+
+      console.log('[ESP32]', line);
+      
       this.lastMsg.set(line);
-      this.parseLine(line);         // 👈 actualiza estado
+      this.parseLine(line);
       this.rx$.next(line);
-      this.notifyWaiters(line);     // 👈 resuelve esperas
+      this.notifyWaiters(line);
     });
   }
 
@@ -86,37 +87,27 @@ export class SppService {
     await this.bt.write(text.endsWith('\n') ? text : text + '\n');
   }
 
-  // ---------- NUEVO: helpers de protocolo ----------
   private parseLine(line: string) {
-    // POSZ:3 / POSX:5
     let m = line.match(/^POSZ:(\d+)/i);
     if (m) this.posZ.set(+m[1]);
     m = line.match(/^POSX:(\d+)/i);
     if (m) this.posX.set(+m[1]);
 
-    // IR:Z=1,X=0,GRIP=1
     m = line.match(/^IR:\s*Z=(\d)\s*,\s*X=(\d)\s*,\s*GRIP=(\d)/i);
     if (m) this.ir.set({ Z:+m[1], X:+m[2], GRIP:+m[3] });
 
-    // GRIP:OPEN / GRIP:CLOSE / GRIP:OPENING/CLOSING
     if (/^GRIP:OPEN$/i.test(line))   this.grip.set('OPEN');
     else if (/^GRIP:CLOSE$/i.test(line)) this.grip.set('CLOSED');
     else if (/^GRIP:(OPENING|CLOSING)$/i.test(line)) this.grip.set('MOV');
 
-    // Confirmaciones de llegada:
-    // - “LLEGO POS3” (si tu firmware lo manda)
-    // - “JOB:DONE” (si usas secuencia completa)
-    // - También puedes inferir por DONEZ/DONEX si tu flujo siempre llega a HOME
     m = line.match(/^LLEGO\s+POS(\d+)/i);
     if (m) this.currentSlot.set(+m[1]);
     if (/^JOB:DONE$/i.test(line)) {
-      // si tu firmware no manda “LLEGO POSx”, intenta inferir según último comando enviado (opcional)
-      // aquí no cambiamos currentSlot porque puede haber vuelto a HOME
+
     }
   }
 
   private notifyWaiters(line: string) {
-    // resuelve cualquiera cuyo RegExp haga match
     this.waiters = this.waiters.filter(w => {
       if (w.re.test(line)) {
         clearTimeout(w.t); w.resolve(); return false;
@@ -134,7 +125,6 @@ export class SppService {
     });
   }
 
-  // Mapa a..h -> POS1..POS8 y espera confirmación
   async moveToSlot(letterOrNumber: string | number) {
     const map: Record<string, number> = { a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8 };
     const n = typeof letterOrNumber === 'number'
@@ -143,16 +133,12 @@ export class SppService {
     if (!n || n < 1 || n > 8) throw new Error('Ubicación inválida');
 
     await this.sendLine(`POS${n}`);
-    // Espera confirmación flexible según tu firmware:
-    //  - LLEGO POSn
-    //  - o JOB:DONE
-    //  - o DONEZ/DONEX (si no hay JOB)
     await Promise.race([
       this.waitFor(new RegExp(`^LLEGO\\s+POS${n}$`, 'i')),
       this.waitFor(/^JOB:DONE$/i),
       this.waitFor(/^DONEZ:\d+$/i),
       this.waitFor(/^DONEX:\d+$/i),
-    ]).catch(() => {}); // no falles si el firmware no emite estas
-    this.currentSlot.set(n); // último target, útil para UI
+    ]).catch(() => {});
+    this.currentSlot.set(n);
   }
 }
