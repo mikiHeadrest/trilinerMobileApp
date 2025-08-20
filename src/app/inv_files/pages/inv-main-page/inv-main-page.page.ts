@@ -64,11 +64,11 @@ export class InvMainPagePage implements OnInit {
     this.loading = true;
     this.error = undefined;
 
-    const { data, error } = await this.supa.getProductos(100); // puedes ordenar en el servicio
+    const { data, error } = await this.supa.getProductos(100);
     if (error) this.error = error.message;
 
     this.productos = data ?? [];
-    this.currentPage = 1; // al recargar/buscar, vuelve a la primera
+    this.currentPage = 1;
     this.loading = false;
   }
 
@@ -94,14 +94,14 @@ export class InvMainPagePage implements OnInit {
   }
 
 
-  // Genera paginación dinámicamente
+
   get visiblePages(): (number | string)[] {
     const total = this.totalPages;
     const current = this.currentPage;
     const pages: (number | string)[] = [];
 
     if (total <= 7) {
-      // Si hay 7 o menos páginas, se muestran todas
+
       for (let i = 1; i <= total; i++) pages.push(i);
     } else {
       if (current <= 4) {
@@ -154,7 +154,7 @@ export class InvMainPagePage implements OnInit {
 
   handleRefresh(event: RefresherCustomEvent) {
     setTimeout(async () => {
-      // Any calls to load data go here
+
       await this.cargarProductos();
       event.target.complete();
     }, 2000);

@@ -16,10 +16,36 @@
   </div>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large"> Configuraciones del usuario </ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="innerContainer">
+    <div class="withBgContainer">
+
+      <div class="imgLogo">
+        Triliner Mobile APP
+      </div>
+
+      <br>
+
+      <div>
+        Equipo de Mecatronica
+      </div>
+      <div class="nameContainer">
+        <div *ngFor="let alumno of alumnosMeca; let i = index" class="alumnoContainer">
+          {{alumno}}
+        </div>
+      </div>
+
+      <br>
+
+      <div>
+        Equpo de Informatica
+      </div>
+      <div class="nameContainer" >
+        <div *ngFor="let alumno of alumnosInfo; let i = index" class="alumnoContainer">
+          {{alumno}}
+        </div>
+      </div>
+
+    </div>
+  </div>
 </ion-content>

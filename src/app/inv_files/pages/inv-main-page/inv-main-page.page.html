@@ -61,7 +61,7 @@
     <button class="page-button" (click)="prevPage()" [disabled]="currentPage<=1">←</button>
     <button
       class="page-button"
-      [class.active]="currentPage===i"
+      [class.active]="i===currentPage"
       *ngFor="let i of [].constructor(totalPages); index as idx"
       (click)="goToPage(idx+1)"
     >

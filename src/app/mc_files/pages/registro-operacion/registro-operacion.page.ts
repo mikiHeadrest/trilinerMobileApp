@@ -28,8 +28,8 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
   tipo = true; // true = recepción
   nombre = '';
   descripcion = '';
-  ubi = '';                        // (si no lo usas, puedes quitarlo)
-  ubicacion: string = 'a';         // a..h para el slot
+  ubi = '';
+  ubicacion: string = 'a';
   botonBloqueado = false;
 
   // inyección
@@ -77,9 +77,9 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
 
       // ------- EVENTO: PRODUCTO:DEJADO -------
       if (line === 'PRODUCTO:DEJADO') {
-        console.log('✅ Producto recibido');
+        console.log('Producto recibido');
 
-        // Opción A: actualizar SOLO la última línea
+        //actualizar SOLO la última línea
         if (this.ultimoIdOperacionProducto) {
           if (this.actualizando) return;
           this.actualizando = true;
@@ -95,21 +95,21 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
               .single();
 
             if (error) {
-              console.error('❌ Update error:', error);
+              console.error('Update error:', error);
             } else if (!data) {
-              console.warn('⚠️ Update no devolvió filas (posible RLS o id inexistente)');
+              console.warn('Update no devolvió filas (posible RLS o id inexistente)');
             } else {
-              console.log('🔄 Línea actualizada:', data.id_operacionProducto, 'isAllocated=', data.isAllocated);
+              console.log('Línea actualizada:', data.id_operacionProducto, 'isAllocated=', data.isAllocated);
             }
           } catch (e) {
-            console.error('❌ Excepción en update:', e);
+            console.error('Excepción en update:', e);
           } finally {
             this.actualizando = false;
           }
-          return; // evita caer a la opción B
+          return; //evita caer a la opción B
         }
 
-        // Opción B: actualizar TODAS las líneas guardadas
+        //actualizar TODAS las líneas guardadas
         if (this.idsLineasUltimaOperacion?.length) {
           if (this.actualizando) return;
           this.actualizando = true;
@@ -124,32 +124,32 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
               .select('id_operacionProducto, isAllocated');
 
             if (error) {
-              console.error('❌ Update error:', error);
+              console.error('Update error:', error);
             } else {
-              console.log('🔄 Líneas actualizadas:', data?.map(d => ({
+              console.log('Líneas actualizadas:', data?.map(d => ({
                 id: d.id_operacionProducto,
                 isAllocated: d.isAllocated
               })));
             }
           } catch (e) {
-            console.error('❌ Excepción en update:', e);
+            console.error('Excepción en update:', e);
           } finally {
             this.actualizando = false;
           }
         } else {
-          console.warn('⚠️ No hay líneas de operación para actualizar');
+          console.warn('No hay líneas de operación para actualizar');
         }
       }
 
       // ------- EVENTO: POS:... -------
       if (line.startsWith('POS:')) {
         const pos = line.replace('POS:', '');
-        console.log('📍 Nueva posición', pos);
+        console.log('Nueva posición', pos);
       }
 
       // ------- EVENTO: JOB:DONE -------
       if (line === 'JOB:DONE') {
-        console.log('✔️ Trabajo finalizado, regresando a Home');
+        console.log('Trabajo finalizado, regresando a Home');
         this.idsLineasUltimaOperacion = [];
         this.ultimoIdOperacionProducto = undefined;
         this.operacionService.vaciarCarrito();
@@ -254,7 +254,7 @@ export class RegistroOperacionPage implements OnInit, OnDestroy {
   async pruebaLed() {
     this.botonBloqueado = true;
     await this.operacion();
-    await this.spp.moveToSlot(this.ubicacion);
+    await this.spp.moveToSlot(this.ubicacion,this.tipoSelect);
   }
 
   // navegación

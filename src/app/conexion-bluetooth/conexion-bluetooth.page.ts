@@ -14,7 +14,7 @@ import { SppService, PairedDevice } from '../services/spp.service';
   standalone: true,
   imports: [
     CommonModule,
-    IonHeader, IonToolbar, IonTitle, IonContent,
+    IonHeader, IonContent,
     IonList, IonItem, IonLabel, IonButton, IonSearchbar, IonIcon, IonAvatar, IonToast, IonSkeletonText
   ]
 })
@@ -65,7 +65,7 @@ export class ConexionBluetoothPage {
       (d.name || '').toLowerCase().includes(s) || (d.id || '').toLowerCase().includes(s)
     );
   }
-  
+
   async connect(d: PairedDevice) {
     try {
       await this.spp.connectByMac(d.id, d.name);

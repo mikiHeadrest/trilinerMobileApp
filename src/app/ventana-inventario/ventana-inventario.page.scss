@@ -132,7 +132,7 @@ ion-card-subtitle {
   cursor: default;
 }
 
-/* Card: tamaño y paddings consistentes */
+
 .prod-card {
   background: #112534;
   color: #bad8d7;
@@ -148,7 +148,7 @@ ion-card-subtitle {
   min-height: 72px;
 }
 
-/* Miniatura con tamaño fijo */
+
 ion-thumbnail.thumb {
   flex: 0 0 56px;
   --size: 56px;
@@ -166,7 +166,7 @@ ion-thumbnail.thumb img {
 
 .card-info {
   flex: 1;
-  min-width: 0; /* IMPORTANT: permite truncado */
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -178,7 +178,7 @@ ion-card-subtitle {
   padding: 0;
 }
 
-/* Título compacto y claro */
+
 .card-info .title {
   font-size: 16px;
   line-height: 1.15;

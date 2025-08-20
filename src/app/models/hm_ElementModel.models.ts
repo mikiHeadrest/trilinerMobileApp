@@ -12,5 +12,6 @@ export interface HM_ElementModel{
 
   unidades:number,
 
-  modified_at?:Date, //De Operacion-Producto
+  modified_at?:Date,
+  //De Operacion-Producto - este ahora es created_at creo?, porque no se guardan valores en la base de datos de modified_at
 }

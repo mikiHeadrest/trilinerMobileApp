@@ -15,6 +15,25 @@ import { personCircleOutline } from 'ionicons/icons';
 })
 export class VentanaConfigPage implements OnInit {
 
+  alumnosMeca:string[] = [
+    "Ontíveros Rodriguez José",
+    "Castelo Acevedo Jesús Manuel",
+    "Moreno Urquizu Jesús Guillermo",
+    "Gerardo Rangel García Jesús",
+    "Osuna Sánchez Genaro Josué",
+    "Vizcarra Ríos Diego Eduardo",
+    "Sanchez Diaz Martin Gonzalo"
+  ]
+
+  alumnosInfo:string[] = [
+    "Valdez Lerma Juan Manuel",
+    "Avendaño Velarde Daniel",
+    "Guerra Perez Roberto",
+    "Casillas Navarro Daniel Omar",
+    "Aguirre Ibarra Zyon Luis",
+    "Lopez Lopez Miguel Angel"
+  ]
+
   constructor() {
     addIcons({personCircleOutline});
   }

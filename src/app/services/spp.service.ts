@@ -66,7 +66,7 @@ export class SppService {
       if (!line) return;
 
       console.log('[ESP32]', line);
-      
+
       this.lastMsg.set(line);
       this.parseLine(line);
       this.rx$.next(line);
@@ -125,12 +125,18 @@ export class SppService {
     });
   }
 
-  async moveToSlot(letterOrNumber: string | number) {
+  async moveToSlot(letterOrNumber: string | number, tipo:string) {
     const map: Record<string, number> = { a:1,b:2,c:3,d:4,e:5,f:6,g:7,h:8 };
     const n = typeof letterOrNumber === 'number'
       ? letterOrNumber
       : map[(letterOrNumber || '').toLowerCase()];
     if (!n || n < 1 || n > 8) throw new Error('Ubicación inválida');
+    if(tipo == "manual"){
+      await this.sendLine(`r${n}`)
+    }
+    else if(tipo=="automatico"){
+      await this.sendLine(`auto`)
+    }
 
     await this.sendLine(`POS${n}`);
     await Promise.race([
